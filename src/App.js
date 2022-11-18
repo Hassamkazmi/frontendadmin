@@ -68,6 +68,7 @@ import SubscriberList from "./pages/Setting/SubscriberList";
 import AdminRole from "./pages/Setting/AdminRole";
 import RaceKind from "./pages/GetTable/RaceKind";
 import RaceKindForm from "./pages/PostTable/RaceKind";
+import PublishRace from "./pages/PostTable/RaceForm/RaceThree";
 
 function App() {
   useEffect(() => {
@@ -147,6 +148,8 @@ function App() {
                 <Route path="/addverdict" element={<Verdict />} />
                 <Route path="/racekindform" element={<RaceKindForm />} />
                 <Route path="/racekind" element={<RaceKind />} />
+                <Route path="/fullpublishrace" element={<PublishRace />} />
+
                 {/* Edit Pages */}
                 <Route path="/editjockey" element={<EditJockey />} />
                 <Route path="/editracecourse" element={<EditRacecourse/>}/>

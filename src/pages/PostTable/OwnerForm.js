@@ -8,68 +8,78 @@ import DatePicker from "react-date-picker";
 import { fetchcolor } from "../../redux/getReducer/getColor";
 import { fetchnationality } from "../../redux/getReducer/getNationality";
 import Select from "react-select";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 const OwnerForm = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const {data: color} = useSelector((state) => state.color);
-  const {data: nationality} = useSelector((state) => state.nationality);
+  const { data: color } = useSelector((state) => state.color);
+  const { data: nationality } = useSelector((state) => state.nationality);
 
-  let AllColor = color === undefined ? <></> : color.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
-  let AllNationality = nationality === undefined ? <></> : nationality.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
-
-
-  
+  let AllColor =
+    color === undefined ? (
+      <></>
+    ) : (
+      color.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
+  let AllNationality =
+    nationality === undefined ? (
+      <></>
+    ) : (
+      nationality.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
   const [NameEn, setNameEn] = useState("");
   const [NameAr, setNameAr] = useState();
   const [TitleEn, setTitleEn] = useState("");
   const [TitleAr, setTitleAr] = useState("");
   const [ShortEn, setShortEn] = useState("");
-  const [SilkColor, setSilkColor] = useState("");
+  // const [SilkColor, setimage] = useState("");
   const [ShortAr, setShortAr] = useState("");
   const [NationalityID, setNationalityID] = useState("");
   const [RegistrationDate, setRegistrationDate] = useState("");
-  const [image, setImage] = useState();
-  const [OwnerImage, setOwnerImage] = useState();
+  const [Ownerimage, setOwnerimage] = useState();
+  const [image, setimage] = useState([]);
   const [preview, setPreview] = useState();
-
 
   useEffect(() => {
     dispatch(fetchcolor());
     dispatch(fetchnationality());
   }, [dispatch]);
 
-  const submit = async (event) => {
+    const submit = async (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("Ownerimage", Ownerimage);
+    formData.append("NameEn", NameEn);
+    formData.append("NameAr", NameAr);
+    formData.append("TitleEn", TitleEn);
+    formData.append("TitleAr", TitleAr);
+    formData.append("ShortEn", ShortEn);
+    formData.append("ShortAr", ShortAr);
+    formData.append("NationalityID", NationalityID.id);
+    formData.append("RegistrationDate", RegistrationDate);
+    formData.append("image", image);
+    // image.forEach((image) => {
+    // formData.append("image", image);
+    // console.log('dasad',image)
+    // });
     try {
-      const formData = new FormData();
-      formData.append("image", image);
-      formData.append("NameEn", NameEn);
-      formData.append("NameAr", NameAr);
-      formData.append("TitleEn", TitleEn);
-      formData.append("TitleAr", TitleAr);
-      formData.append("ShortEn", ShortEn);
-      formData.append("ShortAr", ShortAr);
-      formData.append("SilkColor", SilkColor.id);
-      formData.append("NationalityID", NationalityID.id);
-      formData.append("RegistrationDate", RegistrationDate);
-      await axios.post(`${window.env.API_URL}/createowner`, formData);
+      await axios.post(`${window.env.API_URL}/createowner`,formData);
       swal({
         title: "success!",
         text: "Data Submitted !",
@@ -91,23 +101,37 @@ const OwnerForm = () => {
 
   const isSubmitData = NameEn === "" || image === null || image === undefined;
   useEffect(() => {
-    if (!image) {
+    if (!Ownerimage) {
       setPreview(undefined);
       return;
     }
 
-    const objectUrl = URL.createObjectURL(image);
+    const objectUrl = URL.createObjectURL(Ownerimage);
     setPreview(objectUrl);
 
-    // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
-  }, [image]);
+  }, [Ownerimage]);
+    const onSelectFile = (e) => {
+      setOwnerimage(e.target.files[0]);
+    };
+    const onSelectFile1 = (e) => {
+      setimage(e.target.files[0]);
+    };
 
-  const onSelectFile = (e) => {
-    setImage(e.target.files[0]);
-    console.log(image, "image");
+    const createServiceImagesChange = (e) => {
+    const files = Array.from(e.target.files);
+    setimage([]);
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setimage((old) => [...old, reader.result]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+    console.log(files)
   };
-
 
   return (
     <>
@@ -203,13 +227,13 @@ const OwnerForm = () => {
                     ></input>
                   </div>
                 </div>
-                <div className="row mainrow">
+                {/* <div className="row mainrow">
                   <div className="col-sm">
                     <Select
                     
                       placeholder={<div>Select Color</div>}
                       defaultValue={SilkColor}
-                      onChange={setSilkColor}
+                      onChange={setimage}
                       options={AllColor}
                       isClearable={true}
                       isSearchable={true}
@@ -235,13 +259,13 @@ const OwnerForm = () => {
                       placeholder={<div>حدد نوع الجنس</div>}
                       className='selectdir'
                       defaultValue={SilkColor}
-                      onChange={setSilkColor}
+                      onChange={setimage}
                       options={AllColor}
                       isClearable={true}
                       isSearchable={true}
                     />
                   </div>
-                </div>
+                </div> */}
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
@@ -251,24 +275,25 @@ const OwnerForm = () => {
                       options={AllNationality}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> 
-                    
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/nationality')}>+</button>
-        </OverlayTrigger> 
-                    |</span>
+                    />
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/nationality")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
-                    <Select         className='selectdir'
+                    <Select
+                      className="selectdir"
                       placeholder={
                         <div style={{ direction: "rtl" }}>
                           اكتب للبحث عن الجنسية
@@ -281,7 +306,7 @@ const OwnerForm = () => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
+                </div>
                 {/* <div className="row mainrow">
                   <div className="col-sm">
                     <input
@@ -310,7 +335,7 @@ const OwnerForm = () => {
                       onChange={onSelectFile}
                       className="formInput"
                     />
-                    {image && (
+                    {Ownerimage && (
                       <img src={preview} alt="" className="PreviewImage" />
                     )}
                   </div>
@@ -323,6 +348,13 @@ const OwnerForm = () => {
                     Add Owner
                   </button>
                 </div>
+                <input
+          type="file"
+          name="images"
+          accept="image/*"
+          onChange={onSelectFile1}
+          multiple
+        />
               </form>
             </div>
           </div>

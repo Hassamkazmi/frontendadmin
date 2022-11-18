@@ -409,8 +409,10 @@ border: none !important;
 .textverdict{
   border: none;
 }
+.textverdict:focus-visible{
+  border: none !important;
+}
 
-
-span.myverdictdata{
+.verdictname{
   max-width: 300px !important;
 }

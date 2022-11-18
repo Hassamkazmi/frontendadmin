@@ -160,9 +160,9 @@ console.log(Math.max)
                                   }`,
                                 }}
                               >
-                                {item.RaceTypeModelData.NameEn}
+                                {item.RaceNameModelData.NameEn}
                               </td>
-                              <td>{item.RaceTypeModelData.NameAr} </td>
+                              <td>{item.RaceNameModelData.NameAr} </td>
                               <td>{item.RaceTypeModelData.NameEn} </td>
                               <td>
                                 {item.RaceCourseData === null ? (

@@ -1,12 +1,18 @@
-import { Fragment, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect,Fragment } from "react";
+import Moment from "moment";
+import "react-toastify/dist/ReactToastify.css";
+import { fetchjockey } from "../../redux/getReducer/getJockeySlice";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { add } from "../../redux/postReducer/PostHorse";
+import { useSelector } from "react-redux";
+import { fetchHorse ,STATUSES } from "../../redux/getReducer/getHorseSlice";
+import Select from "react-select";
+import swal from "sweetalert";
+import { AiOutlinePlus } from "react-icons/ai";
+import axios from "axios";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import Select from "react-select";
-import { STATUSES } from "../../redux/getReducer/getHorseSlice";
 
 const LocalItem = () => {
 
@@ -19,79 +25,84 @@ const LocalItem = () => {
 };
 
 const Verdict = () => {
-  const dispatch = useDispatch();
-  const history = useNavigate();
-  const { data: horse, status } = useSelector((state) => state.horse);
-
-  // useEffect(() => {
-  //   dispatch(fetchHorse());
-  // }, [dispatch]);
-
-  const [selectedOption1, setSelectedOption1] = useState("");
-  const [selectedOption2, setSelectedOption2] = useState("");
-  const [selectedOption3, setSelectedOption3] = useState("");
   const [InputData, SetinputData] = useState("");
+  const [InputData2, SetinputData2] = useState("");
+  const [VerdictName, SetVerdictName] = useState();
+  const [Gate , setGate] = useState('')
+  const [JockeyData, SetJockeyData] = useState("");
   const [items, setitems] = useState(LocalItem());
+  const { data: jockey } = useSelector((state) => state.jockey);
+  const { data: horse } = useSelector((state) => state.horse);
+
+  const history = useNavigate();
+  const { state } = useLocation();
+  // const { RaceId } = state;
+  const RaceId='dsada'
 
   let horseoptions = horse.map(function (item) {
     return {
       id: item._id,
       value: item.NameEn,
       label: item.NameEn,
-      jockeyvalue: item.JockeyData.map((item) => item.Name),
+    };
+  });
+  let AllJockey = jockey.map(function (item) {
+    return {
+      id: item._id,
+      value: item.NameEn,
+      label: item.NameEn,
     };
   });
 
-  const handlesubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("RaceKind", "Flat");
-    formData.append("raceName", "Testing");
-    formData.append("Description", "Description");
-    formData.append("DayNTime", "DayNTime");
-    formData.append("Weather", "Weather");
-    formData.append("RaceStatus", "RaceStatus");
-    formData.append("RaceCourse", "6348007b244c9900161902ec");
-    formData.append("Horses", selectedOption1.id);
-    formData.append("Horses", selectedOption2.id);
-    formData.append("Horses", selectedOption3.id);
-
-    dispatch(add(formData));
-  };
-
+  const dispatch = useDispatch();
+  const VerdictEntry = [
+    `1,${VerdictName},${InputData.id},${JockeyData.id}`,
+  ];
+console.log(VerdictName,'VerdictName')
+  useEffect(() => {
+    dispatch(fetchHorse());
+    dispatch(fetchjockey());
+  }, [dispatch]);
+  useEffect(() => {
+    localStorage.setItem("lists", JSON.stringify(items));
+  }, [items]);
   const addItem = () => {
-    
-    if (InputData) {
-    } else {
-      setitems([...items, InputData]);
+    setitems([...items, VerdictEntry]);
     SetinputData("");
-    console.log(items, "data is");
+  };
+  const Remove = () => {
+    setitems([]);
+  };
+  const submit = async (event) => {
+    event.preventDefault();
+    try {
+      console.log(items, "VerdictEntry");
+      const response = await axios.post(`${window.env.API_URL}addverdicts/${RaceId}`, {VerdictEntry:items});
+      const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
+      history("/publishrace", {
+        state: {
+          RaceId: RaceId
+        },
+      });
+      history("/races");
+      swal({
+        title: "Success",
+        text: "Data has been added successfully ",
+        icon: "success",
+        button: "OK",
+      });
+    } catch (error) {
+      const err = error.response.data.message;
+      swal({
+        title: "Error!",
+        text: err,
+        icon: "error",
+        button: "OK",
+      });
     }
   };
 
-  if (status === STATUSES.LOADING) {
-    return (
-      <h2
-        style={{
-          margin: "100px",
-        }}
-      >
-        Loading....
-      </h2>
-    );
-  }
-
-  if (status === STATUSES.ERROR) {
-    return (
-      <h2
-        style={{
-          margin: "100px",
-        }}
-      >
-        Something went wrong!
-      </h2>
-    );
-  }
+  
 
   return (
     <Fragment>
@@ -119,97 +130,49 @@ const Verdict = () => {
                     <span>Jockey Name</span>
                   </div>
                 </div>
-                <div className="myselectdata">
+                {items.map((e, i) => {
+                return (
                   <div className="myselectiondata">
-                    <span>#1</span>
+                    <span >{i + 1}</span>
                     <span>
-                    <div className="col-sm">
-                    <input type='text' placeholder='Verdict Name' className="textverdict" />
+                      <input type='text' value={VerdictName} onChange={() => SetVerdictName(e.target.value)} placeholder='Verdict Name' className='textverdict' />
+                    </span>
+                    <span>
+                      <Select
+                        defaultValue={InputData}
+                        onChange={SetinputData}
+                        options={horseoptions}
+                        isClearable={false}
+                        isSearchable={true}
+                      />
+                    </span>
+                    <span>
+                      <Select
+                        defaultValue={JockeyData}
+                        onChange={SetJockeyData}
+                        options={AllJockey}
+                        isClearable={false}
+                        isSearchable={true}
+                      />
+                    </span>
+                  
+                  </div>
+                );
+              })}
 
-                   </div>
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={selectedOption1}
-                        onChange={setSelectedOption1}
-                        options={horseoptions}
-                        isClearable={true}
-                        isSearchable={true}
-                      />
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={selectedOption1}
-                        onChange={setSelectedOption1}
-                        options={horseoptions}
-                        isClearable={true}
-                        isSearchable={true}
-                      />
-                    </span>
-                  </div>
-                  <div className="myselectiondata">
-                    <span>#2</span>
-                    <span>
-                    <div className="col-sm">
-                    <input type='text' placeholder='Verdict Name' className="textverdict" />
-
-                   </div>
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={selectedOption1}
-                        onChange={setSelectedOption1}
-                        options={horseoptions}
-                        isClearable={true}
-                        isSearchable={true}
-                      />
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={selectedOption1}
-                        onChange={setSelectedOption1}
-                        options={horseoptions}
-                        isClearable={true}
-                        isSearchable={true}
-                      />
-                    </span>
-                  </div>
-                  <div className="myselectiondata">
-                    <span>#3</span>
-                    <span>
-                    <div className="col-sm">
-                     <input type='text' placeholder='Verdict Name' className="textverdict" />
-                   </div>
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={selectedOption1}
-                        onChange={setSelectedOption1}
-                        options={horseoptions}
-                        isClearable={true}
-                        isSearchable={true}
-                      />
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={selectedOption1}
-                        onChange={setSelectedOption1}
-                        options={horseoptions}
-                        isClearable={true}
-                        isSearchable={true}
-                      />
-                    </span>
-                  </div>
-                  <div className="sbmtbtn">
-                    <button onClick={handlesubmit}>Save & Publish </button>
-                  </div>
-                </div>
                 </Tab> 
               )
             })
            }
 
           </Tabs>
+          <button
+                    className="SubmitButton"
+                    type="submit"
+                    onClick={submit}
+                  >
+                    Publish
+                  </button>
         </div>
       </div>
     </Fragment>

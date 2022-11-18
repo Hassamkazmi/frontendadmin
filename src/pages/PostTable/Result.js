@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Select from "react-select";
-import { fetchSponsor } from "../../redux/getReducer/getSponsorSlice";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect,Fragment } from "react";
+import Moment from "moment";
+import "react-toastify/dist/ReactToastify.css";
 import { fetchjockey } from "../../redux/getReducer/getJockeySlice";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { fetchHorse ,STATUSES } from "../../redux/getReducer/getHorseSlice";
+import Select from "react-select";
+import swal from "sweetalert";
+import { AiOutlinePlus } from "react-icons/ai";
+import axios from "axios";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 
 const LocalItem = () => {
+
   const list = localStorage.getItem("lists");
   if (list) {
     return JSON.parse(localStorage.getItem("lists"));
@@ -13,98 +24,125 @@ const LocalItem = () => {
   }
 };
 
-const Todo = () => {
+const Verdict = () => {
   const [InputData, SetinputData] = useState("");
+  const [InputData2, SetinputData2] = useState("");
+  const [VerdictName, SetVerdictName] = useState("");
+  const [Gate , setGate] = useState('')
   const [JockeyData, SetJockeyData] = useState("");
-
   const [items, setitems] = useState(LocalItem());
-  const dispatch = useDispatch();
-  const { data: sponsor } = useSelector((state) => state.sponsor);
   const { data: jockey } = useSelector((state) => state.jockey);
+  const { data: horse } = useSelector((state) => state.horse);
 
-  useEffect(() => {
-    dispatch(fetchSponsor());
-    dispatch(fetchjockey());
-  }, [dispatch]);
-  const HorseEntry = [`1,${InputData.id},${JockeyData.id},${JockeyData.weight}`];
-  const addItem = () => {
-    setitems([...items, HorseEntry]);
-      SetinputData("");
-    // if (!InputData) {
-    // } else {
-    //   setitems([...items, HorseEntry]);
-    //   SetinputData("");
-    //   console.log(HorseEntry, "data is");
-    // }
-  };
+  const history = useNavigate();
+  const { state } = useLocation();
+  // const { RaceId } = state;
+  const RaceId='dsada'
 
-  let sponsoroptions = sponsor.map(function (item) {
+  let horseoptions = horse.map(function (item) {
     return {
       id: item._id,
-      value: item.TitleEn,
-      label: item.TitleEn,
+      value: item.NameEn,
+      label: item.NameEn,
     };
   });
-  // console.log(items,'InputData')
-  let AllJockey =
-    jockey === undefined ? (
-      <></>
-    ) : (
-      jockey.map(function (item) {
-        return {
-          id: item._id,
-          value: item.NameEn,
-          label: item.NameEn,
-          weight: item.MaximumJockeyWeight,
-        };
-      })
-    );
-  const deleteItems = (id) => {
-    const updateItems = items.filter((elem, ind) => {
-      return ind !== id;
-    });
-    setitems(updateItems);
-  };
+  let AllJockey = jockey.map(function (item) {
+    return {
+      id: item._id,
+      value: item.NameEn,
+      label: item.NameEn,
+      weight: item.MaximumJockeyWeight,
+    };
+  });
 
-  const Remove = () => {
-    setitems([]);
-  };
+  const dispatch = useDispatch();
+  const HorseEntry = [
+    `1,${VerdictName},${InputData.id},${JockeyData.id}`,
+  ];
 
+  useEffect(() => {
+    dispatch(fetchHorse());
+    dispatch(fetchjockey());
+  }, [dispatch]);
   useEffect(() => {
     localStorage.setItem("lists", JSON.stringify(items));
   }, [items]);
+  const addItem = () => {
+    setitems([...items, HorseEntry]);
+    SetinputData("");
+  };
+  const Remove = () => {
+    setitems([]);
+  };
+  const submit = async (event) => {
+    event.preventDefault();
+    try {
+      console.log(items, "HorseEntry");
+      const response = await axios.post(`${window.env.API_URL}addverdicts/${RaceId}`, {VerdictEntry:items});
+      const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
+      history("/publishrace", {
+        state: {
+          RaceId: RaceId
+        },
+      });
+      history("/races");
+      swal({
+        title: "Success",
+        text: "Data has been added successfully ",
+        icon: "success",
+        button: "OK",
+      });
+    } catch (error) {
+      const err = error.response.data.message;
+      swal({
+        title: "Error!",
+        text: err,
+        icon: "error",
+        button: "OK",
+      });
+    }
+  };
 
-  console.log(AllJockey, "AllJockey");
+  
+
   return (
-    <>
+    <Fragment>
       <div className="page">
         <div className="rightsidedata">
           <div
-            style={{
-              marginTop: "30px",
-            }}
+            className="Header"
+            style={{ marginTop: "2px", marginLeft: "12px" }}
           >
-            <div className="Header ">
-              <h4>Add Horse</h4>
-            </div>
-            <div className="myselecthorse">
-              <div className="myselecthorsedata">
-                <span>Gate #</span>
-                <span>Horse Name</span>
-                <span>Jockey Name</span>
-                <span>Jockey Weight</span>
-              </div>
-            </div>
-            <div className="myselectdata">
-              {items.map((e, i) => {
+            <h4>Verdict Selection</h4>
+            <button onClick={addItem}>Add Verdict</button>
+          </div>
+
+          <Tabs defaultActiveKey="0" id="justify-tab-example" className="mb-3">
+
+           {
+            items.map((data,index) => {
+              return(
+                <Tab eventKey={index} title={`Verdict # ${index + 1 }`} className="Verdicttab">
+                <div className="myselecthorse">
+                  <div className="myselecthorsedata">
+                    <span>Rank #</span>
+                    <span>Verdict Name</span>
+                    <span>Horse Name</span>
+                    <span>Jockey Name</span>
+                  </div>
+                </div>
+                {items.map((e, i) => {
                 return (
                   <div className="myselectiondata">
-                    <span>{i + 1}</span>
+                    <span >{i + 1}</span>
+                    <span>
+                      <input type='text' value={VerdictName} onChange={() => SetVerdictName(e.target.value)} placeholder='Verdict Name' className='textverdict' />
+                    </span>
                     <span>
                       <Select
                         defaultValue={InputData}
                         onChange={SetinputData}
-                        options={sponsoroptions}
+                        options={horseoptions}
                         isClearable={false}
                         isSearchable={true}
                       />
@@ -118,38 +156,21 @@ const Todo = () => {
                         isSearchable={true}
                       />
                     </span>
-                    <span>
-                      {JockeyData.weight === undefined ? (
-                        <></>
-                      ) : (
-                        <>{JockeyData.weight} KG</>
-                      )}{" "}
-                    </span>
+                  
                   </div>
                 );
               })}
 
-              <div className="sbmtbtndiv">
-                <div className="RaceButtonDiv">
-                  <button className="updateButton" onClick={Remove}>
-                    Update
-                  </button>
+                </Tab> 
+              )
+            })
+           }
 
-                  <button
-                    className="SubmitButton"
-                    type="submit"
-                    onClick={addItem}
-                  >
-                    Save & Add Horses
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          </Tabs>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 
-export default Todo;
+export default Verdict;
