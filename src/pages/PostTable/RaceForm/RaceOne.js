@@ -1,0 +1,212 @@
+import React, { useEffect } from "react";
+import Moment from "moment";
+import "react-toastify/dist/ReactToastify.css";
+import { fetchjockey } from "../../../redux/getReducer/getJockeySlice";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { fetchHorse } from "../../../redux/getReducer/getHorseSlice";
+import Select from "react-select";
+import swal from "sweetalert";
+import { AiOutlinePlus } from "react-icons/ai";
+import axios from "axios";
+
+const LocalItem = () => {
+  const list = localStorage.getItem("lists");
+  if (list) {
+    return JSON.parse(localStorage.getItem("lists"));
+  } else {
+    return [];
+  }
+};
+
+const RaceForm = () => {
+  const [InputData, SetinputData] = useState("");
+  const [JockeyData, SetJockeyData] = useState("");
+  const [items, setitems] = useState(LocalItem());
+  const { data: jockey } = useSelector((state) => state.jockey);
+  const { data: horse } = useSelector((state) => state.horse);
+
+
+  const history = useNavigate();
+  const { state } = useLocation();
+  const { RaceId } = state;
+
+  let horseoptions = horse.map(function (item) {
+    return {
+      id: item._id,
+      value: item.NameEn,
+      label: item.NameEn,
+      
+    };
+  });
+  let AllJockey = jockey.map(function (item) {
+    return {
+      id: item._id,
+      value: item.NameEn,
+      label: item.NameEn,
+      weight: item.MaximumJockeyWeight
+    };
+  });
+
+  const dispatch = useDispatch();
+  const HorseEntry = [`1,${InputData.id},${JockeyData.id},${JockeyData.weight}`];
+
+
+
+  useEffect(() => {
+    dispatch(fetchHorse());
+    dispatch(fetchjockey());
+  }, [dispatch]);
+  useEffect(() => {
+    localStorage.setItem("lists", JSON.stringify(items));
+  }, [items]);
+  const addItem = () => {
+      setitems([...items, HorseEntry]);
+      SetinputData("");
+  };
+  const Remove = () => {
+    setitems([]);
+  };
+  const submit = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("HorseEntry", formData);
+      const response = await axios.post(`${window.env.API_URL}addracehorses/${RaceId}`, {HorseEntry:items});
+      const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
+      history("/publishrace", {
+        state: {
+          RaceId: RaceId
+        },
+      });
+      history("/races");
+      swal({
+        title: "Success",
+        text: "Data has been added successfully ",
+        icon: "success",
+        button: "OK",
+      });
+    } catch (error) {
+      const err = error.response.data.message;
+      swal({
+        title: "Error!",
+        text: err,
+        icon: "error",
+        button: "OK",
+      });
+    }
+  };
+
+
+  return (
+    <>
+      <div className="page">
+        <div className="rightsidedata">
+          
+          <div
+            style={{
+              marginTop: "30px",
+            }}
+          >
+            <div className="Header ">
+              <h4>Add Horse</h4>
+            </div>
+            <div className="myselecthorse">
+              <div className="myselecthorsedata">
+                <span>Gate #</span>
+                <span>Horse Name</span>
+                <span>Jockey Name</span>
+                <span>Jockey Weight</span>
+              </div>
+            </div>
+            <div className="myselectdata">
+            <div className="myselectiondata displaynew">
+                    <span>0</span>
+                    <span>
+                      <Select
+                        defaultValue={InputData}
+                        onChange={SetinputData}
+                        options={horseoptions}
+                        isClearable={false}
+                        isSearchable={true}
+                      />
+                    </span>
+                    <span>
+                      <Select
+                        defaultValue={JockeyData}
+                        onChange={SetJockeyData}
+                        options={AllJockey}
+                        isClearable={false}
+                        isSearchable={true}
+                      />
+                    </span>
+                    <span>
+                      {JockeyData.weight === undefined ? (
+                        <></>
+                      ) : (
+                        <>{JockeyData.weight} KG</>
+                      )}{" "}
+                    </span>
+             </div>
+            {items.map((e, i) => {
+                return (
+                  <div className="myselectiondata">
+                    <span>{i + 1}</span>
+                    <span>
+                      <Select
+                        defaultValue={InputData}
+                        onChange={SetinputData}
+                        options={horseoptions}
+                        isClearable={false}
+                        isSearchable={true}
+                      />
+                    </span>
+                    <span>
+                      <Select
+                        defaultValue={JockeyData}
+                        onChange={SetJockeyData}
+                        options={AllJockey}
+                        isClearable={false}
+                        isSearchable={true}
+                      />
+                    </span>
+                    <span>
+                      {JockeyData.weight === undefined ? (
+                        <></>
+                      ) : (
+                        <>{JockeyData.weight} KG</>
+                      )}{" "}
+                    </span>
+                  </div>
+                );
+              })}
+
+              <div className="addbtn">
+                <button className="AddAnother" onClick={addItem}>
+                  <AiOutlinePlus /> Add Another{" "}
+                </button>
+              </div>
+              <div className="sbmtbtndiv">
+                <div className="RaceButtonDiv">
+                  <button className="updateButton" onClick={Remove}>Update</button>
+
+                  <button
+                    className="SubmitButton"
+                    type="submit"
+                    onClick={submit}
+                  >
+                    Save & Add Horses
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default RaceForm;
