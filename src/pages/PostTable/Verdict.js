@@ -10,9 +10,6 @@ import { STATUSES } from "../../redux/getReducer/getHorseSlice";
 
 const LocalItem = () => {
 
- 
-
-
   const list = localStorage.getItem("lists");
   if (list) {
     return JSON.parse(localStorage.getItem("lists"));
@@ -116,7 +113,8 @@ const Verdict = () => {
                 <Tab eventKey={index} title={`Verdict # ${index + 1 }`} className="Verdicttab">
                 <div className="myselecthorse">
                   <div className="myselecthorsedata">
-                    <span>Gate #</span>
+                    <span>Rank #</span>
+                    <span>Verdict Name</span>
                     <span>Horse Name</span>
                     <span>Jockey Name</span>
                   </div>
@@ -124,6 +122,12 @@ const Verdict = () => {
                 <div className="myselectdata">
                   <div className="myselectiondata">
                     <span>#1</span>
+                    <span>
+                    <div className="col-sm">
+                    <input type='text' placeholder='Verdict Name' className="textverdict" />
+
+                   </div>
+                    </span>
                     <span>
                       <Select
                         defaultValue={selectedOption1}
@@ -134,52 +138,68 @@ const Verdict = () => {
                       />
                     </span>
                     <span>
-                      {selectedOption1 === "" ? (
-                        <p>N/A</p>
-                      ) : (
-                        <p>{selectedOption1.jockeyvalue[0]}</p>
-                      )}
+                      <Select
+                        defaultValue={selectedOption1}
+                        onChange={setSelectedOption1}
+                        options={horseoptions}
+                        isClearable={true}
+                        isSearchable={true}
+                      />
                     </span>
                   </div>
                   <div className="myselectiondata">
                     <span>#2</span>
                     <span>
+                    <div className="col-sm">
+                    <input type='text' placeholder='Verdict Name' className="textverdict" />
+
+                   </div>
+                    </span>
+                    <span>
                       <Select
-                        defaultValue={selectedOption2}
-                        onChange={setSelectedOption2}
+                        defaultValue={selectedOption1}
+                        onChange={setSelectedOption1}
                         options={horseoptions}
                         isClearable={true}
                         isSearchable={true}
                       />
                     </span>
                     <span>
-                      {selectedOption2 === "" ? (
-                        <p>N/A</p>
-                      ) : (
-                        <p>{selectedOption2.jockeyvalue[0]}</p>
-                      )}
+                      <Select
+                        defaultValue={selectedOption1}
+                        onChange={setSelectedOption1}
+                        options={horseoptions}
+                        isClearable={true}
+                        isSearchable={true}
+                      />
                     </span>
                   </div>
                   <div className="myselectiondata">
                     <span>#3</span>
                     <span>
+                    <div className="col-sm">
+                     <input type='text' placeholder='Verdict Name' className="textverdict" />
+                   </div>
+                    </span>
+                    <span>
                       <Select
-                        defaultValue={selectedOption3}
-                        onChange={setSelectedOption3}
+                        defaultValue={selectedOption1}
+                        onChange={setSelectedOption1}
                         options={horseoptions}
                         isClearable={true}
                         isSearchable={true}
                       />
                     </span>
                     <span>
-                      {selectedOption3 === "" ? (
-                        <p>N/A</p>
-                      ) : (
-                        <p>{selectedOption3.jockeyvalue[0]}</p>
-                      )}
+                      <Select
+                        defaultValue={selectedOption1}
+                        onChange={setSelectedOption1}
+                        options={horseoptions}
+                        isClearable={true}
+                        isSearchable={true}
+                      />
                     </span>
                   </div>
-  
                   <div className="sbmtbtn">
                     <button onClick={handlesubmit}>Save & Publish </button>
                   </div>

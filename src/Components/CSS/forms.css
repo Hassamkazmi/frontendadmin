@@ -385,15 +385,14 @@ border: none !important;
   font-size: 12px;
   box-sizing: border-box;
 }
-.col-sm:after {
+/* .col-sm:after {
   content: " *";
   font-size: 31px;
   color: rgb(214, 78, 78);
-  /* float: right; */
   display: flex;
   align-items: center;
   margin: -36px 0px 0px 1px;
-}
+} */
 .addmore {
   position: relative;
   background: transparent;
@@ -405,4 +404,13 @@ border: none !important;
 
 .displaynew{
   display: none !important;
+}
+
+.textverdict{
+  border: none;
+}
+
+
+span.myverdictdata{
+  max-width: 300px !important;
 }

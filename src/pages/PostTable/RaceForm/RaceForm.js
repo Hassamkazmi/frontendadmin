@@ -13,6 +13,7 @@ import { fetchMeeting } from "../../../redux/getReducer/getMeeting";
 import { fetchRaceType } from "../../../redux/getReducer/getRacetype";
 import {fetchRaceName}  from '../../../redux/getReducer/getRaceName'
 import { fetchTrackLength } from "../../../redux/getReducer/getTracklength";
+import { fetchRaceKind } from "../../../redux/getReducer/getRaceKind";
 import Select from "react-select";
 import swal from "sweetalert";
 import DateTimePicker from 'react-datetime-picker';
@@ -47,9 +48,11 @@ const RaceForm = () => {
   const { data: RaceType } = useSelector((state) => state.RaceType);
   const {data : RaceName} = useSelector((state)=> state.RaceName );
   const {data : trackLength} = useSelector((state)=> state.trackLength );
+  const { data: raceKinds, status } = useSelector((state) => state.raceKinds);
 
   const history = useNavigate();
   const dispatch = useDispatch();
+
   let racecourses = racecourse === undefined ? <></> : racecourse.map(function (item) {
     return {
       id: item._id,
@@ -57,8 +60,6 @@ const RaceForm = () => {
       label: item.TrackNameEn,
     };
   });
-
-  
 
   let JockeyForTheRace = jockey === undefined ? <></> : jockey.map(function (item) {
     return {
@@ -69,15 +70,13 @@ const RaceForm = () => {
     };
   });
 
-  let Racename = RaceName === undefined ? <></> : RaceName.map(function (item) {
+  let Racenameoptions = RaceName === undefined ? <></> : RaceName.map(function (item) {
     return {
       id: item._id,
       value: item.NameEn,
       label: item.NameEn,
     };
   });
-  console.log(RaceName,"racce")
-
 
   let SponsorForTheRace = sponsor === undefined ? <></> : sponsor.map(function (item) {
     return {
@@ -110,6 +109,7 @@ const RaceForm = () => {
       label: item.NameEn,
     };
   });
+
   let TrackLenght =  trackLength === undefined ? <></> : trackLength.map(function (item) {
     return {
       id: item._id,
@@ -118,6 +118,16 @@ const RaceForm = () => {
     };
   });
 
+  let OprtionRaceKind =  raceKinds === undefined ? <></> : raceKinds.map(function (item) {
+    return {
+      id: item._id,
+      value: item.NameEn,
+      label: item.NameEn,
+    };
+  });
+
+  
+console.log(raceKinds)
   const [MeetingType , setMeetingType ] = useState("");
   const [RaceNameEn, setRaceNameEn] = useState("");
   const [MeetingCode, setMeetingCode] = useState("");
@@ -148,6 +158,7 @@ const RaceForm = () => {
     dispatch(fetchRaceType());
     dispatch(fetchRaceName());
     dispatch(fetchTrackLength());
+    dispatch(fetchRaceKind());
     if (!image) {
       setPreview(undefined);
       return;
@@ -167,7 +178,7 @@ const RaceForm = () => {
       formData.append("Ground", Ground.id);
       formData.append("RaceNameAr", RaceNameAr);
       formData.append("RaceType", RaceTyp.id);
-      // formData.append("RaceKind", RaceTyp.id)
+      formData.append("RaceKind", RaceKind.id)
       formData.append("DescriptionEn", DescriptionEn);
       formData.append("DescriptionAr", DescriptionAr);
       formData.append("DayNTime", DayNTime);
@@ -241,7 +252,7 @@ const RaceForm = () => {
                       options={MeetingTypes}
                       isClearable={true}
                       isSearchable={true}
-                      option ={<div> Hello</div> }
+                      
                     />{" "}
                     <span className="spanForm">  
         <OverlayTrigger
@@ -298,14 +309,12 @@ const RaceForm = () => {
                       placeholder={<div>Race Name</div>}
                       defaultValue={RaceName}
                       onChange={setRaceNameEn}
-                      options={Racename}
+                      options={Racenameoptions}
                       isClearable={true}
                       isSearchable={true}
                     />
                     <span className="spanForm">
                        <OverlayTrigger
-          
-         
           overlay={
             <Tooltip id={`tooltip-top`}>
               Add more
@@ -537,7 +546,7 @@ const RaceForm = () => {
                       placeholder={<div>RaceKind</div>}
                       defaultValue={RaceKind}
                       onChange={setRaceKind}
-                      options={RaceKinds}
+                      options={OprtionRaceKind}
                       isClearable={true}
                       isSearchable={true}
                     />{" "}
@@ -550,7 +559,7 @@ const RaceForm = () => {
                       defaultValue={RaceKind}
                       className="selectdir"
                       onChange={setRaceKind}
-                      options={RaceKinds}
+                      options={OprtionRaceKind}
                       isClearable={true}
                       isSearchable={true}
                     />

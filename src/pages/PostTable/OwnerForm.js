@@ -46,6 +46,7 @@ const OwnerForm = () => {
   const [NationalityID, setNationalityID] = useState("");
   const [RegistrationDate, setRegistrationDate] = useState("");
   const [image, setImage] = useState();
+  const [OwnerImage, setOwnerImage] = useState();
   const [preview, setPreview] = useState();
 
 
@@ -53,7 +54,6 @@ const OwnerForm = () => {
     dispatch(fetchcolor());
     dispatch(fetchnationality());
   }, [dispatch]);
-
 
   const submit = async (event) => {
     event.preventDefault();
@@ -88,6 +88,7 @@ const OwnerForm = () => {
       });
     }
   };
+
   const isSubmitData = NameEn === "" || image === null || image === undefined;
   useEffect(() => {
     if (!image) {
@@ -106,6 +107,7 @@ const OwnerForm = () => {
     setImage(e.target.files[0]);
     console.log(image, "image");
   };
+
 
   return (
     <>

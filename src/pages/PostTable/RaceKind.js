@@ -1,10 +1,9 @@
+
 import React,{useState} from 'react'
 import swal from 'sweetalert';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-const Horsekindform = () => {
-
+const Racetypeform = () => {
     const [NameEn, setNameEn] = useState("");
     const [NameAr, setNameAr] = useState("");
     const [shortCode,setshortCode]= useState("") 
@@ -19,16 +18,16 @@ const Horsekindform = () => {
         const formData = new FormData();
         formData.append("NameEn", NameEn);
         formData.append("NameAr" , NameAr)
-        formData.append("shortName",shortCode);
+        formData.append("shortCode",shortCode);
   
-        await axios.post(`${window.env.API_URL}/uploadHorseKind`, formData)
+        await axios.post(`${window.env.API_URL}/uploadRaceKind`, formData)
         swal({
           title: "Success!",
           text: "Data has been added successfully ",
           icon: "success",
           button: "OK",
         });
-        history('/horsekind')
+        history('/racekind')
       } catch (error) {
         const err = error.message;
         swal({
@@ -40,8 +39,10 @@ const Horsekindform = () => {
       }
     };
 
+
+
   return (
-   <div className="page">
+    <div className="page">
    
     <div className="rightsidedata">
       <div
@@ -49,7 +50,7 @@ const Horsekindform = () => {
           marginTop: "30px",
         }}
       >
-        <div className="Headers">Create Horse Kind</div>
+        <div className="Headers">Create Race Kind</div>
         <div className="form">
           
           <form onSubmit={submit}>
@@ -99,7 +100,7 @@ const Horsekindform = () => {
             <div className='ButtonSection ' style={{justifyContent:"end"}}>
      
 
-              <button type='submit' className='SubmitButton'>Add Horse Kind</button>
+              <button type='submit' className='SubmitButton'>Add Race type</button>
 
             </div>
           </form>
@@ -110,4 +111,4 @@ const Horsekindform = () => {
   )
 }
 
-export default Horsekindform;
+export default Racetypeform

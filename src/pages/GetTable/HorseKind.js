@@ -1,6 +1,6 @@
 
 import React, { useEffect ,Fragment } from "react";
-import { fetchgender , STATUSES } from "../../redux/getReducer/getGenderSlice";
+import { fetchHorseKind , STATUSES } from "../../redux/getReducer/getHorseKind";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostJockey";
@@ -15,9 +15,9 @@ const HorseKind = () => {
 
     const dispatch = useDispatch();
  
-    const { data: gender, status } = useSelector((state) => state.gender);
+    const { data: HorseKind, status } = useSelector((state) => state.HorseKind);
     useEffect(() => {
-      dispatch(fetchgender());
+      dispatch(fetchHorseKind());
     }, [dispatch]);
     const handleRemove = (Id) => {
       swal({
@@ -113,7 +113,7 @@ const HorseKind = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {gender.map((item, index) => {
+                        {HorseKind.map((item, index) => {
                           return (
                             <>
                               <tr className="tr_table_class">

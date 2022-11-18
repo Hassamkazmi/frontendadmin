@@ -112,7 +112,7 @@ console.log(Math.max)
                       <th>Weather in Degree</th>
                       <th>Weather Type</th>
                       <th>Day and Time</th>
-                      <th>Total Horses</th>
+                      {/* <th>Total Horses</th> */}
                       <th>Race Status</th>
                       <th>image</th>
                       <th>Action</th>

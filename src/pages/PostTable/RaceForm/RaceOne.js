@@ -23,11 +23,12 @@ const LocalItem = () => {
 
 const RaceForm = () => {
   const [InputData, SetinputData] = useState("");
+  const [InputData2, SetinputData2] = useState("");
+  const [Gate , setGate] = useState('')
   const [JockeyData, SetJockeyData] = useState("");
   const [items, setitems] = useState(LocalItem());
   const { data: jockey } = useSelector((state) => state.jockey);
   const { data: horse } = useSelector((state) => state.horse);
-
 
   const history = useNavigate();
   const { state } = useLocation();
@@ -38,7 +39,6 @@ const RaceForm = () => {
       id: item._id,
       value: item.NameEn,
       label: item.NameEn,
-      
     };
   });
   let AllJockey = jockey.map(function (item) {
@@ -46,14 +46,14 @@ const RaceForm = () => {
       id: item._id,
       value: item.NameEn,
       label: item.NameEn,
-      weight: item.MaximumJockeyWeight
+      weight: item.MaximumJockeyWeight,
     };
   });
 
   const dispatch = useDispatch();
-  const HorseEntry = [`1,${InputData.id},${JockeyData.id},${JockeyData.weight}`];
-
-
+  const HorseEntry = [
+    `1,${InputData.id},${JockeyData.id},${JockeyData.weight}`,
+  ];
 
   useEffect(() => {
     dispatch(fetchHorse());
@@ -63,8 +63,8 @@ const RaceForm = () => {
     localStorage.setItem("lists", JSON.stringify(items));
   }, [items]);
   const addItem = () => {
-      setitems([...items, HorseEntry]);
-      SetinputData("");
+    setitems([...items, HorseEntry]);
+    SetinputData("");
   };
   const Remove = () => {
     setitems([]);
@@ -72,8 +72,7 @@ const RaceForm = () => {
   const submit = async (event) => {
     event.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("HorseEntry", formData);
+      console.log(items, "HorseEntry");
       const response = await axios.post(`${window.env.API_URL}addracehorses/${RaceId}`, {HorseEntry:items});
       const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
       history("/publishrace", {
@@ -99,12 +98,10 @@ const RaceForm = () => {
     }
   };
 
-
   return (
     <>
       <div className="page">
         <div className="rightsidedata">
-          
           <div
             style={{
               marginTop: "30px",
@@ -122,38 +119,38 @@ const RaceForm = () => {
               </div>
             </div>
             <div className="myselectdata">
-            <div className="myselectiondata displaynew">
-                    <span>0</span>
-                    <span>
-                      <Select
-                        defaultValue={InputData}
-                        onChange={SetinputData}
-                        options={horseoptions}
-                        isClearable={false}
-                        isSearchable={true}
-                      />
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={JockeyData}
-                        onChange={SetJockeyData}
-                        options={AllJockey}
-                        isClearable={false}
-                        isSearchable={true}
-                      />
-                    </span>
-                    <span>
-                      {JockeyData.weight === undefined ? (
-                        <></>
-                      ) : (
-                        <>{JockeyData.weight} KG</>
-                      )}{" "}
-                    </span>
-             </div>
-            {items.map((e, i) => {
+              <div className="myselectiondata displaynew">
+                <span>0</span>
+                <span>
+                  <Select
+                    defaultValue={InputData2}
+                    onChange={SetinputData2}
+                    options={horseoptions[0]}
+                    isClearable={false}
+                    isSearchable={true}
+                  />
+                </span>
+                <span>
+                  <Select
+                    defaultValue={InputData2}
+                    onChange={SetinputData2}
+                    options={AllJockey}
+                    isClearable={false}
+                    isSearchable={true}
+                  />
+                </span>
+                <span>
+                  {JockeyData.weight === undefined ? (
+                    <></>
+                  ) : (
+                    <>{JockeyData.weight} KG</>
+                  )}{" "}
+                </span>
+              </div>
+              {items.map((e, i) => {
                 return (
                   <div className="myselectiondata">
-                    <span>{i + 1}</span>
+                    <span >{i + 1}</span>
                     <span>
                       <Select
                         defaultValue={InputData}
@@ -190,7 +187,9 @@ const RaceForm = () => {
               </div>
               <div className="sbmtbtndiv">
                 <div className="RaceButtonDiv">
-                  <button className="updateButton" onClick={Remove}>Update</button>
+                  <button className="updateButton" onClick={Remove}>
+                    Update
+                  </button>
 
                   <button
                     className="SubmitButton"

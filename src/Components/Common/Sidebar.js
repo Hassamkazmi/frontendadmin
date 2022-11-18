@@ -23,6 +23,9 @@ const Sidebar = () => {
    <div><Link to='/racenameform' className='mylink'>Add Race Name</Link></div>
    <div><Link to='/racetype' className='mylink'>Race Type Listing</Link> </div>
    <div><Link to='/racetypeform' className='mylink'>Add Race Type</Link>  </div>
+   <div><Link to='/racekindform' className='mylink'>Add Race Kind</Link>  </div>
+   <div><Link to='/racekind' className='mylink'> Race Kind Listing</Link>  </div>
+
    <div> <Link to='/result' className='mylink'>Add Results</Link></div>
     </Accordion.Body>
   </Accordion.Item>

@@ -32,7 +32,7 @@ const Tracklengthform = () => {
         icon: "success",
         button: "OK",
       });
-      history("/genderlist");
+      history("/tracklength");
     } catch (error) {
       const err = error.message;
       swal({

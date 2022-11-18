@@ -11,6 +11,7 @@ import { fetchcolor } from "../../redux/getReducer/getColor";
 import { fetchbreeder } from "../../redux/getReducer/getBreeder";
 import { fetchnationality } from "../../redux/getReducer/getNationality";
 import { fetchgender } from "../../redux/getReducer/getGenderSlice";
+import { fetchHorseKind } from "../../redux/getReducer/getHorseKind";
 import DatePicker from "react-date-picker";
 import Moment from "react-moment";
 import swal from "sweetalert";
@@ -55,6 +56,7 @@ const HorseForm = () => {
   const {data: breeder} = useSelector((state) => state.breeder);
   const {data: nationality} = useSelector((state) => state.nationality);
   const {data: gender} = useSelector((state) => state.gender);
+  const {data: HorseKind} = useSelector((state) => state.HorseKind);
 
   useEffect(() => {
     dispatch(fetchOwner());
@@ -64,9 +66,18 @@ const HorseForm = () => {
     dispatch(fetchbreeder());
     dispatch(fetchnationality());
     dispatch(fetchgender());
+    dispatch(fetchHorseKind());
   }, [dispatch]);
 
   let horseoptions = horse === undefined ? <></> : horse.map(function (item) {
+    return {
+      id: item._id,
+      value: item.NameEn,
+      label: item.NameEn,
+    };
+  });
+
+  let horsekindoptions = HorseKind === undefined ? <></> : HorseKind.map(function (item) {
     return {
       id: item._id,
       value: item.NameEn,
@@ -449,7 +460,7 @@ const onSelectFile = e => {
                       placeholder={<div>Select Horse Kind</div>}
                       defaultValue={KindOfHorse}
                       onChange={setKindOfHorse}
-                      options={Gelted}
+                      options={horsekindoptions}
                       isClearable={true}
                       isSearchable={true}
                     /><span className="spanForm"> |</span>
@@ -461,7 +472,7 @@ const onSelectFile = e => {
                       className='selectdir'
                       defaultValue={KindOfHorse}
                       onChange={setKindOfHorse}
-                      options={Gelted}
+                      options={horsekindoptions}
                       isClearable={true}
                       isSearchable={true}
                     />

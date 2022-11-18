@@ -1,6 +1,6 @@
 
 import React, { useEffect ,Fragment } from "react";
-import { fetchTrackLength,STATUSES } from "../../redux/getReducer/getTracklength";
+import { fetchRaceKind, STATUSES } from "../../redux/getReducer/getRaceKind";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostJockey";
@@ -11,59 +11,60 @@ import ScrollContainer from "react-indiana-drag-scroll";
 
 
 
-const Tracklength = () => {
-    
+const RaceKind = () => {
+
 const dispatch =useDispatch() 
-const { data: trackLength, status } = useSelector((state) => state.trackLength);
-useEffect(() => {
-  dispatch(fetchTrackLength());
-}, [dispatch]);
-const handleRemove = (Id) => {
-  swal({
-    title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this imaginary file!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  })
-  .then((willDelete) => {
-    if (willDelete) {
-      swal("Poof! Your imaginary file has been deleted!", {
-        icon: "success",
+    const { data: raceKinds, status } = useSelector((state) => state.raceKinds);
+    useEffect(() => {
+      dispatch(fetchRaceKind());
+    }, [dispatch]);
+    const handleRemove = (Id) => {
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+          dispatch(remove(Id));
+          
+        } else {
+          swal("Your imaginary file is safe!");
+        }
       });
       dispatch(remove(Id));
-      
-    } else {
-      swal("Your imaginary file is safe!");
+     
+    };
+  
+    
+    if (status === STATUSES.LOADING) {
+      return (
+          <h2
+          className="loader"
+          >
+            <div class="inner">
+      </div>
+          </h2>
+      );
     }
-  });
-  dispatch(remove(Id));
- 
-};
+  
+    if (status === STATUSES.ERROR) {
+      return (
+        <h2
+          style={{
+            margin: "100px",
+          }}
+        >
+          Something went wrong!
+        </h2>
+      );
+    }
 
-
-if (status === STATUSES.LOADING) {
-  return (
-      <h2
-      className="loader"
-      >
-        <div class="inner">
-  </div>
-      </h2>
-  );
-}
-
-if (status === STATUSES.ERROR) {
-  return (
-    <h2
-      style={{
-        margin: "100px",
-      }}
-    >
-      Something went wrong!
-    </h2>
-  );
-}
 
 
 
@@ -78,7 +79,7 @@ if (status === STATUSES.ERROR) {
                 }}
               >
                 <div className="Header ">
-                  <h4>Race Type Listings</h4>
+                  <h4>Race Kind Listings</h4>
     
                   <div>
                     <h6
@@ -91,8 +92,8 @@ if (status === STATUSES.ERROR) {
                       Toggle to Arabic
                     </h6>
     
-                    <Link to="/tracklengthform">
-                      <button>Add Track Length</button>
+                    <Link to="/RaceKindform">
+                      <button>Add Race Type</button>
                     </Link>
                   </div>
                 </div>
@@ -102,25 +103,36 @@ if (status === STATUSES.ERROR) {
                     <table>
                       <thead>
                         <tr>
-                          <th>Track Length</th>
-                          <th>Race Course </th>
-                          <th>RaceCourse Image</th>
+                          <th>Name</th>
+                          <th>Name Arabic </th>
+                        
+                          <th>Short Code</th>
+                 
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {trackLength.map((item, index) => {
+                        {raceKinds.map((item, index) => {
                           return (
                             <>
                               <tr className="tr_table_class">
-                                <td>{item.TrackLength}</td>
+                                <td>{item.NameEn}</td>
                                 <td>{item.NameAr}</td>
-                                <td><img src={item.RaceCourseImage}/></td>
+    
+    <td>{item.shortCode} </td>
+  
+    
+    
+                          
+    
+                              
                                 <td className="table_delete_btn1">
-                                {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
+                           {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
                                   <MdDelete
+                                    
                                     onClick={() => handleRemove(item._id)}
                                   />
+                             
                                 </td>
                               </tr>
                             </>
@@ -149,4 +161,4 @@ if (status === STATUSES.ERROR) {
   )
 }
 
-export default Tracklength
+export default RaceKind
