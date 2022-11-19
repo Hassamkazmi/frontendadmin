@@ -138,7 +138,7 @@ const AdsForm = () => {
             {image &&  <img src={preview}  className="PreviewImage" alt=""/> }
         </div>
 
-                  <button type='submit' className='SubmitButton' disabled={isSubmitData}>Add Owner</button>
+                  <button type='submit' className='SubmitButton' disabled={isSubmitData}>Create Ads</button>
 
                 </div>
               </form>

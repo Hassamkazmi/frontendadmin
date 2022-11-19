@@ -76,7 +76,7 @@ const OwnerForm = () => {
         icon: "success",
         button: "OK",
       });
-      history("/owner");
+      history("/owner");t
     } catch (error) {
       console.log(error.response.data.message, "error");
       const err = error.response.data.message;

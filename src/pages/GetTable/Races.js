@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import { fetchrace, STATUSES } from "../../redux/getReducer/getRaceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { remove } from "../../redux/postReducer/postRace";
@@ -193,12 +193,12 @@ console.log(Math.max)
                                 {item.DescriptionAr}
                               </td>
                               <td>
-                                {item.TrackLengthData.TrackLength}
+                                66
                               </td>
 
                               <td>{item.WeatherDegree}</td>
                               <td>{item.WeatherType}</td>
-                              <td> <Moment parse="YYYY-MM-DD HH:mm">
+                              <td> <Moment format="hh:mm:ss" trim durationFromNow>
                               {item.DayNTime}
                              </Moment></td>
                              {/* <td>{item.HorseModel}</td> */}

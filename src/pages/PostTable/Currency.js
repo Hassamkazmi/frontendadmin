@@ -21,7 +21,7 @@ const history = useNavigate()
       formData.append("NameAr" , NameAr)
       formData.append("shortCode",shortCode);
       formData.append("Rate",Rate)
-      await axios.post(`${window.env.API_URL}/CreateCurrency`,formData);
+      await axios.post(`${window.env.API_URL}uploadCurrency`,formData);
 history('/currencylist')
       swal({
         title: "Success!",

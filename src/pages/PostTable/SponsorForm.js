@@ -141,7 +141,7 @@ const onSelectFile = e => {
             {image &&  <img src={preview} className="PreviewImage" alt="" /> }
         </div>
 
-                  <button type='submit' className='SubmitButton'>Add Owner</button>
+                  <button type='submit' className='SubmitButton'>Add Sponsor</button>
 
                 </div>
               </form>

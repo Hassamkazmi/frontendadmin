@@ -33,7 +33,7 @@ const GetMeetingType = () => {
       }
     });
     dispatch(remove(Id));
-    history("/color");
+    history("/");
   };
 
   if (status === STATUSES.LOADING) {
@@ -66,21 +66,21 @@ const GetMeetingType = () => {
             }}
           >
             <div className="Header ">
-              <h4>Color Listings</h4>
+              <h4>meeting Listings</h4>
 
               <div>
                 <h6
                   style={{
                     marginRight: "100px",
                     alignItems: "center",
-                    color: "rgba(0, 0, 0, 0.6)",
+                    meeting: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
                   Toggle to Arabic
                 </h6>
 
-                <Link to="/color">
-                  <button>Add Color</button>
+                <Link to="/meeting">
+                  <button>Add meeting</button>
                 </Link>
               </div>
             </div>

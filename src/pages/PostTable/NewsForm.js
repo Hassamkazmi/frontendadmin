@@ -171,7 +171,7 @@ const NewsForm = () => {
                   </div>
 
                   <button type="submit" className="SubmitButton">
-                    Add Owner
+                    Ad  News
                   </button>
                 </div>
               </form>

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 import swal from 'sweetalert';
 import ScrollContainer from "react-indiana-drag-scroll";
+import { alignPropType } from "react-bootstrap/esm/types";
 
 
 
@@ -115,7 +116,7 @@ if (status === STATUSES.ERROR) {
                               <tr className="tr_table_class">
                                 <td>{item.TrackLength}</td>
                                 <td>{item.NameAr}</td>
-                                <td><img src={item.RaceCourseImage}/></td>
+                                <td><img src={item.RaceCourseImage } alt=""/></td>
                                 <td className="table_delete_btn1">
                                 {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
                                   <MdDelete
