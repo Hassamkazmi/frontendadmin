@@ -38,7 +38,8 @@ import EditRacecourse from "./pages/UpdateTable/EditRacecourse";
 import EditOwner from "./pages/UpdateTable/EditOwner"
 import EditSlider from "./pages/UpdateTable/EditSlider"
 import EditSponsor from "./pages/UpdateTable/EditSponsor"
-import Result from "./pages/PostTable/Result";
+import ResultForm from "./pages/PostTable/Result/ResultForm";
+import RacesResult from "./pages/PostTable/Result/ResultRaces";
 import Color from "./pages/PostTable/Color";
 import Nationality from "./pages/PostTable/Nationality";
 import Currency from "./pages/PostTable/Currency";
@@ -122,7 +123,8 @@ function App() {
                 <Route path="/owner" element={<Owner />} />
                 <Route path="/ownerform" element={<OwnerForm />} />
                 <Route path="/sliderform" element={<SliderForm />} />
-                <Route path="/result" element={<Result/>}/>
+                <Route path="/resultform" element={<ResultForm/>}/>
+                <Route path="/resultrace" element={<RacesResult/>}/>
                 <Route path="/color" element={<Color/>}/>
                 <Route path="/Nationalitylist"element={<NationalityTable/>} />
                 <Route path="/colorlist"element={<ColorTable/>} />

@@ -416,3 +416,6 @@ border: none !important;
 .verdictname{
   max-width: 300px !important;
 }
+button.Approvedbtn.resultbtn{
+  color: #000;
+}

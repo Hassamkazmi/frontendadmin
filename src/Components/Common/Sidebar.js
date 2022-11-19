@@ -25,8 +25,7 @@ const Sidebar = () => {
    <div><Link to='/racetypeform' className='mylink'>Add Race Type</Link>  </div>
    <div><Link to='/racekindform' className='mylink'>Add Race Kind</Link>  </div>
    <div><Link to='/racekind' className='mylink'> Race Kind Listing</Link>  </div>
-
-   <div> <Link to='/result' className='mylink'>Add Results</Link></div>
+   <div> <Link to='/resultrace' className='mylink'>Add Results</Link></div>
     </Accordion.Body>
   </Accordion.Item>
   <Accordion.Item eventKey="1">
