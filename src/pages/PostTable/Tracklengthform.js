@@ -7,6 +7,8 @@ import { fetchracecourse } from "../../redux/getReducer/getRaceCourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip'
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 
 
 const Tracklengthform = () => {
@@ -85,24 +87,40 @@ const Tracklengthform = () => {
             <form onSubmit={submit}>
               <div className="row mainrow">
                 <div className="col-sm">
-                  <input
-                    type="number"
-                    placeholder="Track Length  "
-                    onChange={(e) => setTrackLength(e.target.value)}
-                    name="Track Length"
-                    value={TrackLength}
-                    required
-                  ></input>
+                  
+                       <FloatingLabel
+        controlId="floatingInput"
+        label="Track Length"
+        className="mb-3"
+        onChange={(e) => setTrackLength(e.target.value)}
+      
+        value={TrackLength}
+> 
+        <Form.Control type="text" placeholder="Track Length" />
+      </FloatingLabel>
                   <span className="spanForm"> |</span>
                 </div>
 
                 <div className="col-sm">
                   <input
-                    value={TrackLength}
+             
                     style={{ direction: "rtl" }}
                     placeholder="اسم "
                     name="Name"
                   ></input>
+                    <FloatingLabel
+        controlId="floatingInput"
+        label="طول المسار"
+        className="mb-3 floatingInputAr"
+
+                  name="Name"
+                  value={TrackLength}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="طول المسار"     />
+      </FloatingLabel>
                 </div>
               </div>
               <div className="row mainrow">

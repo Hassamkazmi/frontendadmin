@@ -19,6 +19,8 @@ import axios from "axios";
 import Rating from "react-rating";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 
 const Gender = [
   { id: "1", value: "Male", label: "Male" },
@@ -302,26 +304,40 @@ const onSelectFile = e => {
             <div className="form">
               <form onSubmit={submit}>
               
-                <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Horse Name"
-                      onChange={(e) => setNameEn(e.target.value)}
-                      name="Name"
-                      value={NameEn}
-                      required
-                    /><span className="spanForm">|</span>
-                  </div>
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم "
-                      onChange={(e) => setNameAr(e.target.value)}
-                      name="Name"
-                      value={NameAr}
-                    ></input>
-                  </div>
-                </div>
+              <div className="row mainrow">
+              <div className="col-sm">
+               
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Horse Name"
+        className="mb-3"
+onChange={(e) => setNameEn(e.target.value)}
+                  name="Name"
+                  value={NameEn}
+> 
+        <Form.Control type="text" placeholder=" Horse Name" />
+      </FloatingLabel>
+                
+                
+                <span className="spanForm"> |</span>
+              </div>
+
+              <div className="col-sm">
+              <FloatingLabel
+        controlId="floatingInput"
+        label="اسم"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setNameAr(e.target.value)}
+                  name="Name"
+                  value={NameAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="اسم"     />
+      </FloatingLabel>
+              </div>
+            </div>
                 <div className="row mainrow">
                   <div className="col-sm">
                     <DatePicker
@@ -434,22 +450,36 @@ const onSelectFile = e => {
                     ></input>
                   </div>
                 </div> */}
-                <div className="row mainrow">
+           <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Remarks"
-                      onChange={(e) => setRemarks(e.target.value)}
-                      name="Remarks"
-                      value={Remarks}
-                      required
-                    ></input><span className="spanForm"> |</span>
+                   
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="Remarks"
+        className="mb-3"
+        onChange={(e) => setRemarks(e.target.value)}
+     
+        value={Remarks}
+> 
+        <Form.Control type="text" placeholder="Details" />
+      </FloatingLabel>
+
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="طول المسار"
-                    ></input>
+                  <FloatingLabel
+        controlId="floatingInput"
+        label="ملاحظات"
+        className="mb-3 floatingInputAr"
+
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="ملاحظات"     />
+      </FloatingLabel>
                   </div>
                 </div>
 
@@ -493,23 +523,36 @@ const onSelectFile = e => {
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Purchase Price"
-                      onChange={(e) => setPurchasePrice(e.target.value)}
-                      name="Name"
-                      value={PurchasePrice}
-                      type='number'
-                      required
-                    ></input><span className="spanForm"> |</span>
+                  
+                    
+                    <FloatingLabel
+        controlId="floatingInput"
+        label="Purchase Price"
+        className="mb-3"
+        onChange={(e) => setPurchasePrice(e.target.value)}
+     
+        value={PurchasePrice}
+> 
+        <Form.Control type="text" placeholder="Purchase Price" />
+      </FloatingLabel>
+                    
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم "
-                      onChange={(e) => setPurchasePrice(e.target.value)}
-                      name="Name"
-                      value={PurchasePrice}
-                    ></input>
+                  <FloatingLabel
+        controlId="floatingInput"
+        label="سعر الشراء"
+        className="mb-3 floatingInputAr"
+        onChange={(e) => setPurchasePrice(e.target.value)}
+     
+        value={PurchasePrice}
+
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="سعر الشراء"     />
+      </FloatingLabel>
                   </div>
                 </div>
                 <div className="row mainrow">

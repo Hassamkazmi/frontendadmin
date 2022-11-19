@@ -468,7 +468,7 @@ left: 0;
 }
 
 .floatingInputAr>label{
-  right: 0;
+  right: -31px;
   left: initial;
 
 }

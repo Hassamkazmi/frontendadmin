@@ -6,7 +6,8 @@ import Select from "react-select";
 import { fetchnationality } from "../../redux/getReducer/getNationality";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 // import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-date-picker";
@@ -115,27 +116,40 @@ const TrainerForm = () => {
             <div className="Headers">Add Trainer</div>
             <div className="form">
               <form onSubmit={submit}>
-                <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder=" Name"
-                      onChange={(e) => setNameEn(e.target.value)}
-                      name="Name"
-                      value={NameEn}
-                      required
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
+              <div className="row mainrow">
+              <div className="col-sm">
+               
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Name"
+        className="mb-3"
+onChange={(e) => setNameEn(e.target.value)}
+                  name="Name"
+                  value={NameEn}
+> 
+        <Form.Control type="text" placeholder="Name" />
+      </FloatingLabel>
+                
+                
+                <span className="spanForm"> |</span>
+              </div>
 
-                  <div className="col-sm">
-                    <input
-                    onChange={e => setNameAr(e.target.value)}
-                    value={NameAr}
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم "
-                    ></input>
-                  </div>
-                </div>
+              <div className="col-sm">
+              <FloatingLabel
+        controlId="floatingInput"
+        label="اسم"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setNameAr(e.target.value)}
+                  name="Name"
+                  value={NameAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="اسم"     />
+      </FloatingLabel>
+              </div>
+            </div>
                 <div className="row mainrow">
                   <div className="col-sm">
                    <DatePicker 
@@ -150,58 +164,93 @@ const TrainerForm = () => {
                     <span className="spanForm"> |</span>
                   </div>
 
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      type="number"
-                      placeholder="اسم المسار"
-                    ></input>
+                  <div className="col-sm"     style={{direction:"rtl"}}>
+                  <DatePicker 
+                     onChange={setDOB}
+                     value={DOB}
+                     dayPlaceholder=" "
+                     monthPlaceholder="تاريخ الولادة"
+                     yearPlaceholder=""
+                     
+                   
+                   
+                   />
                   </div>
                 </div>
-                <div className="row mainrow">
+                <div className="row  mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Title"
-                      onChange={(e) => setTitleEn(e.target.value)}
-                      name="Name"
-                      value={TitleEn}
-                      required
-                      type="text"
-                    ></input>
+               
+
+
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="Title"
+        className="mb-3"
+        onChange={(e) => setTitleEn(e.target.value)}
+     
+        value={TitleEn}
+> 
+        <Form.Control type="text" placeholder="Title" />
+      </FloatingLabel>
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      type="text"
-                      onChange={e => setTitleAr(e.target.value)}
-                      value={TitleAr}
-                      placeholder="اسم المسار"
-                    ></input>
+                  
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="عنوان"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setTitleAr(e.target.value)}
+                  name="Name"
+                  value={TitleAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="عنوان"     />
+      </FloatingLabel>
+
                   </div>
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Short Name"
-                      onChange={(e) => setShortNameEn(e.target.value)}
-                      name="Name"
-                      value={ShortNameEn}
-                      required
-                      type="text"
-                    ></input>
+                 
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="Short Name"
+        className="mb-3"
+        onChange={(e) => setShortNameEn(e.target.value)}
+     
+        value={ShortNameEn}
+> 
+        <Form.Control type="text" placeholder="Short Name" />
+      </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      type="text"
-                      onChange={e => setShortNameAr(e.target.value)}
-                      value={ShortNameAr}
-                      placeholder="اسم المسار"
-                    ></input>
+                 
+
+
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="اسم قصير"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setShortNameAr(e.target.value)}
+                  name="Name"
+                  value={ShortNameAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="اسم قصير"     />
+      </FloatingLabel>
                   </div>
                 </div>
                 {/* <div className="row mainrow">
@@ -230,39 +279,68 @@ const TrainerForm = () => {
                 </div> */}
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Detail"
-                      name="Detail"
-                      onChange={(e) => setDetail(e.target.value)}
-                      value={Detail}
-                    ></input>
+                   
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="Details"
+        className="mb-3"
+        onChange={(e) => setDetail(e.target.value)}
+     
+        value={Detail}
+> 
+        <Form.Control type="text" placeholder="Details" />
+      </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      placeholder="التفاصيل"
-                      style={{ direction: "rtl" }}
-                    ></input>
+             
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="تفاصيل"
+        className="mb-3 floatingInputAr"
+
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="تفاصيل"     />
+      </FloatingLabel>
                   </div>
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Remarks"
-                      onChange={(e) => setRemarks(e.target.value)}
-                      name="Remarks"
-                      value={Remarks}
-                      required
-                    ></input>
+                   
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="Remarks"
+        className="mb-3"
+        onChange={(e) => setRemarks(e.target.value)}
+     
+        value={Remarks}
+> 
+        <Form.Control type="text" placeholder="Details" />
+      </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="طول المسار"
-                    ></input>
+                  <FloatingLabel
+        controlId="floatingInput"
+        label="ملاحظات"
+        className="mb-3 floatingInputAr"
+
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="ملاحظات"     />
+      </FloatingLabel>
                   </div>
                 </div>
                 {/* <div className="row mainrow">
@@ -336,12 +414,13 @@ const TrainerForm = () => {
                     <span className="spanForm"> |</span>
                   </div>
 
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      type="number"
-                      placeholder="اسم المسار"
-                    ></input>
+                  <div className="col-sm" style={{direction:"rtl"}}>
+                  <DatePicker
+              
+                      dayPlaceholder="  "
+                      monthPlaceholder="تاريخ الترخيص"
+                      yearPlaceholder=""
+                    />
                   </div>
                 </div>
                 <div className="ButtonSection">

@@ -2,6 +2,8 @@ import React,{useState ,useEffect} from 'react'
 import swal from 'sweetalert';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 
 const Breeder = () => {
   const [NameEn, setNameEn] = useState("");
@@ -73,65 +75,114 @@ const history = useNavigate()
         <div className="Headers">Create Breeder</div>
         <div className="form">
           <form onSubmit={submit}>
-            <div className="row mainrow">
+          <div className="row mainrow">
               <div className="col-sm">
-                <input
-                  placeholder=" Name"
-                  onChange={(e) => setNameEn(e.target.value)}
+               
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Name"
+        className="mb-3"
+onChange={(e) => setNameEn(e.target.value)}
                   name="Name"
                   value={NameEn}
-                  required
-                ></input><span className="spanForm"> |</span>
+> 
+        <Form.Control type="text" placeholder="Name" />
+      </FloatingLabel>
+                
+                
+                <span className="spanForm"> |</span>
               </div>
 
               <div className="col-sm">
-                <input
-                  style={{ direction: "rtl" }}
-                  placeholder="اسم "
-                  onChange={(e) => setNameAr(e.target.value)}
+              <FloatingLabel
+        controlId="floatingInput"
+        label="اسم"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setNameAr(e.target.value)}
                   name="Name"
                   value={NameAr}
-                ></input>
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="اسم"     />
+      </FloatingLabel>
               </div>
             </div>
 
             <div className="row mainrow">
               <div className="col-sm">
-                <input
-                  placeholder="Short Code"
-                  name="Detail"
-                  onChange={(e) => setshortCode(e.target.value)}
-                  value={shortCode}
-                ></input><span className="spanForm"> |</span>
+          
+                
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Short Code"
+        className="mb-3"
+        onChange={(e) => setshortCode(e.target.value)}
+        value={shortCode}
+                 
+               
+             
+> 
+        <Form.Control type="text" placeholder="Short Code"/>
+      </FloatingLabel>
+                
+                <span className="spanForm"> |</span>
               </div>
 
               <div className="col-sm">
-                <input
-                 placeholder="التفاصيل"  style={{ direction: "rtl" }} 
-                  name="Detail"
-         
-            
-                ></input>
+              <FloatingLabel
+        controlId="floatingInput"
+        label="اسم"
+        className="mb-3 floatingInputAr "
+        style={{ direction: "rtl" , left:'initial' , right:0  }}
+
+        
+             
+> 
+        <Form.Control type="text" placeholder="اسم"  style={{left:'%'}}   />
+      </FloatingLabel>
               </div>
             </div>
 
             <div className="row mainrow">
               <div className="col-sm">
-                <input
-                  placeholder="Description"
-                  name="DescriptionEn"
-                  onChange={(e) => setDescriptionEn(e.target.value)}
-                  value={DescriptionEn}
-                ></input><span className="spanForm"> |</span>
+                
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="Description"
+        className="mb-3"
+        onChange={(e) => setDescriptionEn(e.target.value)}
+      value={DescriptionEn}
+                 
+               
+             
+> 
+        <Form.Control type="text" placeholder="Description"/>
+      </FloatingLabel>
+      <span className="spanForm"> |</span>
+
               </div>
 
               <div className="col-sm">
-                <input
-                 placeholder="التفاصيل"  style={{ direction: "rtl" }} 
-                  name="DescriptionAr"
-                  onChange={(e) => setDescriptionAr(e.target.value)}
-                  value={DescriptionAr}
-                ></input>
+                
+
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="اسم"
+        className="mb-3 floatingInputAr"
+        onChange={(e) => setDescriptionAr(e.target.value)}
+        value={DescriptionAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="وصف"     />
+      </FloatingLabel>
+
+
               </div>
             </div>
             <div className="ButtonSection">

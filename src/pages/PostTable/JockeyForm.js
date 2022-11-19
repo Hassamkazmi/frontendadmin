@@ -12,6 +12,8 @@ import Select from "react-select";
 import Rating from "react-rating";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 
 const NewsForm = () => {
   const dispatch = useDispatch();
@@ -124,75 +126,112 @@ const NewsForm = () => {
             <div className="Headers">Add Jockey</div>
             <div className="form">
               <form onSubmit={submit}>
-                <div className="row mainrow">
+              <div className="row mainrow">
+              <div className="col-sm">
+               
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Name"
+        className="mb-3"
+onChange={(e) => setNameEn(e.target.value)}
+                  name="Name"
+                  value={NameEn}
+> 
+        <Form.Control type="text" placeholder="Name" />
+      </FloatingLabel>
+                
+                
+                <span className="spanForm"> |</span>
+              </div>
+
+              <div className="col-sm">
+              <FloatingLabel
+        controlId="floatingInput"
+        label="اسم"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setNameAr(e.target.value)}
+                  name="Name"
+                  value={NameAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="اسم"     />
+      </FloatingLabel>
+              </div>
+            </div>
+
+            <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder=" Name"
-                      onChange={(e) => setNameEn(e.target.value)}
-                      name="Name"
-                      value={NameEn}
-                      required
-                    ></input>
+                 
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="Short Name"
+        className="mb-3"
+        onChange={(e) => setShortNameEn(e.target.value)}
+     
+        value={ShortNameEn}
+> 
+        <Form.Control type="text" placeholder="Short Name" />
+      </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم "
-                      onChange={(e) => setNameAr(e.target.value)}
-                      value={NameAr}
-                    ></input>
+                 
+
+
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="اسم قصير"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setShortNameAr(e.target.value)}
+                  name="Name"
+                  value={ShortNameAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="اسم قصير"     />
+      </FloatingLabel>
                   </div>
                 </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Short Name "
-                      onChange={(e) => setShortNameEn(e.target.value)}
-                      name="Name"
-                      value={ShortNameEn}
-                      required
-                      type="text"
-                    ></input>
+                  
+<FloatingLabel
+        controlId="floatingInput"
+        label="Remarks"
+        className="mb-3"
+        onChange={(e) => setRemarksEn(e.target.value)}
+
+        value={RemarksEn}
+> 
+        <Form.Control type="text" placeholder="Remarks" />
+      </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      onChange={(e) => setShortNameAr(e.target.value)}
-                      type="text"
-                      value={ShortNameAr}
-                      placeholder="اسم قصير"
-                    ></input>
-                  </div>
-                </div>
-
-                <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Remarks "
-                      onChange={(e) => setRemarksEn(e.target.value)}
-                      name="Name"
-                      value={RemarksEn}
-                      required
-                      type="text"
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      onChange={(e) => setRemarksAr(e.target.value)}
-                      name="Name"
-                      value={RemarksAr}
-                      required
-                      type="text"
-                      placeholder="اسم قصير"
-                    ></input>
+                    
+                    <FloatingLabel
+        controlId="floatingInput"
+        label="ملاحظات"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setRemarksAr(e.target.value)}
+                  name="Name"
+                  value={RemarksAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="ملاحظات"     />
+      </FloatingLabel>
                   </div>
                 </div>
 
@@ -240,71 +279,114 @@ const NewsForm = () => {
                       style={{ direction: "rtl" }}
                       placeholder="Jockey Licence Date"
                     />
+
                   </div>
                 </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      onChange={(e) => setRating(e.target.value)}
-                      value={Rating}
-                      placeholder="Rating"
-                    />
+                
+<FloatingLabel
+        controlId="floatingInput"
+        label="Rating"
+        className="mb-3"
+        onChange={(e) => setRating(e.target.value)}
+        value={Rating}
+
+   
+> 
+        <Form.Control type="number" placeholder="Rating" />
+      </FloatingLabel>
 
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      style={{ direction: "rtl" }}
-                      placeholder="تقييم"
-                    />
+                   
+                               <FloatingLabel
+        controlId="floatingInput"
+        label="معدل"
+        className="mb-3 floatingInputAr"
+
+                  name="Name"
+ 
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="number" placeholder="معدل"     />
+      </FloatingLabel>
                   </div>
                 </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      onChange={(e) => setMiniumumJockeyWeight(e.target.value)}
-                      value={MiniumumJockeyWeight}
-                      placeholder="Jockey Minimum Weight"
-                    />
+                    
+                    <FloatingLabel
+        controlId="floatingInput"
+        label="Jockey Minimum Weight"
+        className="mb-3"
+        onChange={(e) => setMiniumumJockeyWeight(e.target.value)}
+        value={MiniumumJockeyWeight}
+
+   
+> 
+        <Form.Control type="number" placeholder="Jockey Minimum Weight" />
+      </FloatingLabel>
 
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      style={{ direction: "rtl" }}
-                      placeholder="الحد الأدنى لوزن الجوكي"
-                    />
+                 
+                                          <FloatingLabel
+        controlId="floatingInput"
+        label="الحد الأدنى لوزن الجوكي"
+        className="mb-3 floatingInputAr"
+value={MiniumumJockeyWeight}
+              
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="number" placeholder="الحد الأدنى لوزن الجوكي"     />
+      </FloatingLabel>
                   </div>
                 </div>
 
+             
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      onChange={(e) => setMaximumJockeyWeight(e.target.value)}
-                      value={MaximumJockeyWeight}
-                      placeholder="Jockey Maximum Weight"
-                    />
+                    
+                    <FloatingLabel
+        controlId="floatingInput"
+        label="Jockey Maximum Weight"
+        className="mb-3"
+        onChange={(e) => setMaximumJockeyWeight(e.target.value)}
+        value={MaximumJockeyWeight}
+
+   
+> 
+        <Form.Control type="number" placeholder="Jockey Maximum Weight" />
+      </FloatingLabel>
 
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      style={{ direction: "rtl" }}
-                      placeholder="الحد الأدنى لوزن الجوكي"
-                      onChange={(e) => setMaximumJockeyWeight(e.target.value)}
-                      value={MaximumJockeyWeight}
-                    />
+                 
+                                          <FloatingLabel
+        controlId="floatingInput"
+        label="الحد الأدنى لوزن الجوكي"
+        className="mb-3 floatingInputAr"
+value={MaximumJockeyWeight}
+              
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="number" placeholder="الحد الأدنى لوزن الجوكي"     />
+      </FloatingLabel>
                   </div>
                 </div>
                 <div className="row mainrow">
@@ -347,24 +429,39 @@ const NewsForm = () => {
                     />
                   </div>
                 </div> 
+                     
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      onChange={(e) => setJockeyAllowance(e.target.value)}
-                      value={JockeyAllowance}
-                      placeholder="Jockey Allowance"
-                    />
+                    
+                    <FloatingLabel
+        controlId="floatingInput"
+        label="Jockey Allowance"
+        className="mb-3"
+        onChange={(e) => setJockeyAllowance(e.target.value)}
+        value={JockeyAllowance}
+
+   
+> 
+        <Form.Control type="number" placeholder="Jockey Allowance" />
+      </FloatingLabel>
 
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      style={{ direction: "rtl" }}
-                      placeholder="الحد الأدنى لوزن الجوكي"
-                    />
+                 
+                                          <FloatingLabel
+        controlId="floatingInput"
+        label="الحد الأدنى لوزن الجوكي"
+        className="mb-3 floatingInputAr"
+value={JockeyAllowance}
+              
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="number" placeholder="الحد الأدنى لوزن الجوكي"     />
+      </FloatingLabel>
                   </div>
                 </div>
 

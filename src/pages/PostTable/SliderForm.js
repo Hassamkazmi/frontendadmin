@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 
 const SliderForm = () => {
   const dispatch = useDispatch();
@@ -67,28 +69,40 @@ const onSelectFile = e => {
             <div className="Headers">Add Slider</div>
             <div className="form">
               <form onSubmit={submit}>
-                <div className="row  mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder=" Name"
-                      onChange={(e) => setTitleEn(e.target.value)}
-                      name="Name"
-                      value={TitleEn}
-                      
-                      required
-                    ></input><span className="spanForm"> |</span>
-                  </div>
+              <div className="row mainrow">
+              <div className="col-sm">
+               
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Title"
+        className="mb-3"
+onChange={(e) => setTitleEn(e.target.value)}
+                  name="Name"
+                  value={TitleEn}
+> 
+        <Form.Control type="text" placeholder="Title" />
+      </FloatingLabel>
+                
+                
+                <span className="spanForm"> |</span>
+              </div>
 
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      onChange={(e) => setTitleAr(e.target.value)}
-                      name="Name"
-                      value={TitleAr}
-                      placeholder="اسم "
-                    ></input>
-                  </div>
-                </div>
+              <div className="col-sm">
+              <FloatingLabel
+        controlId="floatingInput"
+        label="عنوان"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setTitleAr(e.target.value)}
+                  name="Name"
+                  value={TitleAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="عنوان"     />
+      </FloatingLabel>
+              </div>
+            </div>
 
        
         

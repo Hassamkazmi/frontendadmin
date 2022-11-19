@@ -9,8 +9,10 @@ import { BiEdit } from 'react-icons/bi'
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import AdsPopup from "../../Components/Popup/AdsPopup";
-import {BsFillEyeFill} from 'react-icons/bs'
-import ScrollContainer from 'react-indiana-drag-scroll'
+import {BsFillEyeFill} from 'react-icons/bs';
+import ScrollContainer from 'react-indiana-drag-scroll';
+
+
 
 const Ads = () => {
 

@@ -2,6 +2,8 @@ import React, { useState ,useEffect} from 'react'
 import swal from 'sweetalert';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 
 const Nationality = () => {
   const [NameEn, setNameEn] = useState("");
@@ -82,89 +84,144 @@ const onSelectFile = e => {
           <div className="Headers">Add Nationality</div>
           <div className="form">
             <form onSubmit={submit}>
+            <div className="row mainrow">
+              <div className="col-sm">
+               
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Name"
+        className="mb-3"
+onChange={(e) => setNameEn(e.target.value)}
+                  name="Name"
+                  value={NameEn}
+> 
+        <Form.Control type="text" placeholder="Name" />
+      </FloatingLabel>
+                
+                
+                <span className="spanForm"> |</span>
+              </div>
+
+              <div className="col-sm">
+              <FloatingLabel
+        controlId="floatingInput"
+        label="اسم"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setNameAr(e.target.value)}
+                  name="Name"
+                  value={NameAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="اسم"     />
+      </FloatingLabel>
+              </div>
+            </div>
+
+
+            <div className="row mainrow">
+              <div className="col-sm">
+          
+                
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Short Code"
+        className="mb-3"
+        onChange={(e) => setshortCode(e.target.value)}
+        value={shortCode}
+                 
+               
+             
+> 
+        <Form.Control type="text" placeholder="Short Code"/>
+      </FloatingLabel>
+                
+                <span className="spanForm"> |</span>
+              </div>
+
+              <div className="col-sm">
+              <FloatingLabel
+        controlId="floatingInput"
+        label="رمز قصير"
+        className="mb-3 floatingInputAr "
+        style={{ direction: "rtl" , left:'initial' , right:0  }}
+
+        
+             
+> 
+        <Form.Control type="text" placeholder="رمز قصير"  style={{left:'%'}}   />
+      </FloatingLabel>
+              </div>
+            </div>
+
               <div className="row mainrow">
                 <div className="col-sm">
-                  <input
-                    placeholder=" Name"
-                    onChange={(e) => setNameEn(e.target.value)}
-                    name="Name"
-                    value={NameEn}
-                    required
-                  ></input><span className="spanForm"> |</span>
+                
+                         <FloatingLabel
+        controlId="floatingInput"
+        label="Write Abbreviation"
+        className="mb-3"
+        onChange={(e) => setAbbrev(e.target.value)}
+        value={Abbrev}
+                 
+               
+             
+> 
+        <Form.Control type="text" placeholder="Write Abbreviation"/>
+      </FloatingLabel>
+                  
+                  <span className="spanForm"> |</span>
                 </div>
 
                 <div className="col-sm">
-                  <input
-                    style={{ direction: "rtl" }}
-                    placeholder="اسم "
-                    onChange={(e) => setNameAr(e.target.value)}
-                    name="Name"
-                    value={NameAr}
-                  ></input>
+                <FloatingLabel
+        controlId="floatingInput"
+        label="اكتب الاختصار"
+        className="mb-3 floatingInputAr "
+        style={{ direction: "rtl" , left:'initial' , right:0  }}
+
+        
+             
+> 
+        <Form.Control type="text" placeholder="اكتب الاختصار"  style={{left:'%'}}   />
+      </FloatingLabel>
                 </div>
               </div>
 
               <div className="row mainrow">
                 <div className="col-sm">
-                  <input
-                    placeholder="Short Code"
-                    name="Detail"
-                    onChange={(e) => setshortCode(e.target.value)}
-                    value={shortCode}
-                  ></input><span className="spanForm"> |</span>
+                
+                  
+                  <FloatingLabel
+        controlId="floatingInput"
+        label="Write Alternative Name"
+        className="mb-3"
+        onChange={(e) => setAltName(e.target.value)}
+        value={AltName}
+                 
+               
+             
+> 
+        <Form.Control type="text" placeholder="Write Alternative Name"/>
+      </FloatingLabel>
+                  
+                  <span className="spanForm"> |</span>
                 </div>
 
                 <div className="col-sm">
-                  <input
-                    placeholder="رمز قصير" style={{ direction: "rtl" }}
-                    name="Detail"
+               
+                    <FloatingLabel
+        controlId="floatingInput"
+        label="اكتب الاسم البديل"
+        className="mb-3 floatingInputAr "
+        style={{ direction: "rtl" , left:'initial' , right:0  }}
 
-
-                  ></input>
-                </div>
-              </div>
-
-              <div className="row mainrow">
-                <div className="col-sm">
-                  <input
-                    placeholder="Write Abbreviation"
-
-                    onChange={(e) => setAbbrev(e.target.value)}
-                    value={Abbrev}
-                    type="text"
-                  ></input><span className="spanForm"> |</span>
-                </div>
-
-                <div className="col-sm">
-                  <input
-                    type="text"
-                    placeholder="معدل" style={{ direction: "rtl" }}
-                    name="Detail"
-
-
-                  ></input>
-                </div>
-              </div>
-
-              <div className="row mainrow">
-                <div className="col-sm">
-                  <input
-                    placeholder="Write Alternative Name"
-
-                    onChange={(e) => setAltName(e.target.value)}
-                    value={AltName}
-                    type="text"
-                  ></input><span className="spanForm"> |</span>
-                </div>
-
-                <div className="col-sm">
-                  <input
-                    type="text"
-                    placeholder="معدل" style={{ direction: "rtl" }}
-                    name="Detail"
-
-
-                  ></input>
+        
+             
+> 
+        <Form.Control type="text" placeholder="اكتب الاسم البديل"  style={{left:'%'}}   />
+      </FloatingLabel>
                 </div>
               </div>
 
@@ -172,69 +229,113 @@ const onSelectFile = e => {
 
               <div className="row mainrow">
                 <div className="col-sm">
-                  <input
-                    placeholder="Label"
-
-                    onChange={(e) => setLabel(e.target.value)}
-                    value={Label}
-                    type="text"
-                  ></input><span className="spanForm"> |</span>
+           
+               
+                         
+                         <FloatingLabel
+        controlId="floatingInput"
+        label="Label"
+        className="mb-3"
+        onChange={(e) => setLabel(e.target.value)}
+        value={Label}
+                 
+               
+             
+> 
+        <Form.Control type="text" placeholder="Label"/>
+      </FloatingLabel>   <span className="spanForm"> |</span>
                 </div>
 
                 <div className="col-sm">
-                  <input
-                    type="text"
-                    placeholder="معدل" style={{ direction: "rtl" }}
-                    name="Detail"
+                  <FloatingLabel
+        controlId="floatingInput"
+        label="مُلصَق"
+        className="mb-3 floatingInputAr "
+        style={{ direction: "rtl" , left:'initial' , right:0  }}
 
-
-                  ></input>
-                </div>
-              </div>
-
-
-              <div className="row mainrow">
-                <div className="col-sm">
-                  <input
-                    placeholder="OffSet  "
-
-                    onChange={(e) => setOffset(e.target.value)}
-                    value={Offset}
-                    type="number"
-                  ></input><span className="spanForm"> |</span>
-                </div>
-
-                <div className="col-sm">
-                  <input
-                    type="number"
-                    placeholder="معدل" style={{ direction: "rtl" }}
-                    name="Detail"
-
-
-                  ></input>
+        
+             
+> 
+        <Form.Control type="text" placeholder="مُلصَق"  style={{left:'%'}}   />
+      </FloatingLabel>
                 </div>
               </div>
 
 
               <div className="row mainrow">
                 <div className="col-sm">
-                  <input
-                    placeholder="Value"
-
-                    onChange={(e) => setValue(e.target.value)}
-                    value={Value}
-                    type="text"
-                  ></input><span className="spanForm"> |</span>
+                
+                  
+                  
+                       
+                  <FloatingLabel
+        controlId="floatingInput"
+        label="Off Set"
+        className="mb-3"
+        onChange={(e) => setOffset(e.target.value)}
+        value={Offset}
+        type="number"
+               
+             
+> 
+        <Form.Control type="number" placeholder="Off Set"/>
+      </FloatingLabel> 
+                  <span className="spanForm"> |</span>
                 </div>
 
                 <div className="col-sm">
-                  <input
-                    type="text"
-                    placeholder="معدل" style={{ direction: "rtl" }}
-                    name="Detail"
+                
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="معدل"
+        className="mb-3 floatingInputAr "
+        style={{ direction: "rtl" , left:'initial' , right:0  }}
+
+        
+             
+> 
+        <Form.Control type="number" placeholder="معدل"  style={{left:'%'}}   />
+      </FloatingLabel>
+
+                </div>
+              </div>
 
 
-                  ></input>
+              <div className="row mainrow">
+                <div className="col-sm">
+        
+                  
+                  
+                     
+                  <FloatingLabel
+        controlId="floatingInput"
+        label="Value"
+        className="mb-3"
+        onChange={(e) => setValue(e.target.value)}
+        value={Value}
+     
+               
+             
+> 
+        <Form.Control type="text" placeholder="Value"/>
+      </FloatingLabel> 
+                  <span className="spanForm"> |</span>
+                </div>
+
+                <div className="col-sm">
+                 
+<FloatingLabel
+        controlId="floatingInput"
+        label="معدل"
+        className="mb-3 floatingInputAr "
+        style={{ direction: "rtl" , left:'initial' , right:0  }}
+
+        
+             
+> 
+        <Form.Control type="text" placeholder="معدل"  style={{left:'%'}}   />
+      </FloatingLabel>
                 </div>
               </div>
 
