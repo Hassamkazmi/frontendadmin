@@ -61,7 +61,7 @@ const Owner = () => {
   }
 
 
-
+console.log(owner)
 
   return (
     <>
@@ -128,7 +128,7 @@ const Owner = () => {
                              </Moment></td>
                     
                       <td>{item.OwnerDataNationalityData.NameEn}</td> 
-                         <td>{item.SilkColorData.NameEn === null ? <>NoData</> :<>{item.SilkColorData.NameEn}</> }</td>
+                         <td>{item.SilkColorData === null ? <>N/A</> :<>{item.SilkColorData.NameEn}</> }</td>
                          <td>
                            <img src={item.image} alt="" />
                          </td>

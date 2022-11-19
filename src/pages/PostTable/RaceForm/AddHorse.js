@@ -74,13 +74,13 @@ const RaceForm = () => {
     try {
       console.log(items, "HorseEntry");
       const response = await axios.post(`${window.env.API_URL}addracehorses/${RaceId}`, {HorseEntry:items});
-      const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
-      history("/publishrace", {
+      // const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
+      history("/fullpublishrace", {
         state: {
           RaceId: RaceId
         },
       });
-      history("/races");
+      // history("/races");
       swal({
         title: "Success",
         text: "Data has been added successfully ",

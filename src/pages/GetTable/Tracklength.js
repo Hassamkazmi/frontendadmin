@@ -115,8 +115,13 @@ if (status === STATUSES.ERROR) {
                             <>
                               <tr className="tr_table_class">
                                 <td>{item.TrackLength}</td>
+<<<<<<< HEAD
                                 <td>{item.NameAr}</td>
                                 <td><img src={item.RaceCourseImage } alt=""/></td>
+=======
+                                <td>{item.RaceCourseData.TrackNameEn}</td>
+                                <td><img src={item.RaceCourseImage}/></td>
+>>>>>>> dd0e4a402a1ae51b1381a80d990615d7f9f0d328
                                 <td className="table_delete_btn1">
                                 {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
                                   <MdDelete

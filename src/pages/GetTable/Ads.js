@@ -5,11 +5,11 @@ import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostAds";
 import { Link } from 'react-router-dom'
 import { edit } from "../../redux/postReducer/PostAds";
-import { BiEdit } from 'react-icons/bi'
+
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import AdsPopup from "../../Components/Popup/AdsPopup";
-import {BsFillEyeFill} from 'react-icons/bs';
+
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 
@@ -19,10 +19,7 @@ const Ads = () => {
   const [show, setShow] = useState(false);
   const [modaldata, setmodaldata] = useState()
   const handleClose = () => setShow(false);
-  const handleShow = async (data) => {
-      setmodaldata(data)
-      await setShow(true)
-  };
+
   const history = useNavigate()
   const dispatch = useDispatch();
   const { data: allads, status } = useSelector((state) => state.ads);

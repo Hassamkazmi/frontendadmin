@@ -149,6 +149,13 @@ console.log(raceKinds)
   const [preview, setPreview] = useState();
   const [RaceTyp, setRaceType] = useState("");
 
+  const [FirstPrice, setFirstPrice] = useState("");
+  const [SecondPrice, setSecondPrice] = useState("");
+  const [ThirdPrice, setThirdPrice] = useState("");
+  const [FourthPrice, setFourthPrice] = useState("");
+  const [FifthPrice, setFifthPrice] = useState("");
+  const [SixthPrice, setSixthPrice] = useState("");
+
 
   useEffect(() => {
     dispatch(fetchracecourse());
@@ -186,6 +193,12 @@ console.log(raceKinds)
       formData.append("RaceStatus", RaceStatus.value);
       formData.append("RaceCourse", RaceCourse.id);
       formData.append("WeatherIcon", WeatherIcon);
+      formData.append("FirstPrice", FirstPrice);
+      formData.append("SecondPrice", SecondPrice);
+      formData.append("ThirdPrice", ThirdPrice);
+      formData.append("FourthPrice", FourthPrice);
+      formData.append("FifthPrice", FifthPrice);
+      formData.append("SixthPrice", SixthPrice);
       formData.append("Sponsor", Sponsor.id);
       formData.append("WeatherDegree", WeatherDegree);
       formData.append("TrackLength", TrackLength.id);
@@ -774,29 +787,29 @@ console.log(raceKinds)
                   <div className="col-sm">
                     <input
                       placeholder="Enter 1st Prize"
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setFirstPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={FirstPrice}
                      
                     ></input><span className="spanForm"> |</span>
                   </div>
-                  <div className="col-sm">
+                  {/* <div className="col-sm">
                     <input
                       style={{ direction: "rtl" }}
                       placeholder="اسم "
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setFirstPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={FirstPrice}
                     ></input>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
                     <input
                       placeholder="Enter 2nd Prize"
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setSecondPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={SecondPrice}
                      
                     ></input><span className="spanForm"> |</span>
                   </div>
@@ -804,9 +817,9 @@ console.log(raceKinds)
                     <input
                       style={{ direction: "rtl" }}
                       placeholder="اسم "
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setSecondPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={SecondPrice}
                     ></input>
                   </div>
                 </div>
@@ -814,9 +827,9 @@ console.log(raceKinds)
                   <div className="col-sm">
                     <input
                       placeholder="Enter 3rd Prize"
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setThirdPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={ThirdPrice}
                      
                     ></input><span className="spanForm"> |</span>
                   </div>
@@ -824,9 +837,9 @@ console.log(raceKinds)
                     <input
                       style={{ direction: "rtl" }}
                       placeholder="اسم "
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setThirdPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={ThirdPrice}
                     ></input>
                   </div>
                 </div>
@@ -834,9 +847,9 @@ console.log(raceKinds)
                   <div className="col-sm">
                     <input
                       placeholder="Enter 4th Prize"
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setFourthPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={FourthPrice}
                      
                     ></input><span className="spanForm"> |</span>
                   </div>
@@ -844,9 +857,9 @@ console.log(raceKinds)
                     <input
                       style={{ direction: "rtl" }}
                       placeholder="اسم "
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setFourthPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={FourthPrice}
                     ></input>
                   </div>
                 </div>
@@ -854,9 +867,9 @@ console.log(raceKinds)
                   <div className="col-sm">
                     <input
                       placeholder="Enter 5th Prize"
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setFifthPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={FifthPrice}
                      
                     ></input><span className="spanForm"> |</span>
                   </div>
@@ -864,9 +877,9 @@ console.log(raceKinds)
                     <input
                       style={{ direction: "rtl" }}
                       placeholder="اسم "
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setFifthPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={FifthPrice}
                     ></input>
                   </div>
                 </div>
@@ -874,9 +887,9 @@ console.log(raceKinds)
                   <div className="col-sm">
                     <input
                       placeholder="Enter 6th Prize"
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setSixthPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={SixthPrice}
                      
                     ></input><span className="spanForm"> |</span>
                   </div>
@@ -884,9 +897,9 @@ console.log(raceKinds)
                     <input
                       style={{ direction: "rtl" }}
                       placeholder="اسم "
-                      // onChange={(e) => setCap(e.target.value)}
+                      onChange={(e) => setSixthPrice(e.target.value)}
                       name="Name"
-                      // value={Cap}
+                      value={SixthPrice}
                     ></input>
                   </div>
                 </div>

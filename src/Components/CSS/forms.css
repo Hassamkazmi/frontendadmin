@@ -409,12 +409,13 @@ border: none !important;
 .textverdict{
   border: none;
 }
-
-
-span.myverdictdata{
-  max-width: 300px !important;
+.textverdict:focus-visible{
+  border: none !important;
 }
 
+.verdictname{
+  max-width: 300px !important;
+}
 
 .mb-3.form-floating {
   margin-top: -2px;
@@ -470,5 +471,9 @@ left: 0;
 .floatingInputAr>label{
   right: -31px;
   left: initial;
+
+}
+button.Approvedbtn.resultbtn{
+  color: #000;
 
 }

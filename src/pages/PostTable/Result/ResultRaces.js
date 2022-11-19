@@ -1,20 +1,20 @@
- import React, { useEffect, useState } from "react";
-import { fetchrace, STATUSES } from "../../redux/getReducer/getRaceSlice";
+import React, { useEffect, useState } from "react";
+import { fetchrace, STATUSES } from "../../../redux/getReducer/getRaceSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { remove } from "../../redux/postReducer/postRace";
-import { Link } from "react-router-dom";
-import "../../Components/CSS/Table.css";
+import { remove } from "../../../redux/postReducer/postRace";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import "../../../Components/CSS/Table.css";
 import ScrollContainer from "react-indiana-drag-scroll";
-import "../../Components/CSS/race.css";
+import "../../../Components/CSS/race.css";
 import { Modal } from "react-bootstrap";
-import RacePopup from "../../Components/Popup/RacePopup";
+import RacePopup from "../../../Components/Popup/RacePopup";
 import { MdDelete } from "react-icons/md";
 import swal from "sweetalert";
 import Moment from "react-moment";
 
 
-
 const Races = () => {
+console.log(Math.max)
   const [show, setShow] = useState(false);
   const [modaldata, setmodaldata] = useState();
   const handleClose = () => setShow(false);
@@ -23,7 +23,7 @@ const Races = () => {
     await setShow(true);
   };
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const { data: race, status } = useSelector((state) => state.race);
   const handleRemove = async (Id) => {
     swal({
@@ -73,8 +73,7 @@ const Races = () => {
             }}
           >
             <div className="Header ">
-              <h4>Race Listings</h4>
-
+              <h4>Result Awaited</h4>
               <div>
                 <h6
                   style={{
@@ -86,9 +85,7 @@ const Races = () => {
                   Toggle to Arabic
                 </h6>
 
-                <Link to="/raceform">
-                  <button>Add Race</button>
-                </Link>
+               
               </div>
             </div>
 
@@ -192,12 +189,12 @@ const Races = () => {
                                 {item.DescriptionAr}
                               </td>
                               <td>
-                                66
+                                {item.TrackLengthData.TrackLength}
                               </td>
 
                               <td>{item.WeatherDegree}</td>
                               <td>{item.WeatherType}</td>
-                              <td> <Moment format="hh:mm:ss" trim durationFromNow>
+                              <td> <Moment parse="YYYY-MM-DD HH:mm">
                               {item.DayNTime}
                              </Moment></td>
                              {/* <td>{item.HorseModel}</td> */}
@@ -210,9 +207,10 @@ const Races = () => {
                                 }}/>{" "}
                               </td>
                               <td>
-                                <MdDelete
+                               <button className="Approvedbtn resultbtn"  onClick={() => navigate('/resultform')}> Add Result</button>
+                                {/* <MdDelete
                                   onClick={() => handleRemove(item._id)}
-                                />
+                                /> */}
                               </td>
                             </tr>
                           </tbody>

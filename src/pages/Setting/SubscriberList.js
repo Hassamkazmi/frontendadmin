@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { fetchsubscriber ,STATUSES} from "../../redux/getReducer/getSubscriber";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,6 @@ const SubscriberList = () => {
     );
   }
   const handleRole = async (Id) => {
-    console.log(Id)
     swal({
       title: "Are you sure?",
       text: "You want to Approve User!",
@@ -61,7 +60,6 @@ const SubscriberList = () => {
           >
             <div className="Header ">
               <h4>Subscriber List</h4>
-
               <div>
                 <h6
                   style={{

@@ -1,12 +1,12 @@
 import React, { useEffect,Fragment } from "react";
 import Moment from "moment";
 import "react-toastify/dist/ReactToastify.css";
-import { fetchjockey } from "../../redux/getReducer/getJockeySlice";
+import { fetchjockey } from "../../../redux/getReducer/getJockeySlice";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { fetchHorse ,STATUSES } from "../../redux/getReducer/getHorseSlice";
+import { fetchHorse ,STATUSES } from "../../../redux/getReducer/getHorseSlice";
 import Select from "react-select";
 import swal from "sweetalert";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -16,15 +16,15 @@ import Tabs from "react-bootstrap/Tabs";
 
 const LocalItem = () => {
 
-  const list = localStorage.getItem("lists");
+  const list = localStorage.getItem("verdict");
   if (list) {
-    return JSON.parse(localStorage.getItem("lists"));
+    return JSON.parse(localStorage.getItem("verdict"));
   } else {
     return [];
   }
 };
 
-const Verdict = () => {
+const PublishRace = () => {
   const [InputData, SetinputData] = useState("");
   const [InputData2, SetinputData2] = useState("");
   const [VerdictName, SetVerdictName] = useState();
@@ -36,9 +36,9 @@ const Verdict = () => {
 
   const history = useNavigate();
   const { state } = useLocation();
-  // const { RaceId } = state;
-  const RaceId='dsada'
-
+  const { RaceId } = state;
+  // const RaceId='dsada'
+  console.log(RaceId ,'RaceId')
   let horseoptions = horse.map(function (item) {
     return {
       id: item._id,
@@ -55,16 +55,14 @@ const Verdict = () => {
   });
 
   const dispatch = useDispatch();
-  const VerdictEntry = [
-    `1,${VerdictName},${InputData.id},${JockeyData.id}`,
-  ];
+  const VerdictEntry = [`1,${VerdictName},${InputData.id},${JockeyData.id}`,];
 console.log(VerdictName,'VerdictName')
   useEffect(() => {
     dispatch(fetchHorse());
     dispatch(fetchjockey());
   }, [dispatch]);
   useEffect(() => {
-    localStorage.setItem("lists", JSON.stringify(items));
+    localStorage.setItem("verdict", JSON.stringify(items));
   }, [items]);
   const addItem = () => {
     setitems([...items, VerdictEntry]);
@@ -77,13 +75,8 @@ console.log(VerdictName,'VerdictName')
     event.preventDefault();
     try {
       console.log(items, "VerdictEntry");
-      const response = await axios.post(`${window.env.API_URL}addverdicts/${RaceId}`, {VerdictEntry:items});
+      // const response = await axios.post(`${window.env.API_URL}addverdicts/${RaceId}`, {VerdictEntry:items});
       const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
-      history("/publishrace", {
-        state: {
-          RaceId: RaceId
-        },
-      });
       history("/races");
       swal({
         title: "Success",
@@ -179,4 +172,4 @@ console.log(VerdictName,'VerdictName')
   );
 };
 
-export default Verdict;
+export default PublishRace;

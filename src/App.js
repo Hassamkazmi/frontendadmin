@@ -38,12 +38,13 @@ import EditRacecourse from "./pages/UpdateTable/EditRacecourse";
 import EditOwner from "./pages/UpdateTable/EditOwner"
 import EditSlider from "./pages/UpdateTable/EditSlider"
 import EditSponsor from "./pages/UpdateTable/EditSponsor"
-import Result from "./pages/PostTable/Result";
+import ResultForm from "./pages/PostTable/Result/ResultForm";
+import RacesResult from "./pages/PostTable/Result/ResultRaces";
 import Color from "./pages/PostTable/Color";
 import Nationality from "./pages/PostTable/Nationality";
 import Currency from "./pages/PostTable/Currency";
 import Breeder from "./pages/PostTable/Breeder";
-import HorseData from './pages/PostTable/RaceForm/RaceOne'
+import HorseData from './pages/PostTable/RaceForm/AddHorse'
 import NationalityTable from "./pages/GetTable/NationalityTable";
 import ColorTable from "./pages/GetTable/ColorTable";
 import BreederTable from "./pages/GetTable/BreederTable";
@@ -68,6 +69,7 @@ import SubscriberList from "./pages/Setting/SubscriberList";
 import AdminRole from "./pages/Setting/AdminRole";
 import RaceKind from "./pages/GetTable/RaceKind";
 import RaceKindForm from "./pages/PostTable/RaceKind";
+import PublishRace from "./pages/PostTable/RaceForm/AddVerdict";
 
 function App() {
   useEffect(() => {
@@ -121,7 +123,8 @@ function App() {
                 <Route path="/owner" element={<Owner />} />
                 <Route path="/ownerform" element={<OwnerForm />} />
                 <Route path="/sliderform" element={<SliderForm />} />
-                <Route path="/result" element={<Result/>}/>
+                <Route path="/resultform" element={<ResultForm/>}/>
+                <Route path="/resultrace" element={<RacesResult/>}/>
                 <Route path="/color" element={<Color/>}/>
                 <Route path="/Nationalitylist"element={<NationalityTable/>} />
                 <Route path="/colorlist"element={<ColorTable/>} />
@@ -147,6 +150,8 @@ function App() {
                 <Route path="/addverdict" element={<Verdict />} />
                 <Route path="/racekindform" element={<RaceKindForm />} />
                 <Route path="/racekind" element={<RaceKind />} />
+                <Route path="/fullpublishrace" element={<PublishRace />} />
+
                 {/* Edit Pages */}
                 <Route path="/editjockey" element={<EditJockey />} />
                 <Route path="/editracecourse" element={<EditRacecourse/>}/>
