@@ -12,6 +12,19 @@ import { MdDelete } from "react-icons/md";
 import swal from "sweetalert";
 import Moment from "react-moment";
 
+const Prize = (data) => {
+  console.log(data,'FifthPrice')
+  return(
+    <>
+      <p>First Price : {data.data.FirstPrice}</p>
+      <p> Second Price{data.data.SecondPrice}</p>
+      <p> Third Price : {data.data.ThirdPrice}</p>
+      <p>Fourth Price : {data.data.FourthPrice}</p>
+      <p> Fifth Price : {data.data.FifthPrice}</p>
+      <p>Sixth Price : {data.data.SixthPrice}</p>
+    </>
+  )
+}
 
 
 const Races = () => {
@@ -20,6 +33,7 @@ const Races = () => {
   const handleClose = () => setShow(false);
   const handleShow = async (data) => {
     setmodaldata(data);
+    console.log(data,'asadasdasdsa')
     await setShow(true);
   };
   const dispatch = useDispatch();
@@ -46,7 +60,6 @@ const Races = () => {
   useEffect(() => {
     dispatch(fetchrace());
   }, []);
-  console.log(race, "race");
   if (status === STATUSES.LOADING) {
     return <h2 className="loader"></h2>;
   }
@@ -113,6 +126,7 @@ const Races = () => {
                       <th>Day and Time</th>
                       {/* <th>Total Horses</th> */}
                       <th>Race Status</th>
+                      <th>Prize Money</th>
                       <th>image</th>
                       <th>Action</th>
                     </tr>
@@ -204,11 +218,15 @@ const Races = () => {
                               {/* <td>{item.Horses.length}</td> */}
                               <td>{item.RaceStatus}</td>
                               <td>
+                                <button className="Approvedbtn resultbtn"   onClick={() => handleShow(item)}>Click</button>
+                              </td>
+                              <td>
                                 {" "}
                                 <img src={item.image} alt=""  style={{
                                   width:"50px"
                                 }}/>{" "}
                               </td>
+                             
                               <td>
                                 <MdDelete
                                   onClick={() => handleRemove(item._id)}
@@ -234,10 +252,10 @@ const Races = () => {
         centered
       >
         <Modal.Header closeButton>
-          <h2>Race Course </h2>
+          <h2>Race Prize </h2>
         </Modal.Header>
         <Modal.Body>
-          <RacePopup data={modaldata} />
+          <Prize data={modaldata} />
         </Modal.Body>
         <Modal.Footer>
           <button onClick={handleClose} className="modalClosebtn">
