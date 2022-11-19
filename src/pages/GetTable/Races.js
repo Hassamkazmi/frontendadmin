@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchrace, STATUSES } from "../../redux/getReducer/getRaceSlice";
+import { fetchtobePublishRace } from "../../redux/getReducer/getToBePublishRace";
 import { useDispatch, useSelector } from "react-redux";
 import { remove } from "../../redux/postReducer/postRace";
 import { Link } from "react-router-dom";
@@ -7,25 +8,41 @@ import "../../Components/CSS/Table.css";
 import ScrollContainer from "react-indiana-drag-scroll";
 import "../../Components/CSS/race.css";
 import { Modal } from "react-bootstrap";
-import RacePopup from "../../Components/Popup/RacePopup";
 import { MdDelete } from "react-icons/md";
 import swal from "sweetalert";
 import Moment from "react-moment";
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const Prize = (data) => {
-  console.log(data,'FifthPrice')
-  return(
+  console.log(data, "FifthPrice");
+  return (
     <>
-      <p>First Price : {data.data.FirstPrice}</p>
-      <p> Second Price{data.data.SecondPrice}</p>
-      <p> Third Price : {data.data.ThirdPrice}</p>
-      <p>Fourth Price : {data.data.FourthPrice}</p>
-      <p> Fifth Price : {data.data.FifthPrice}</p>
-      <p>Sixth Price : {data.data.SixthPrice}</p>
+      <table className="Prizeclass">
+        <thead>
+          <tr>
+            <th>1st</th>
+            <th>2nd </th>
+            <th>3rd </th>
+            <th>4th </th>
+            <th>5th </th>
+            <th>6th </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{data.data.FirstPrice}</td>
+            <td>{data.data.SecondPrice}</td>
+            <td>{data.data.ThirdPrice}</td>
+            <td>{data.data.FourthPrice}</td>
+            <td>{data.data.FifthPrice}</td>
+            <td>{data.data.SixthPrice}</td>
+          </tr>
+        </tbody>
+      </table>
     </>
-  )
-}
-
+  );
+};
 
 const Races = () => {
   const [show, setShow] = useState(false);
@@ -33,12 +50,12 @@ const Races = () => {
   const handleClose = () => setShow(false);
   const handleShow = async (data) => {
     setmodaldata(data);
-    console.log(data,'asadasdasdsa')
     await setShow(true);
   };
   const dispatch = useDispatch();
-
   const { data: race, status } = useSelector((state) => state.race);
+  const { data: tobePublishRace } = useSelector((state) => state.tobePublishRace);
+
   const handleRemove = async (Id) => {
     swal({
       title: "Are you sure?",
@@ -59,11 +76,15 @@ const Races = () => {
   };
   useEffect(() => {
     dispatch(fetchrace());
-  }, []);
+  }, [dispatch]);
+
+  const handleAwaited = () => {
+
+  }
+
   if (status === STATUSES.LOADING) {
     return <h2 className="loader"></h2>;
   }
-
   if (status === STATUSES.ERROR) {
     return (
       <h2
@@ -87,7 +108,6 @@ const Races = () => {
           >
             <div className="Header ">
               <h4>Race Listings</h4>
-
               <div>
                 <h6
                   style={{
@@ -96,7 +116,10 @@ const Races = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  <DropdownButton id="dropdown-basic-button" title="Filter">
+                  <Dropdown.Item >All</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleAwaited()}>Publish Awaited</Dropdown.Item>
+                </DropdownButton>
                 </h6>
 
                 <Link to="/raceform">
@@ -182,7 +205,6 @@ const Races = () => {
                                   <>N/A</>
                                 ) : (
                                   item.RaceCourseData.TrackNameEn
-
                                 )}
                               </td>
                               <td
@@ -205,28 +227,38 @@ const Races = () => {
                               >
                                 {item.DescriptionAr}
                               </td>
-                              <td>
-                                {item.TrackLengthData.TrackLength}
-                              </td>
+                              <td>{item.TrackLengthData.TrackLength}</td>
 
                               <td>{item.WeatherDegree}</td>
                               <td>{item.WeatherType}</td>
-                              <td> <Moment parse="YYYY-MM-DD HH:mm">
-                              {item.DayNTime}
-                             </Moment></td>
-                             {/* <td>{item.HorseModel}</td> */}
+                              <td>
+                                {" "}
+                                <Moment parse="YYYY-MM-DD HH:mm">
+                                  {item.DayNTime}
+                                </Moment>
+                              </td>
+                              {/* <td>{item.HorseModel}</td> */}
                               {/* <td>{item.Horses.length}</td> */}
                               <td>{item.RaceStatus}</td>
                               <td>
-                                <button className="Approvedbtn resultbtn"   onClick={() => handleShow(item)}>Click</button>
+                                <button
+                                  className="Approvedbtn resultbtn"
+                                  onClick={() => handleShow(item)}
+                                >
+                                  Click
+                                </button>
                               </td>
                               <td>
                                 {" "}
-                                <img src={item.image} alt=""  style={{
-                                  width:"50px"
-                                }}/>{" "}
+                                <img
+                                  src={item.image}
+                                  alt=""
+                                  style={{
+                                    width: "50px",
+                                  }}
+                                />{" "}
                               </td>
-                             
+
                               <td>
                                 <MdDelete
                                   onClick={() => handleRemove(item._id)}
