@@ -38,6 +38,7 @@ import getSingleSlider from './getReducer/getSingleSlider';
 import getRaceKind from './getReducer/getRaceKind';
 import getHorseKind from './getReducer/getHorseKind';
 import getToBePublishRace from './getReducer/getToBePublishRace';
+import { fetchtobeRaceResult } from './getReducer/getRaceToBeAwait';
 
 const store = configureStore({
     reducer: {
@@ -79,7 +80,8 @@ const store = configureStore({
         subscriber: getSubscriber,
         raceKinds:getRaceKind,
         HorseKind:getHorseKind,
-        tobePublishRace:getToBePublishRace
+        tobePublishRace:getToBePublishRace,
+        tobeRaceResult:fetchtobeRaceResult
     },
 });
 

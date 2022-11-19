@@ -79,7 +79,7 @@ const Races = () => {
   }, [dispatch]);
 
   const handleAwaited = () => {
-
+    dispatch(fetchtobePublishRace());
   }
 
   if (status === STATUSES.LOADING) {

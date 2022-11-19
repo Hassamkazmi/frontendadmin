@@ -66,6 +66,11 @@ line-height: 24px;
     padding: 10px;
 
 }
+
+.ResultAwaited > h3{
+  padding: 10px;
+
+}
 .DashboardCard {
   /* margin-top: 3rem; */
   display: flex;

@@ -33,6 +33,7 @@ const WeatherTypes = [
 const RaceStatuss = [
   { id: "1", value: "Cancel", label: "Cancel" },
   { id: "2", value: "Due", label: "Due" },
+  { id: "3", value: "Awaited", label: "Awaited" },
 ];
 const GroundTypes = [
   { id: "1", value: "Green", label: "Green" },
@@ -127,7 +128,6 @@ const RaceForm = () => {
   });
 
   
-console.log(raceKinds)
   const [MeetingType , setMeetingType ] = useState("");
   const [RaceNameEn, setRaceNameEn] = useState("");
   const [MeetingCode, setMeetingCode] = useState("");

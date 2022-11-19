@@ -1,19 +1,20 @@
 import React,{useEffect} from 'react'
-
 import '../Components/CSS/home.css'
-
 import { fetchrace, STATUSES } from "../redux/getReducer/getRaceSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchtobeRaceResult } from "../redux/getReducer/getRaceToBeAwait";
 
 const Dashboard = () => {
 
   const dispatch = useDispatch();
   const { data: race, status } = useSelector((state) => state.race);
-   
+  const { data: tobeRaceResult } = useSelector((state) => state.tobeRaceResult);
+
   useEffect(() => {
     dispatch(fetchrace());
+    dispatch(fetchtobeRaceResult());
   }, [dispatch]);
-console.log(race)
+
   if (status === STATUSES.LOADING) {
     return (
       <h2
@@ -35,7 +36,7 @@ console.log(race)
       </h2>
     );
   }
-
+  console.log(tobeRaceResult)
   return (
     <>
 
@@ -52,6 +53,7 @@ console.log(race)
         </div>
         <div className='ResultAwaited'>
         <p>Result Awaited</p>
+        <h3>{tobeRaceResult === undefined ? <>O</> : tobeRaceResult.length}</h3>
         </div>
         <div className='CompetitionsRaces'>
         <p>Competitions</p>
