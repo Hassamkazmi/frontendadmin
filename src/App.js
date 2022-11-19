@@ -43,7 +43,7 @@ import Color from "./pages/PostTable/Color";
 import Nationality from "./pages/PostTable/Nationality";
 import Currency from "./pages/PostTable/Currency";
 import Breeder from "./pages/PostTable/Breeder";
-import HorseData from './pages/PostTable/RaceForm/RaceOne'
+import HorseData from './pages/PostTable/RaceForm/AddHorse'
 import NationalityTable from "./pages/GetTable/NationalityTable";
 import ColorTable from "./pages/GetTable/ColorTable";
 import BreederTable from "./pages/GetTable/BreederTable";
@@ -68,7 +68,7 @@ import SubscriberList from "./pages/Setting/SubscriberList";
 import AdminRole from "./pages/Setting/AdminRole";
 import RaceKind from "./pages/GetTable/RaceKind";
 import RaceKindForm from "./pages/PostTable/RaceKind";
-import PublishRace from "./pages/PostTable/RaceForm/RaceThree";
+import PublishRace from "./pages/PostTable/RaceForm/AddVerdict";
 
 function App() {
   useEffect(() => {
