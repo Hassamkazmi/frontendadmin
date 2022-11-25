@@ -1,5 +1,4 @@
 import React, { useEffect,useState } from "react";
-
 import { fetchTrainer, STATUSES } from "../../redux/getReducer/getTrainerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
@@ -10,9 +9,9 @@ import TrainerPopup from "../../Components/Popup/TrainerPopup";
 import {BsFillEyeFill} from 'react-icons/bs';
 import ScrollContainer from "react-indiana-drag-scroll";
 import Moment from 'react-moment';
-
 import swal from 'sweetalert';
-
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 
 const Trainer = () => {
@@ -60,8 +59,6 @@ const Trainer = () => {
   }, []);
   
     const handlePageClick = async (data) => {
-    console.log(data.selected);
-
     let currentPage = data.selected + 1;
 
     // const commentsFormServer = await fetchComments(currentPage);
@@ -70,7 +67,10 @@ const Trainer = () => {
     
   };
   if (status === STATUSES.LOADING) {
-    return <h2 className="loader"></h2>;
+        return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
+
+
   }
 
   if (status === STATUSES.ERROR) {
@@ -86,9 +86,6 @@ const Trainer = () => {
   }
   const dob = new Date().toLocaleString()
   const age =' 2022-11-14T00:00:00.000Z'
-  console.log(trainer,'trainer data');
-  console.log(dob,'age data')
-
 
   return (
    <>
@@ -112,7 +109,7 @@ const Trainer = () => {
         
         
         <div>
-          <h6 style={{ marginRight: "100px", alignItems: "center", color: "rgba(0, 0, 0, 0.6)" }}>Toggle to Arabic</h6>
+          <h6 style={{ marginRight: "100px", alignItems: "center", color: "rgba(0, 0, 0, 0.6)" }}></h6>
         
           <Link to="/trainerform">
             <button>Add Trainer</button>

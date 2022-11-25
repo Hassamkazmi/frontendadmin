@@ -57,7 +57,10 @@
 //     }
 //   ]);
 
-//   console.log(horseoptions, 'sadas');
+//   
+
+
+(horseoptions, 'sadas');
 //   const addTodo = id => {
 //     const newTodos = [...todos, { id }];
 //     setTodos(newTodos);
@@ -70,7 +73,10 @@
 
 //       formdata.append(`setSelectedOption1${i}`, selectedOption1);
 //     }
-//     console.log(formdata);
+//     
+
+
+(formdata);
 //   };
 //   return (
 //     <div className="app">
@@ -130,7 +136,10 @@
 // const Test = () => {
 //   const [selectedOption2, setSelectedOption2] = useState([]);
 
-//   console.log(selectedOption2)
+//   
+
+
+(selectedOption2)
 //   return (
 //     <div>
 //       <Select options={options} 

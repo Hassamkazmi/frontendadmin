@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { fetchrace, STATUSES } from "../../../redux/getReducer/getRaceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { remove } from "../../../redux/postReducer/postRace";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -11,20 +10,18 @@ import RacePopup from "../../../Components/Popup/RacePopup";
 import { MdDelete } from "react-icons/md";
 import swal from "sweetalert";
 import Moment from "react-moment";
-
-
+import { fetchResult ,STATUSES } from "../../../redux/getReducer/getResultSlice";
+import Lottie from "lottie-react";
+import HorseAnimation from "../../../assets/horselottie.json";
 const Races = () => {
-console.log(Math.max)
+
   const [show, setShow] = useState(false);
   const [modaldata, setmodaldata] = useState();
   const handleClose = () => setShow(false);
-  const handleShow = async (data) => {
-    setmodaldata(data);
-    await setShow(true);
-  };
+  
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  const { data: race, status } = useSelector((state) => state.race);
+  const { data: Result, status } = useSelector((state) => state.Result);
   const handleRemove = async (Id) => {
     swal({
       title: "Are you sure?",
@@ -44,11 +41,14 @@ console.log(Math.max)
     });
   };
   useEffect(() => {
-    dispatch(fetchrace());
+    dispatch(fetchResult());
   }, []);
-  console.log(race, "race");
+  
   if (status === STATUSES.LOADING) {
-    return <h2 className="loader"></h2>;
+        return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
+
+
   }
 
   if (status === STATUSES.ERROR) {
@@ -82,7 +82,7 @@ console.log(Math.max)
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                
@@ -114,7 +114,7 @@ console.log(Math.max)
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {race === undefined ? (
+                  {Result === undefined ? (
                     <h3
                       style={{
                         textAlign: "center",
@@ -124,7 +124,7 @@ console.log(Math.max)
                     </h3>
                   ) : (
                     <>
-                      {race.map((item) => {
+                      {Result.map((item) => {
                         const { RaceStatus } = item;
                         return (
                           <tbody

@@ -1,14 +1,14 @@
-
 import React, { useEffect ,Fragment } from "react";
 import { fetchTrackLength,STATUSES } from "../../redux/getReducer/getTracklength";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostJockey";
 import { Link } from "react-router-dom";
-
 import swal from 'sweetalert';
 import ScrollContainer from "react-indiana-drag-scroll";
-
+import { alignPropType } from "react-bootstrap/esm/types";
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 
 const Tracklength = () => {
@@ -43,14 +43,8 @@ const handleRemove = (Id) => {
 
 
 if (status === STATUSES.LOADING) {
-  return (
-      <h2
-      className="loader"
-      >
-        <div class="inner">
-  </div>
-      </h2>
-  );
+  return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
 }
 
 if (status === STATUSES.ERROR) {
@@ -78,7 +72,7 @@ if (status === STATUSES.ERROR) {
                 }}
               >
                 <div className="Header ">
-                  <h4>Race Type Listings</h4>
+                  <h4>Track Length Listings</h4>
     
                   <div>
                     <h6
@@ -88,7 +82,7 @@ if (status === STATUSES.ERROR) {
                         color: "rgba(0, 0, 0, 0.6)",
                       }}
                     >
-                      Toggle to Arabic
+                      
                     </h6>
     
                     <Link to="/tracklengthform">

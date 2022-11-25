@@ -20,23 +20,29 @@ const Sidebar = () => {
     <div><Link to='/races' className='mylink'>View Listings</Link></div>
    <div> <Link to='/raceform' className='mylink'>Add New</Link></div>
    <div><Link to='/racename' className='mylink'>Race Name Listing</Link> </div>
+   <div> <Link to='/racecard' className='mylink'>Create Race Card</Link></div>
    <div><Link to='/racenameform' className='mylink'>Add Race Name</Link></div>
    <div><Link to='/racetype' className='mylink'>Race Type Listing</Link> </div>
    <div><Link to='/racetypeform' className='mylink'>Add Race Type</Link>  </div>
    <div><Link to='/racekindform' className='mylink'>Add Race Kind</Link>  </div>
    <div><Link to='/racekind' className='mylink'> Race Kind Listing</Link>  </div>
+   <div><Link to='/meeting' className='mylink'>Add Meeting </Link>  </div>
+   <div><Link to='/getmeeting' className='mylink'>Meeting Type</Link> </div>
+   <div><Link to='/verdict' className='mylink'>Add Verdict</Link> </div>
+   <div><Link to='/verdictlist' className='mylink'>Verdict</Link> </div>
    <div> <Link to='/resultrace' className='mylink'>Add Results</Link></div>
     </Accordion.Body>
   </Accordion.Item>
   <Accordion.Item eventKey="1">
-    <Accordion.Header>Racecourse</Accordion.Header>
+    <Accordion.Header>Race Course</Accordion.Header>
     <Accordion.Body className='AccordionBody'>
     <div>  <Link to='/racecourse' className='mylink'>View Listing</Link></div>
    <div>   <Link to='/racecourseform' className='mylink'>Add New</Link></div>
     
    <div><Link to='/tracklength' className='mylink'>Track Length Listing</Link> </div>
    <div><Link to='/tracklengthform' className='mylink'>Add Track Length</Link>  </div>
-
+   <div><Link to='/ground' className='mylink'>Add Ground Type</Link>  </div>
+   <div><Link to='/groundlist' className='mylink'>Ground Type Listing</Link>  </div>
 
     </Accordion.Body>
   </Accordion.Item>
@@ -81,36 +87,96 @@ const Sidebar = () => {
   <Accordion.Item eventKey="7">
     <Accordion.Header>Statistics</Accordion.Header>
     <Accordion.Body className='AccordionBody'>
-    <div><Link to='/statistics' className='mylink'>View Listing</Link></div>
-   <div> <Link to='/statistics' className='mylink'>Add New</Link></div>
+    <div><Link to='/statistics' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>View Listing</Link></div>
+   <div> <Link to='/statistics' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add New</Link></div>
     </Accordion.Body>
   </Accordion.Item>
   <Accordion.Item eventKey="8">
     <Accordion.Header>News</Accordion.Header>
     <Accordion.Body className='AccordionBody'>
-    <div><Link to='/news' className='mylink'>View Listing</Link></div>
-   <div> <Link to='/newsform' className='mylink'>Add New</Link></div>
+    <div><Link to='/news' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>View Listing</Link></div>
+   <div> <Link to='/newsform' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add New</Link></div>
     </Accordion.Body>
   </Accordion.Item>
   <Accordion.Item eventKey="9">
-    <Accordion.Header>Ads</Accordion.Header>
+    <Accordion.Header>Advertisement</Accordion.Header>
     <Accordion.Body className='AccordionBody'>
-    <div><Link to='/ads' className='mylink'>View Listing</Link></div>
-   <div> <Link to='/adsform' className='mylink'>Add New</Link></div>
+    <div><Link to='/ads' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>View Listing</Link></div>
+   <div> <Link to='/adsform' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add New</Link></div>
     </Accordion.Body>
   </Accordion.Item>
   <Accordion.Item eventKey="10">
     <Accordion.Header>Sponsor</Accordion.Header>
     <Accordion.Body className='AccordionBody'>
-    <div><Link to='/sponsor' className='mylink'>View Listing</Link></div>
-   <div> <Link to='/sponsorform' className='mylink'>Add New</Link></div>
+    <div><Link to='/sponsor' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>View Listing</Link></div>
+   <div> <Link to='/sponsorform' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add New</Link></div>
     </Accordion.Body>
   </Accordion.Item>
   <Accordion.Item eventKey="11">
     <Accordion.Header>Slider</Accordion.Header>
     <Accordion.Body className='AccordionBody'>
-    <div><Link to='/slider' className='mylink'>View Listing</Link></div>
-   <div> <Link to='/sliderform' className='mylink'>Add New</Link></div>
+    <div><Link to='/slider' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>View Listing</Link></div>
+   <div> <Link to='/sliderform' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add New</Link></div>
     </Accordion.Body>
     
     
@@ -118,13 +184,49 @@ const Sidebar = () => {
 <Accordion.Item eventKey="12">
   <Accordion.Header>Create Features </Accordion.Header>
     <Accordion.Body className='AccordionBody'>
-    <div><Link to='/meeting' className='mylink'>Add Meeting Type</Link>  </div>
-    <div><Link to='/color' className='mylink'>Add Color</Link></div>
-   <div> <Link to='/currency' className='mylink'>Add Currency</Link></div>
-   <div> <Link to='/breeder' className='mylink'>Add Breeder</Link></div>
-   <div> <Link to='/nationality' className='mylink'>Add Nationality</Link></div>
-   <div> <Link to='/gender' className='mylink'>Add Gender</Link></div>
- 
+
+    <div><Link to='/color' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add Color</Link></div>
+   <div> <Link to='/currency' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add Currency</Link></div>
+   <div> <Link to='/breeder' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add Breeder</Link></div>
+   <div> <Link to='/nationality' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add Nationality</Link></div>
+   <div> <Link to='/gender' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Add Gender</Link></div>
+ <div><Link to ='/equipment' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}> Add Equipment  </Link></div>
 
     </Accordion.Body>
     </Accordion.Item>
@@ -132,13 +234,49 @@ const Sidebar = () => {
     <Accordion.Item eventKey="13">
   <Accordion.Header>Features Listing</Accordion.Header>
     <Accordion.Body className='AccordionBody'>
-    <div><Link to='/getmeeting' className='mylink'>Meeting Type</Link> </div>
-    <div><Link to='/colorlist' className='mylink'>Color </Link></div>
-   <div> <Link to='/currencylist' className='mylink'>Currency </Link></div>
-   <div> <Link to='/breederlist' className='mylink'>Breeder </Link></div>
-   <div> <Link to='/nationalitylist' className='mylink'>Nationality </Link></div>
-   <div> <Link to='/genderlist' className='mylink'>Gender </Link></div>
   
+    <div><Link to='/colorlist' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Color </Link></div>
+   <div> <Link to='/currencylist' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Currency </Link></div>
+   <div> <Link to='/breederlist' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Breeder </Link></div>
+   <div> <Link to='/nationalitylist' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Nationality </Link></div>
+   <div> <Link to='/genderlist' className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Gender </Link></div>
+  <div><Link to="/equipmentlist" className='mylink'  onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Equipment </Link> </div>
 
 
     </Accordion.Body>
@@ -147,8 +285,14 @@ const Sidebar = () => {
 
  
 </Accordion>
-
-<div className='SettingSec' ><Link to='/setting' className='mylink'>Setting</Link></div>
+<hr/>
+<div className='SettingSec' ><Link to='/setting' className='mylink'onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}>Setting</Link></div>
   </div> : null
 }
 </>

@@ -11,7 +11,8 @@ import swal from 'sweetalert';
 import Moment from "react-moment";
 import { Modal } from "react-bootstrap";
 import HorsePopup from "../../Components/Popup/HorsePopup";
-
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const Horse = () => {
  
@@ -37,7 +38,10 @@ const Horse = () => {
   useEffect(() => {
     dispatch(fetchHorse({ pagenumber }));
   }, [dispatch]);
-  console.log(horse);
+  
+
+
+(horse);
   const handleRemove = (Id) => {
     swal({
       title: "Are you sure?",
@@ -62,13 +66,8 @@ const Horse = () => {
   };
 
   if (status === STATUSES.LOADING) {
-    return (
-      <h2
-      className="loader"
-      >
-        
-      </h2>
-    );
+        return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
   }
 
   if (status === STATUSES.ERROR) {
@@ -104,7 +103,7 @@ const Horse = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                 <Link to="/horseform">
@@ -191,8 +190,10 @@ const Horse = () => {
                                 }}></img>
                               </td>
                               <td>
-                                <BiEdit />
-                                <MdDelete onClick={handleRemove} />
+                                {/* <BiEdit /> */}
+                                <MdDelete style={{
+                                  fontSize: "22px",
+                                }}/>
                          
 
                               </td>

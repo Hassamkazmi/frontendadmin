@@ -3,7 +3,7 @@ import { fetchrace, STATUSES } from "../../redux/getReducer/getRaceSlice";
 import { fetchtobePublishRace } from "../../redux/getReducer/getToBePublishRace";
 import { useDispatch, useSelector } from "react-redux";
 import { remove } from "../../redux/postReducer/postRace";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import "../../Components/CSS/Table.css";
 import ScrollContainer from "react-indiana-drag-scroll";
 import "../../Components/CSS/race.css";
@@ -13,13 +13,18 @@ import swal from "sweetalert";
 import Moment from "react-moment";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const Prize = (data) => {
-  console.log(data, "FifthPrice");
+  
+
+
+(data, "FifthPrice");
   return (
     <>
       <table className="Prizeclass">
-        <thead>
+        <thead className="Prizeclassthead">
           <tr>
             <th>1st</th>
             <th>2nd </th>
@@ -29,7 +34,7 @@ const Prize = (data) => {
             <th>6th </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="Prizeclasstbody">
           <tr>
             <td>{data.data.FirstPrice}</td>
             <td>{data.data.SecondPrice}</td>
@@ -45,6 +50,11 @@ const Prize = (data) => {
 };
 
 const Races = () => {
+  const history = useNavigate();
+
+  const [PublishRace, setPublishRace] = useState(false)
+  
+
   const [show, setShow] = useState(false);
   const [modaldata, setmodaldata] = useState();
   const handleClose = () => setShow(false);
@@ -52,9 +62,12 @@ const Races = () => {
     setmodaldata(data);
     await setShow(true);
   };
+  
   const dispatch = useDispatch();
   const { data: race, status } = useSelector((state) => state.race);
   const { data: tobePublishRace } = useSelector((state) => state.tobePublishRace);
+
+  const [AllRace, setAllRace] = useState(race)
 
   const handleRemove = async (Id) => {
     swal({
@@ -76,14 +89,25 @@ const Races = () => {
   };
   useEffect(() => {
     dispatch(fetchrace());
+    dispatch(fetchtobePublishRace());
   }, [dispatch]);
 
   const handleAwaited = () => {
-    dispatch(fetchtobePublishRace());
+    setAllRace(tobePublishRace)
+    setPublishRace(true)
   }
-
+  const handleAll = () => {
+    setAllRace(race)
+  }
+  const GoToPublish = (RaceId) => {
+    history("/publishrace", {
+      state: {
+        RaceId: RaceId,
+      },
+    });
+  }
   if (status === STATUSES.LOADING) {
-    return <h2 className="loader"></h2>;
+    return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
   }
   if (status === STATUSES.ERROR) {
     return (
@@ -96,7 +120,10 @@ const Races = () => {
       </h2>
     );
   }
+  
 
+
+(race)
   return (
     <>
       <div className="page">
@@ -117,7 +144,7 @@ const Races = () => {
                   }}
                 >
                   <DropdownButton id="dropdown-basic-button" title="Filter">
-                  <Dropdown.Item >All</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleAll()}>Published</Dropdown.Item>
                   <Dropdown.Item onClick={() => handleAwaited()}>Publish Awaited</Dropdown.Item>
                 </DropdownButton>
                 </h6>
@@ -151,10 +178,11 @@ const Races = () => {
                       <th>Race Status</th>
                       <th>Prize Money</th>
                       <th>image</th>
+                      
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {race === undefined ? (
+                  {AllRace === undefined ? (
                     <h3
                       style={{
                         textAlign: "center",
@@ -164,7 +192,7 @@ const Races = () => {
                     </h3>
                   ) : (
                     <>
-                      {race.map((item) => {
+                      {AllRace.map((item) => {
                         const { RaceStatus } = item;
                         return (
                           <tbody
@@ -258,7 +286,11 @@ const Races = () => {
                                   }}
                                 />{" "}
                               </td>
-
+                              {/* {
+                                PublishRace ? <td>
+                                <button  className="Approvedbtn resultbtn" onClick={() => GoToPublish(item._id)}>Click</button>
+                              </td>:null
+                              } */}
                               <td>
                                 <MdDelete
                                   onClick={() => handleRemove(item._id)}

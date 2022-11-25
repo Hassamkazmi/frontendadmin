@@ -72,7 +72,7 @@ const RaceForm = () => {
   const submit = async (event) => {
     event.preventDefault();
     try {
-      console.log(items, "HorseEntry");
+      
       // const response = await axios.post(`${window.env.API_URL}addracehorses/${RaceId}`, {HorseEntry:items});
       // const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
       // history("/fullpublishrace", {

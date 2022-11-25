@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-
 import { fetchNews, STATUSES } from "../../redux/getReducer/getNewsSlice";
 import { useDispatch, useSelector } from "react-redux";
-
 import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostNewsSlice";
-
 import swal from 'sweetalert';
 import { Modal } from "react-bootstrap";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import { BiEdit } from "react-icons/bi";
 import ScrollContainer from "react-indiana-drag-scroll";
 import NewsPopup from "../../Components/Popup/NewsPopup";
 import {BsFillEyeFill} from 'react-icons/bs'
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const News = () => {
 
@@ -63,13 +60,7 @@ const News = () => {
   };
 
   if (status === STATUSES.LOADING) {
-    return (
-      <h2
-        className="loader"
-      >
-
-      </h2>
-    );
+    return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
   }
 
   if (status === STATUSES.ERROR) {
@@ -105,7 +96,7 @@ const News = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                 <Link to="/newsform">
@@ -119,14 +110,14 @@ const News = () => {
                   <table>
                     <thead>
                       <tr>
-                        <th>Title En</th>
+                        <th>Title </th>
 
-                        <th>Sub Title En</th>
+                        <th>Sub Title </th>
 
-                        <th>Description En</th>
-                        <th>Title Ar</th>
-                        <th>Sub Title Ar</th>
-                        <th>Description Ar</th>
+                        <th>Description </th>
+                        <th>Title Arabic</th>
+                        <th>Sub Title Arabic</th>
+                        <th>Description Arabic</th>
                         <th>Image</th>
 
                         <th>Action</th>

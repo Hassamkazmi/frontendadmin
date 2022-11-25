@@ -62,14 +62,21 @@ line-height: 24px;
     background: linear-gradient(89.98deg, #19469D 23.67%, #00A3FF 97.94%);
     border-radius: 20px;
 } 
-.OngoingRaces > h3{
-    padding: 10px;
-
-}
-
-.ResultAwaited > h3{
+.OngoingRaces > h3 {
   padding: 10px;
-
+  position: top;
+  top: 16%;
+  position: relative;
+  right: -2%;
+  font-size: 40px;
+}
+.ResultAwaited > h3 {
+  padding: 10px;
+  position: top;
+  top: 16%;
+  position: relative;
+  right: -2%;
+  font-size: 40px;
 }
 .DashboardCard {
   /* margin-top: 3rem; */

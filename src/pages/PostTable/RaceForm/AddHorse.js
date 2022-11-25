@@ -7,6 +7,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { fetchHorse } from "../../../redux/getReducer/getHorseSlice";
+import { fetchequipment } from "../../../redux/getReducer/getEquipment";
+import { toast } from 'react-toastify';
+
 import Select from "react-select";
 import swal from "sweetalert";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -23,12 +26,14 @@ const LocalItem = () => {
 
 const RaceForm = () => {
   const [InputData, SetinputData] = useState("");
-  const [InputData2, SetinputData2] = useState("");
-  const [Gate , setGate] = useState('')
+  const [InputData2, SetinputData2] = useState('');
+  const [Gate , setGate] = useState(1)
+  const [EquipmentData, SetEquipmentData] = useState("");
   const [JockeyData, SetJockeyData] = useState("");
   const [items, setitems] = useState(LocalItem());
   const { data: jockey } = useSelector((state) => state.jockey);
   const { data: horse } = useSelector((state) => state.horse);
+  const { data: equipment } = useSelector((state) => state.equipment);
 
   const history = useNavigate();
   const { state } = useLocation();
@@ -49,38 +54,65 @@ const RaceForm = () => {
       weight: item.MaximumJockeyWeight,
     };
   });
-
+  let AllEquipment = equipment.map(function (item) {
+    return {
+      id: item._id,
+      value: item.NameEn,
+      label: item.NameEn,
+     
+    };
+  });
   const dispatch = useDispatch();
   const HorseEntry = [
-    `1,${InputData.id},${JockeyData.id},${JockeyData.weight}`,
+    `${Gate},${InputData.id},${JockeyData.id},${JockeyData.weight},${EquipmentData.id}`,
   ];
+
+
+
+const HorseLength = horse.length;
+const ItemLength = items.length;
+
 
   useEffect(() => {
     dispatch(fetchHorse());
     dispatch(fetchjockey());
+    dispatch(fetchequipment());
   }, [dispatch]);
   useEffect(() => {
     localStorage.setItem("lists", JSON.stringify(items));
-  }, [items]);
+  }, [items ,InputData]);
+
   const addItem = () => {
-    setitems([...items, HorseEntry]);
-    SetinputData("");
+    if(HorseLength === ItemLength){
+      toast('No Horse ')
+    }
+    else if(InputData.id !== undefined){
+      setitems([...items, HorseEntry]);
+      setGate(Gate+1)
+    }
+    else{
+      setitems([...items, items]);
+      setGate(1)
+    }
   };
   const Remove = () => {
     setitems([]);
+    setGate(1)
   };
   const submit = async (event) => {
     event.preventDefault();
     try {
-      console.log(items, "HorseEntry");
+      
+
+
+(items, "HorseEntry");
       const response = await axios.post(`${window.env.API_URL}addracehorses/${RaceId}`, {HorseEntry:items});
-      // const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
       history("/fullpublishrace", {
         state: {
           RaceId: RaceId
         },
       });
-      // history("/races");
+     
       swal({
         title: "Success",
         text: "Data has been added successfully ",
@@ -116,6 +148,7 @@ const RaceForm = () => {
                 <span>Horse Name</span>
                 <span>Jockey Name</span>
                 <span>Jockey Weight</span>
+                <span>Equipment</span>
               </div>
             </div>
             <div className="myselectdata">
@@ -150,7 +183,7 @@ const RaceForm = () => {
               {items.map((e, i) => {
                 return (
                   <div className="myselectiondata">
-                    <span >{i + 1}</span>
+                    <span onChange={setGate} value={i + 1}>{i + 1}</span>
                     <span>
                       <Select
                         defaultValue={InputData}
@@ -176,6 +209,15 @@ const RaceForm = () => {
                         <>{JockeyData.weight} KG</>
                       )}{" "}
                     </span>
+                    <span>
+                  <Select
+                    defaultValue={EquipmentData}
+                    onChange={SetEquipmentData}
+                    options={AllEquipment}
+                    isClearable={false}
+                    isSearchable={true}
+                  />
+                </span>
                   </div>
                 );
               })}
@@ -188,13 +230,14 @@ const RaceForm = () => {
               <div className="sbmtbtndiv">
                 <div className="RaceButtonDiv">
                   <button className="updateButton" onClick={Remove}>
-                    Update
+                    Remove
                   </button>
 
                   <button
                     className="SubmitButton"
                     type="submit"
                     onClick={submit}
+                   
                   >
                     Save & Add Horses
                   </button>

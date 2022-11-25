@@ -9,8 +9,8 @@ import { BiEdit } from 'react-icons/bi'
 import ScrollContainer from "react-indiana-drag-scroll";
 import SponserPopup from '../../Components/Popup/SponserPopup';
 import { Modal } from "react-bootstrap";
-import {BsFillEyeFill} from 'react-icons/bs'
-
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 
 const News = () => {
@@ -43,20 +43,15 @@ const News = () => {
           });
           dispatch(remove(Id));
         } else {
-          swal("Your Data is safe!");
+          swal("Your imaginary file is safe!");
         }
       });
 
     fetchSponsor();
   };
   if (status === STATUSES.LOADING) {
-    return (
-      <h2
-      className="loader"
-      >
-       
-      </h2>
-    );
+    return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
   }
 
   if (status === STATUSES.ERROR) {
@@ -93,7 +88,7 @@ const News = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                 <Link to="/sponsorform">
@@ -110,10 +105,10 @@ const News = () => {
 
 
 
-                      <th>Title En</th>
-                      <th>Title Ar</th>
-                      <th>Description En</th>
-                      <th>Description Ar</th>
+                      <th>Title </th>
+                      <th>Title Arabic</th>
+                      <th>Description </th>
+                      <th>Description Arabic</th>
                       <th>Image</th>
                       <th style={{textAlign: 'center'}}>Action</th>
                     </tr>
@@ -136,7 +131,7 @@ const News = () => {
                               }} />
                             </td>
                             <td className="table_delete_btn1" style={{textAlign: 'center'}}>
-                            <Link to ={`/editsponsor/${item._Id}`}      ><BiEdit /></Link> 
+                            {/* <Link to ={`/editsponsor/${item._Id}`}      ><BiEdit /></Link>  */}
                           
                               <MdDelete
                               

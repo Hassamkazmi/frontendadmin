@@ -6,6 +6,8 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import Moment from "react-moment";
 import swal from 'sweetalert';
 import axios from "axios";
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const SubscriberList = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,10 @@ const SubscriberList = () => {
   }, [dispatch]);
 
   if (status === STATUSES.LOADING) {
-    return <h2 className="loader"></h2>;
+        return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
+
+
   }
   if (status === STATUSES.ERROR) {
     return (
@@ -68,7 +73,7 @@ const SubscriberList = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                 

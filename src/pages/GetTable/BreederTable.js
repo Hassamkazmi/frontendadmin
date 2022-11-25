@@ -1,6 +1,5 @@
 import React, { useEffect ,Fragment } from "react";
 import { fetchbreeder ,STATUSES } from "../../redux/getReducer/getBreeder";
-
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostJockey";
@@ -8,7 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import swal from 'sweetalert';
 import ScrollContainer from "react-indiana-drag-scroll";
-
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const BreederTable = () => {
 
@@ -32,25 +32,18 @@ const BreederTable = () => {
             icon: "success",
           });
           dispatch(remove(Id));
-          history("/");
+          history("/breederlist");
         } else {
           swal("Your imaginary file is safe!");
         }
       });
       dispatch(remove(Id));
-      history("/fetchbreeder");
+      history("/breederlist");
     };
   
     
     if (status === STATUSES.LOADING) {
-      return (
-          <h2
-          className="loader"
-          >
-            <div class="inner">
-      </div>
-          </h2>
-      );
+      return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
     }
   
     if (status === STATUSES.ERROR) {
@@ -65,7 +58,10 @@ const BreederTable = () => {
       );
     }
 
-   console.log(breeder,'breederbreeder')
+   
+
+
+(breeder,'breederbreeder')
   return (
     <Fragment>
 
@@ -87,7 +83,7 @@ const BreederTable = () => {
                         color: "rgba(0, 0, 0, 0.6)",
                       }}
                     >
-                      Toggle to Arabic
+                      
                     </h6>
     
                     <Link to="/breeder">
@@ -134,10 +130,12 @@ const BreederTable = () => {
     
                               
                                 <td className="table_delete_btn1">
-                           <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link> 
+                           {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
                                   <MdDelete
-                                    
-                                    onClick={() => handleRemove(item._id)}
+                                    style={{
+                                      fontSize: "22px",
+                                    }}
+                                    // onClick={() => handleRemove(item._id)}
                                   />
                              
                                 </td>

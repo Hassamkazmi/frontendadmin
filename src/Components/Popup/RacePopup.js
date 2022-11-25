@@ -4,7 +4,8 @@ import React from "react";
 
 const RacePopup = (data) => {
 
-    console.log(data,'data')
+    
+
 
     return (
         <>

@@ -3,21 +3,23 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
-
 import { Modal } from "react-bootstrap";
 import SliderPopup from "../../Components/Popup/SliderPopup";
 import swal from "sweetalert";
 import remove from "../../redux/postReducer/PostSlider";
-
 import { fetchSlider, STATUSES } from "../../redux/getReducer/getSliderSlice";
 import "../../Components/CSS/Table.css";
 import { BsFillEyeFill } from "react-icons/bs";
 import { BiEdit } from "react-icons/bi";
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
+
 
 const Slider = () => {
   const [show, setShow] = useState(false);
   const [modaldata, setmodaldata] = useState();
   const handleClose = () => setShow(false);
+
   const handleShow = async (data) => {
     setmodaldata(data);
     await setShow(true);
@@ -60,7 +62,10 @@ const Slider = () => {
   }, []);
 
   if (status === STATUSES.LOADING) {
-    return <h2 className="loader"></h2>;
+        return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
+
+
   }
 
   if (status === STATUSES.ERROR) {
@@ -74,6 +79,8 @@ const Slider = () => {
       </h2>
     );
   }
+
+
 
   return (
     <>
@@ -95,7 +102,7 @@ const Slider = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                 <Link to="/sliderform">
@@ -109,9 +116,9 @@ const Slider = () => {
                 <table>
                   <thead>
                     <tr>
-                      <th>Title English</th>
+                      <th>Title</th>
                       <th>Title Arabic </th>
-
+                      <th>Url</th>
                       <th>Image</th>
                       <th>Action</th>
                     </tr>
@@ -124,13 +131,13 @@ const Slider = () => {
                             <td>{item.TitleEn}</td>
 
                             <td>{item.TitleAr}</td>
-
+                            <td>{item.Url}</td>
                             <td>
                               <img src={item.image} alt="" />
                             </td>
 
                             <td>
-                              <BiEdit
+                              {/* <BiEdit
                                 onClick={() =>
                                   history("/editslider", {
                                     state: {
@@ -138,9 +145,9 @@ const Slider = () => {
                                     },
                                   })
                                 }
-                              />
+                              /> */}
                               <MdDelete
-                                onClick={() => handleRemove(item._id)}
+                                // onClick={() => handleRemove(item._id)}
                               />
                             </td>
                           </tr>

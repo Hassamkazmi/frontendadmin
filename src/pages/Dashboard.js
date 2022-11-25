@@ -1,28 +1,25 @@
 import React,{useEffect} from 'react'
 import '../Components/CSS/home.css'
 import { fetchrace, STATUSES } from "../redux/getReducer/getRaceSlice";
+import { fetchtobePublishRace } from "../redux/getReducer/getToBePublishRace";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchtobeRaceResult } from "../redux/getReducer/getRaceToBeAwait";
+import Lottie from "lottie-react";
+import HorseAnimation from "../assets/horselottie.json";
+
 
 const Dashboard = () => {
 
   const dispatch = useDispatch();
   const { data: race, status } = useSelector((state) => state.race);
-  const { data: tobeRaceResult } = useSelector((state) => state.tobeRaceResult);
+  const { data: tobePublishRace } = useSelector((state) => state.tobePublishRace);
 
   useEffect(() => {
     dispatch(fetchrace());
-    dispatch(fetchtobeRaceResult());
+    dispatch(fetchtobePublishRace());
   }, [dispatch]);
-
   if (status === STATUSES.LOADING) {
-    return (
-      <h2
-      className="loader"
-      >
-        
-      </h2>
-    );
+        return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
   }
 
   if (status === STATUSES.ERROR) {
@@ -36,7 +33,7 @@ const Dashboard = () => {
       </h2>
     );
   }
-  console.log(tobeRaceResult)
+
   return (
     <>
 
@@ -49,11 +46,11 @@ const Dashboard = () => {
        <div className='DashboardCard'>
         <div className='OngoingRaces'>
           <p>Ongoing Races </p>
-          <h3>{race.length}</h3>
+          <h3>0{race.length}</h3>
         </div>
         <div className='ResultAwaited'>
         <p>Result Awaited</p>
-        <h3>{tobeRaceResult === undefined ? <>O</> : tobeRaceResult.length}</h3>
+        <h3>0{tobePublishRace.length}</h3>
         </div>
         <div className='CompetitionsRaces'>
         <p>Competitions</p>

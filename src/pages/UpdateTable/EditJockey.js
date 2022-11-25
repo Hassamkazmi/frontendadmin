@@ -50,7 +50,7 @@ const NewsForm = () => {
   const submit = async (event) => {
     event.preventDefault();
     try {
-      console.log(state1.NameEn)
+      
       const formData = new FormData();
       formData.append("image", image);
       formData.append("NameEn", state1.NameEn);

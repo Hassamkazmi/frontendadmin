@@ -2,18 +2,20 @@ import React, { Fragment, useState, useEffect } from "react";
 import "../../Components/CSS/forms.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { add } from "../../redux/postReducer/PostRaceCourse";
-// import { Country_Name } from "../../Data/Country";
-// import { Country_NameAr } from "../../Data/Country";
 import axios from "axios";
 import swal from "sweetalert";
 import Select from "react-select";
 import { fetchnationality } from "../../redux/getReducer/getNationality";
 import { fetchcolor } from "../../redux/getReducer/getColor";
 import { fetchTrackLength } from "../../redux/getReducer/getTracklength";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
-
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import ColorPopUp from "../PostTable/Color";
+import NationalityPopUp from "../PostTable/Nationality";
+import { AiOutlineReload } from 'react-icons/ai'
+import { Modal } from "react-bootstrap";
 
 const RaceCourseForm = () => {
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const RaceCourseForm = () => {
       })
     );
 
-    let AllColor=
+  let AllColor =
     color === undefined ? (
       <></>
     ) : (
@@ -48,7 +50,7 @@ const RaceCourseForm = () => {
       })
     );
 
-    let AllTrack=
+  let AllTrack =
     trackLength === undefined ? (
       <></>
     ) : (
@@ -60,16 +62,6 @@ const RaceCourseForm = () => {
         };
       })
     );
-
-
-  // const [TrackLength, setTrackLength] = useState("");
-  // const [WeatherType, setWeatherType] = useState("");
-  // const [WeatherDegree, setWeatherDegree] = useState("");
-  // const [WeatherIcon, setWeatherIcon] = useState("");
-
-  // const [Country, setCountry] = useState("");
-  const [GroundTypeEn, setGroundTypeEn] = useState("");
-  const [GroundTypeAr, setGroundTypeAr] = useState("");
   const [TrackNameEn, setTrackNameEn] = useState("");
   const [TrackNameAr, setTrackNameAr] = useState("");
   const [shortCode, setshortCode] = useState("");
@@ -77,6 +69,7 @@ const RaceCourseForm = () => {
   const [ColorCode, setColorCode] = useState("");
   const [image, setImage] = useState();
   const [preview, setPreview] = useState();
+  const [show, setShow] = useState(false);
 
   const submit = async (event) => {
     event.preventDefault();
@@ -85,16 +78,8 @@ const RaceCourseForm = () => {
       formData.append("image", image);
       formData.append("TrackNameEn", TrackNameEn);
       formData.append("TrackNameAr", TrackNameAr);
-      // formData.append("TrackLength", TrackLength);
-      // formData.append("WeatherType", WeatherType);
-      // formData.append("WeatherDegree", WeatherDegree);
-      // formData.append("WeatherIcon", WeatherIcon);
-      formData.append("GroundTypeEn", GroundTypeEn);
-      formData.append("GroundTypeAr", setGroundTypeAr);
       formData.append("ColorCode", ColorCode.id);
-
       formData.append("NationalityId", NationalityId.id);
-      // formData.append("Country", Country.value);
       formData.append("shortCode", shortCode);
       const response = await axios.post(
         `${window.env.API_URL}/createcourse?keyword=&page=`,
@@ -108,7 +93,7 @@ const RaceCourseForm = () => {
       });
       history("/racecourse");
     } catch (error) {
-      console.log(error.response.data.message, "error");
+      
       const err = error.response.data.message;
       swal({
         title: "Error!",
@@ -137,7 +122,18 @@ const RaceCourseForm = () => {
 
   const onSelectFile = (e) => {
     setImage(e.target.files[0]);
-    console.log(image, "image");
+    
+  };
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = async () => {
+    await setShow(true);
+  };
+  const FetchNew = () => {
+    dispatch(fetchnationality());
+    dispatch(fetchcolor());
+    dispatch(fetchTrackLength());
   };
 
   return (
@@ -152,164 +148,68 @@ const RaceCourseForm = () => {
             <div className="Headers">New Race Course</div>
             <div className="form">
               <form onSubmit={submit}>
-              <div className="row mainrow">
+                <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Track Name"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Track Name"
+                      className="mb-3"
                       onChange={(e) => setTrackNameEn(e.target.value)}
+                      name="Name"
                       value={TrackNameEn}
-                      required
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder="Track Name" />
+                    </FloatingLabel>
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="رمز قصير"
                       onChange={(e) => setTrackNameAr(e.target.value)}
                       value={TrackNameAr}
-                      style={{ direction: "rtl" }}
-                      placeholder="نوع الأرض"
-                    ></input>
+                      className="mb-3 floatingInputAr "
+                      style={{ direction: "rtl", left: "initial", right: 0 }}
+                    >
+                      <Form.Control
+                        type="text"
+                        placeholder="رمز قصير"
+                        style={{ left: "%" }}
+                      />
+                    </FloatingLabel>
                   </div>
                 </div>
-            
-                {/* <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Track Name"
-                      onChange={(e) => setTrackNameEn(e.target.value)}
-                      value={TrackNameEn}
-                      required
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      onChange={(e) => setTrackNameAr(e.target.value)}
-                      value={TrackNameAr}
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم المسار"
-                    ></input>
-                  </div>
-                </div> */}
-                {/* <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Track Length"
-                      onChange={(e) => setTrackLength(e.target.value)}
-                      value={TrackLength}
-                      required
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="طول المسار"
-                    ></input>
-                  </div>
-                </div> */}
-
-                {/* <div className="row mainrow">
-                    <div className="col-sm">
-                    <Select
-                    placeholder={<div>Weather</div>}
-                    defaultValue={setWeatherType}
-                    onChange={setWeatherType}
-                    options={Weathers}
-                    isClearable={true}
-                    isSearchable={true}
-                  />  <span className="spanForm"> |</span>
-                    </div>
-
-                    <div className="col-sm">
-                    <Select
-                    
-                    placeholder={<div>طقس</div>}
-                  
-                    className='selectdir'
-                    options={Weathers}
-                    isClearable={true}
-                    isSearchable={true}
-                  />
-                    </div>
-                  </div>
-                <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Weather Degree"
-                      onChange={(e) => setWeatherDegree(e.target.value)}
-                      value={WeatherDegree}
-                      required
-                      type='number'
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم المسار"
-                    ></input>
-                  </div>
-                </div> */}
-                <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Ground Type"
-                      onChange={(e) => setGroundTypeEn(e.target.value)}
-                      value={GroundTypeEn}
-                      required
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      onChange={(e) => setGroundTypeAr(e.target.value)}
-                      value={GroundTypeAr}
-                      style={{ direction: "rtl" }}
-                      placeholder="نوع الأرض"
-                    ></input>
-                  </div>
-                </div>
-                {/* <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Weather Icon"
-                      onChange={(e) => setWeatherIcon(e.target.value)}
-                      value={WeatherIcon}
-                      required
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم المسار"
-                    ></input>
-                  </div>
-                </div> */}
+                
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Short Code"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Short Code"
+                      className="mb-3"
                       onChange={(e) => setshortCode(e.target.value)}
                       value={shortCode}
-                      required
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder="Short Code" />
+                    </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder=" رمز قصير"
-                    ></input>
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="رمز قصير"
+                      className="mb-3 floatingInputAr "
+                      style={{ direction: "rtl", left: "initial", right: 0 }}
+                    >
+                      <Form.Control
+                        type="text"
+                        placeholder="رمز قصير"
+                        style={{ left: "%" }}
+                      />
+                    </FloatingLabel>
                   </div>
                 </div>
                 <div className="row mainrow">
@@ -322,26 +222,36 @@ const RaceCourseForm = () => {
                       options={AllColor}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> 
-                          <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/color')}>+</button>
-        </OverlayTrigger> 
-                    
-                    |</span>
+                    />
+                    <span className="spanForm">
+                      <OverlayTrigger 
+                        overlay={
+                          <Tooltip id={`tooltip-top`}>
+                            Add more
+                          </Tooltip>
+                        }
+                      >
+                        <>
+                        <button className="addmore" onClick={handleShow}>+</button>
+                        </>
+                      </OverlayTrigger> 
+                      <OverlayTrigger 
+                        overlay={
+                          <Tooltip id={`tooltip-top`}>
+                            Fetch New
+                          </Tooltip>
+                        }
+                      >
+                        <>
+                        <button className="addmore" onClick={FetchNew}><AiOutlineReload /></button>
+                        </>
+                      </OverlayTrigger> |</span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder="تقييم الحصان"
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={ColorCode}
                       value={ColorCode}
                       onChange={setColorCode}
@@ -350,8 +260,8 @@ const RaceCourseForm = () => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
-                
+                </div>
+
                 {/* <div className="row mainrow">
                   <div className="col-sm">
                     <Select
@@ -386,21 +296,18 @@ const RaceCourseForm = () => {
                       isSearchable={true}
                     />
                     <span className="spanForm">
-                      
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/nationality')}>+</button>
-        </OverlayTrigger> 
-                      
-                      
-                       |</span>
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/nationality")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
@@ -440,6 +347,34 @@ const RaceCourseForm = () => {
           </div>
         </div>
       </div>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <h2>Add Color</h2>
+        </Modal.Header>
+        <Modal.Body>
+          <ColorPopUp />
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <h2>Add Nationality</h2>
+        </Modal.Header>
+        <Modal.Body>
+          <NationalityPopUp />
+        </Modal.Body>
+      </Modal>
     </Fragment>
   );
 };

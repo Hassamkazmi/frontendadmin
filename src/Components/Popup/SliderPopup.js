@@ -4,8 +4,7 @@ import React from "react";
 
 const SliderPopup = (data) => {
 
-    console.log(data,'data')
-
+    
     return (
         <>
             <div  >

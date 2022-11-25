@@ -1,14 +1,13 @@
-
 import React, { useEffect ,Fragment } from "react";
 import { fetchHorseKind , STATUSES } from "../../redux/getReducer/getHorseKind";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostJockey";
 import { Link } from "react-router-dom";
-
 import swal from 'sweetalert';
 import ScrollContainer from "react-indiana-drag-scroll";
-
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 
 const HorseKind = () => {
@@ -44,14 +43,7 @@ const HorseKind = () => {
   
     
     if (status === STATUSES.LOADING) {
-      return (
-          <h2
-          className="loader"
-          >
-            <div class="inner">
-      </div>
-          </h2>
-      );
+      return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
     }
   
     if (status === STATUSES.ERROR) {
@@ -90,7 +82,7 @@ const HorseKind = () => {
                         color: "rgba(0, 0, 0, 0.6)",
                       }}
                     >
-                      Toggle to Arabic
+                      
                     </h6>
     
                     <Link to="/horsekindform">
@@ -107,7 +99,7 @@ const HorseKind = () => {
                           <th>Name</th>
                           <th>Name Arabic </th>
                         
-                          <th>Short Code</th>
+                          <th>Short Name</th>
                  
                           <th>Action</th>
                         </tr>
@@ -120,7 +112,7 @@ const HorseKind = () => {
                                 <td>{item.NameEn}</td>
                                 <td>{item.NameAr}</td>
     
-    <td>{item.shortCode} </td>
+    <td>{item.shortName} </td>
   
     
     
@@ -129,9 +121,10 @@ const HorseKind = () => {
                               
                                 <td className="table_delete_btn1">
                            {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
-                                  <MdDelete
-                                    
-                                    onClick={() => handleRemove(item._id)}
+                           <MdDelete style={{
+                                  fontSize: "22px",
+                                }}
+                                    // onClick={() => handleRemove(item._id)}
                                   />
                              
                                 </td>

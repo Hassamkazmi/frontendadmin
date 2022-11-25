@@ -16,9 +16,12 @@ import DatePicker from "react-date-picker";
 import Moment from "react-moment";
 import swal from "sweetalert";
 import axios from "axios";
-import Rating from "react-rating";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+import ReactStars from "react-rating-stars-component";
+
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 
 const Gender = [
   { id: "1", value: "Male", label: "Male" },
@@ -26,6 +29,10 @@ const Gender = [
   { id: "3", value: "Cross Gender", label: "Cross Gender" },
 ];
 const Gelted = [
+  { id: "0", value: "false", label: "false" },
+  { id: "1", value: "true", label: "true" },
+];
+const HorseStatusAll = [
   { id: "0", value: "false", label: "false" },
   { id: "1", value: "true", label: "true" },
 ];
@@ -41,22 +48,21 @@ const Foals = [
   { id: "7", value: "8", label: "8" },
   { id: "8", value: "9", label: "9" },
   { id: "9", value: "10", label: "10" },
-  
 ];
 
 const HorseForm = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
-    const [isClearable, setIsClearable] = useState(true);
+  const [isClearable, setIsClearable] = useState(true);
 
   const { data: trainer } = useSelector((state) => state.trainer);
   const { data: owner } = useSelector((state) => state.owner);
   const { data: horse } = useSelector((state) => state.horse);
-  const {data: color} = useSelector((state) => state.color);
-  const {data: breeder} = useSelector((state) => state.breeder);
-  const {data: nationality} = useSelector((state) => state.nationality);
-  const {data: gender} = useSelector((state) => state.gender);
-  const {data: HorseKind} = useSelector((state) => state.HorseKind);
+  const { data: color } = useSelector((state) => state.color);
+  const { data: breeder } = useSelector((state) => state.breeder);
+  const { data: nationality } = useSelector((state) => state.nationality);
+  const { data: gender } = useSelector((state) => state.gender);
+  const { data: HorseKind } = useSelector((state) => state.HorseKind);
 
   useEffect(() => {
     dispatch(fetchOwner());
@@ -69,70 +75,109 @@ const HorseForm = () => {
     dispatch(fetchHorseKind());
   }, [dispatch]);
 
-  let horseoptions = horse === undefined ? <></> : horse.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let horseoptions =
+    horse === undefined ? (
+      <></>
+    ) : (
+      horse.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let horsekindoptions = HorseKind === undefined ? <></> : HorseKind.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let horsekindoptions =
+    HorseKind === undefined ? (
+      <></>
+    ) : (
+      HorseKind.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let traineroption =  trainer === undefined ? <></> : trainer.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let traineroption =
+    trainer === undefined ? (
+      <></>
+    ) : (
+      trainer.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let owneroption =   owner === undefined ? <></> : owner.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let owneroption =
+    owner === undefined ? (
+      <></>
+    ) : (
+      owner.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let AllColor = color === undefined ? <></> : color.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let AllColor =
+    color === undefined ? (
+      <></>
+    ) : (
+      color.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let AllBreeder = breeder === undefined ? <></> : breeder.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let AllBreeder =
+    breeder === undefined ? (
+      <></>
+    ) : (
+      breeder.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let AllNationality = nationality === undefined ? <></> : nationality.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let AllNationality =
+    nationality === undefined ? (
+      <></>
+    ) : (
+      nationality.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let AllGender = gender === undefined ? <></> : gender.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
-
+  let AllGender =
+    gender === undefined ? (
+      <></>
+    ) : (
+      gender.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
   // let jockeyoption =  jockey === undefined ? <></> : jockey.map(function (item) {
   //   return {
@@ -142,7 +187,10 @@ const HorseForm = () => {
   //   };
   // });
 
-  console.log(trainer,'trainer')
+  
+
+
+(trainer, "trainer");
   const [ActiveOwner, setActiveOwner] = useState("");
   // const [Jockey, setJockey] = useState("");
   const [Age, setAge] = useState("");
@@ -151,17 +199,17 @@ const HorseForm = () => {
   const [Owner, setOwner] = useState("");
   const [ActiveTrainer, setActiveTrainer] = useState("");
   // const [ActiveJockey, setActiveJockey] = useState("");
-  const [Breeder, setBreeder] = useState(""); 
+  const [Breeder, setBreeder] = useState("");
   // const [Trainer, setTrainer] = useState("");
   const [Remarks, setRemarks] = useState("");
-  // const [HorseRating, setHorseRating] = useState("");
+  const [HorseStatus, setHorseStatus] = useState("");
   const [Sex, setSex] = useState("");
   const [ColorID, setColor] = useState("");
   const [KindOfHorse, setKindOfHorse] = useState("");
   const [Dam, setDam] = useState("");
   const [Sire, setSire] = useState("");
   const [DOB, setDOB] = useState("");
-  const [CreationId,setCreationId] = useState("")
+  const [CreationId, setCreationId] = useState("");
   const [GSire, setGSire] = useState("");
   // const [WinningAmount, setWinningAmount] = useState("");
   const [OverAllRating, setOverAllRating] = useState("");
@@ -173,8 +221,8 @@ const HorseForm = () => {
   const [NationalityId, setNationalityId] = useState("");
   const [PurchasePrice, setPurchasePrice] = useState("");
   const [Rds, setRds] = useState("");
-  const [preview, setPreview] = useState()
- 
+  const [preview, setPreview] = useState();
+
   const submit = async (event) => {
     event.preventDefault();
     try {
@@ -185,10 +233,9 @@ const HorseForm = () => {
       formData.append("NameAr", NameAr);
       formData.append("Remarks", Remarks);
       formData.append("ActiveOwner", ActiveOwner.id);
-  
       // formData.append("ActiveJockey", ActiveJockey.id);
       // formData.append("Owner", Owner.id);
-      // formData.append("HorseRating", HorseRating);
+      formData.append("HorseStatus", HorseStatus);
       // formData.append("Jockey", Jockey.id);
       // formData.append("Trainer", Trainer.id);
       // formData.append("Trainer", ActiveTrainer.id);
@@ -210,88 +257,119 @@ const HorseForm = () => {
       formData.append("NationalityId", NationalityId.id);
       formData.append("CreationId", NationalityId.id);
       formData.append("PurchasePrice", PurchasePrice);
-      const response = await axios.post(`${window.env.API_URL}createhorse?keyword=&page=`,formData);
+      const response = await axios.post(
+        `${window.env.API_URL}createhorse?keyword=&page=`,
+        formData
+      );
       swal({
         title: "success!",
-        text: 'Data Submitted !',
+        text: "Data Submitted !",
         icon: "success",
         button: "OK",
       });
       history("/horse");
-       
-     
-    } 
-    catch (error) {
-      const err = error.response.data.message
+    } catch (error) {
+      const err = error.response.data.message;
       swal({
         title: "Error!",
         text: err,
         icon: "error",
         button: "OK",
       });
-      
-    
     }
   };
   useEffect(() => {
     if (!image) {
-        setPreview(undefined)
-        return
+      setPreview(undefined);
+      return;
     }
 
-    const objectUrl = URL.createObjectURL(image)
-    setPreview(objectUrl)
+    const objectUrl = URL.createObjectURL(image);
+    setPreview(objectUrl);
 
     // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl)
-}, [image])
-console.log(color,'color')
-const onSelectFile = e => {
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [image]);
+  
 
+
+(color, "color");
+  const onSelectFile = (e) => {
     // I've kept this example simple by using the first image instead of multiple
-    setimage(e.target.files[0])
-  console.log(image,'image')
+    setimage(e.target.files[0]);
+    
 
-  }
+
+(image, "image");
+  };
   const isSubmitData =
-  // ActiveOwner === "" ||
-  // Age === "" ||
-  // NameEn === "" ||
-  // NameAr === "" ||
-  // Owner === "" ||
-  // ActiveTrainer === "" ||
-  // Remarks === "" ||
-  // Sex === "" ||
-  // Color === "" ||
-  // KindOfHorse === "" ||
-  // Dam === "" ||
-  // Sire === "" ||
-  // GSire === "" ||
-  // WinningAmount === "" ||
-  // OverAllRating === "" ||
-  image === null ||
-  image === undefined
+    // ActiveOwner === "" ||
+    // Age === "" ||
+    // NameEn === "" ||
+    // NameAr === "" ||
+    // Owner === "" ||
+    // ActiveTrainer === "" ||
+    // Remarks === "" ||
+    // Sex === "" ||
+    // Color === "" ||
+    // KindOfHorse === "" ||
+    // Dam === "" ||
+    // Sire === "" ||
+    // GSire === "" ||
+    // WinningAmount === "" ||
+    // OverAllRating === "" ||
+    image === null || image === undefined;
 
   const convert = (num) => {
-
     var date = new Date(num);
-    var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
-      "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+    var months = [
+      "يناير",
+      "فبراير",
+      "مارس",
+      "إبريل",
+      "مايو",
+      "يونيو",
+      "يوليو",
+      "أغسطس",
+      "سبتمبر",
+      "أكتوبر",
+      "نوفمبر",
+      "ديسمبر",
     ];
-    var days = ["اﻷحد", "اﻷثنين", "الثلاثاء", "اﻷربعاء", "الخميس", "الجمعة", "السبت"];
-    var delDateString = days[date.getDay()] + ', ' + date.getDate() + ' ' + months[date.getMonth()] + ', ' + date.getFullYear();
+    var days = [
+      "اﻷحد",
+      "اﻷثنين",
+      "الثلاثاء",
+      "اﻷربعاء",
+      "الخميس",
+      "الجمعة",
+      "السبت",
+    ];
+    var delDateString =
+      days[date.getDay()] +
+      ", " +
+      date.getDate() +
+      " " +
+      months[date.getMonth()] +
+      ", " +
+      date.getFullYear();
 
-    console.log(delDateString);
+    
 
-  
+
+(delDateString);
 
     return delDateString;
   };
+
+  const DateMax =   new Date();
+  
+
+
+(STARS,'Starts')
   return (
     <Fragment>
- 
       <div className="page">
-       
         <div className="rightsidedata">
           <div
             style={{
@@ -301,25 +379,34 @@ const onSelectFile = e => {
             <div className="Headers">Add Horse</div>
             <div className="form">
               <form onSubmit={submit}>
-              
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Horse Name"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Horse Name"
+                      className="mb-3"
                       onChange={(e) => setNameEn(e.target.value)}
                       name="Name"
                       value={NameEn}
-                      required
-                    /><span className="spanForm">|</span>
+                    >
+                      <Form.Control type="text" placeholder=" Horse Name" />
+                    </FloatingLabel>
+
+                    <span className="spanForm"> |</span>
                   </div>
+
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم "
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="اسم"
+                      className="mb-3 floatingInputAr"
                       onChange={(e) => setNameAr(e.target.value)}
                       name="Name"
                       value={NameAr}
-                    ></input>
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="text" placeholder="اسم" />
+                    </FloatingLabel>
                   </div>
                 </div>
                 <div className="row mainrow">
@@ -327,6 +414,8 @@ const onSelectFile = e => {
                     <DatePicker
                       onChange={setDOB}
                       value={DOB}
+                      // minDate={DateMin}
+                      maxDate={DateMax}
                       dayPlaceholder="  "
                       monthPlaceholder="Date Of Birth"
                       yearPlaceholder=""
@@ -336,58 +425,16 @@ const onSelectFile = e => {
                   </div>
 
                   <div className="col-sm">
-                    <input type="text"
-                     placeholder="Date Of Birth" 
-                     onChange={setDOB}
-                     value={convert(DOB)}
-                     style={{ direction: "rtl" }}
-                     />
+                    <input
+                      type="text"
+                      placeholder="Date Of Birth"
+                      onChange={setDOB}
+                      value={DOB}
+                      style={{ direction: "rtl" }}
+                    />
                   </div>
                 </div>
-                {/* <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Age"
-                      onChange={(e) => setAge(e.target.value)}
-                      name="Name"
-                      value={Age}
-                      required
-                      type="number"
-                    ></input><span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      onChange={(e) => setAge(e.target.value)}
-                      name="Name"
-                      value={Age}
-                      style={{ direction: "rtl" }}
-                      type="number"
-                      placeholder="سن"
-                      required
-                    ></input>
-                  </div>
-                </div> */}
-                
-                {/* <div className="row mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Winning Amount"
-                      type="number"
-                      onChange={(e) => setWinningAmount(e.target.value)}
-                      value={WinningAmount}
-                    ></input><span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      placeholder="كسب"
-                      style={{ direction: "rtl" }}
-                      type="number"
-                    ></input>
-                  </div>
-                </div> */}
-                 <div className="row mainrow">
+                <div className="row mainrow">
                   <div className="col-sm">
                     <Select
                       placeholder={<div>Select Foal</div>}
@@ -399,13 +446,14 @@ const onSelectFile = e => {
                       classNamePrefix="select"
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> |</span>
+                    />
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder="تقييم الحصان"
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={Foal}
                       value={Foal}
                       onChange={setFoal}
@@ -414,8 +462,8 @@ const onSelectFile = e => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
-                
+                </div>
+
                 {/* <div className="row mainrow">
                   <div className="col-sm">
                     <input
@@ -436,24 +484,31 @@ const onSelectFile = e => {
                 </div> */}
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Remarks"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Remarks"
+                      className="mb-3"
                       onChange={(e) => setRemarks(e.target.value)}
-                      name="Remarks"
                       value={Remarks}
-                      required
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control type="text" placeholder="Details" />
+                    </FloatingLabel>
+
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="ملاحظات"
+                      className="mb-3 floatingInputAr"
                       style={{ direction: "rtl" }}
-                      placeholder="طول المسار"
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder="ملاحظات" />
+                    </FloatingLabel>
                   </div>
                 </div>
 
-                
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
@@ -463,13 +518,14 @@ const onSelectFile = e => {
                       options={horsekindoptions}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> |</span>
+                    />
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder={<div>حدد جيلتي</div>}
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={KindOfHorse}
                       onChange={setKindOfHorse}
                       options={horsekindoptions}
@@ -478,38 +534,81 @@ const onSelectFile = e => {
                     />
                   </div>
                 </div>
+
+                <div className="row mainrow">
+                  <div className="col-sm">
+                    <Select
+                      placeholder={<div>Select Horse Status</div>}
+                      defaultValue={HorseStatus}
+                      onChange={setHorseStatus}
+                      options={HorseStatusAll}
+                      isClearable={true}
+                      isSearchable={true}
+                    />
+                    <span className="spanForm"> |</span>
+                  </div>
+                  <div className="col-sm">
+                    <Select
+                      required
+                      placeholder={<div>حدد جيلتي</div>}
+                      className="selectdir"
+                      defaultValue={HorseStatus}
+                      onChange={setHorseStatus}
+                      options={HorseStatusAll}
+                      isClearable={true}
+                      isSearchable={true}
+                    />
+                  </div>
+                </div>
                 <div className="row mainrow">
                   <div className="starstyle">
                     <p>Stars</p>
-                  <div>
-                  <Rating
-                    fractions={2}
-                    stop={5}
-                    initialRating={STARS}
-                    onClick={rate => setSTARS(rate)}
-                  />
-                  </div>
+                    <div className="starcss">
+                    <ReactStars
+                      count={5}
+                      onChange={setSTARS}
+                      size={44}
+                      a11y= {true}
+                      isHalf= {true}
+                      activeColor="#19469D "
+                    />
+                      {/* <Rating
+                        fractions={2}
+                        stop={5}
+                        initialRating={STARS}
+                        onClick={(rate) => setSTARS(rate)}
+                      /> */}
+                    </div>
                   </div>
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Purchase Price"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Purchase Price"
+                      className="mb-3"
                       onChange={(e) => setPurchasePrice(e.target.value)}
-                      name="Name"
                       value={PurchasePrice}
-                      type='number'
-                      required
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control
+                        type="number"
+                        placeholder="Purchase Price"
+                      />
+                    </FloatingLabel>
+
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم "
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="سعر الشراء"
+                      className="mb-3 floatingInputAr"
                       onChange={(e) => setPurchasePrice(e.target.value)}
-                      name="Name"
                       value={PurchasePrice}
-                    ></input>
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="number" placeholder="سعر الشراء" />
+                    </FloatingLabel>
                   </div>
                 </div>
                 <div className="row mainrow">
@@ -521,13 +620,14 @@ const onSelectFile = e => {
                       options={Gelted}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> |</span>
+                    />
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder={<div>حدد جيلتي</div>}
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={Rds}
                       onChange={setRds}
                       options={Gelted}
@@ -535,8 +635,8 @@ const onSelectFile = e => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
-                
+                </div>
+
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
@@ -546,28 +646,26 @@ const onSelectFile = e => {
                       options={AllBreeder}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm">
-                      
-                      
+                    />
+                    <span className="spanForm">
                       <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/breeder')}>+</button>
-        </OverlayTrigger> 
-                      
-                       |</span>
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/breeder")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder={<div>حدد نوع الجنس</div>}
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={Breeder}
                       onChange={setBreeder}
                       options={AllBreeder}
@@ -575,39 +673,36 @@ const onSelectFile = e => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
+                </div>
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
-                    
                       placeholder={<div>Select Color</div>}
                       defaultValue={ColorID}
                       onChange={setColor}
                       options={AllColor}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> 
-                    
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/color')}>+</button>
-        </OverlayTrigger> 
-                      
-                    
-                    |</span>
+                    />
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/color")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder={<div>حدد نوع الجنس</div>}
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={ColorID}
                       onChange={setColor}
                       options={AllColor}
@@ -615,40 +710,36 @@ const onSelectFile = e => {
                       isSearchable={true}
                     />
                   </div>
-                </div>  
+                </div>
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
-                    
                       placeholder={<div>Select Gender</div>}
                       defaultValue={Sex}
                       onChange={setSex}
                       options={AllGender}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> 
-                    
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/gender')}>+</button>
-        </OverlayTrigger> 
-                      
-                    
-                    
-                    |</span>
+                    />
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/gender")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder={<div>حدد نوع الجنس</div>}
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={Sex}
                       onChange={setSex}
                       options={Gender}
@@ -656,7 +747,7 @@ const onSelectFile = e => {
                       isSearchable={true}
                     />
                   </div>
-                </div>            
+                </div>
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
@@ -666,7 +757,8 @@ const onSelectFile = e => {
                       options={horseoptions}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> |</span>
+                    />
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
@@ -674,7 +766,7 @@ const onSelectFile = e => {
                       placeholder={<div>اكتب للبحث عن مواليد</div>}
                       defaultValue={Sire}
                       onChange={setSire}
-                      className='selectdir'
+                      className="selectdir"
                       options={horseoptions}
                       isClearable={true}
                       isSearchable={true}
@@ -690,7 +782,8 @@ const onSelectFile = e => {
                       options={horseoptions}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> |</span>
+                    />
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
@@ -699,7 +792,7 @@ const onSelectFile = e => {
                       defaultValue={Dam}
                       onChange={setDam}
                       options={horseoptions}
-                      className='selectdir'
+                      className="selectdir"
                       isClearable={true}
                       isSearchable={true}
                     />
@@ -714,7 +807,8 @@ const onSelectFile = e => {
                       options={horseoptions}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> |</span>
+                    />
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
@@ -723,7 +817,7 @@ const onSelectFile = e => {
                       defaultValue={GSire}
                       onChange={setGSire}
                       options={horseoptions}
-                      className='selectdir'
+                      className="selectdir"
                       isClearable={true}
                       isSearchable={true}
                     />
@@ -738,36 +832,29 @@ const onSelectFile = e => {
                       options={owneroption}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm">
-                      
-                      
+                    />
+                    <span className="spanForm">
                       <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/ownerform')}>+</button>
-        </OverlayTrigger> 
-                      
-                      
-                       |</span>
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/ownerform")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
-                    <Select         className='selectdir'
-                      placeholder={
-                        <div >
-                          اكتب للبحث عن المالك
-                        </div>
-                      }
+                    <Select
+                      className="selectdir"
+                      placeholder={<div>اكتب للبحث عن المالك</div>}
                       defaultValue={Owner}
                       onChange={setOwner}
                       options={owneroption}
-              
                       isClearable={true}
                       isSearchable={true}
                     />
@@ -817,20 +904,20 @@ const onSelectFile = e => {
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
-                    
                       placeholder={<div>Select Gelted</div>}
                       defaultValue={isGelted}
                       onChange={setisGelted}
                       options={Gelted}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> |</span>
+                    />
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder={<div>حدد جيلتي</div>}
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={isGelted}
                       onChange={setisGelted}
                       options={Gelted}
@@ -838,7 +925,7 @@ const onSelectFile = e => {
                       isSearchable={true}
                     />
                   </div>
-                </div>              
+                </div>
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
@@ -848,25 +935,25 @@ const onSelectFile = e => {
                       options={AllNationality}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> 
-                    
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/nationality')}>+</button>
-        </OverlayTrigger> 
-                    
-                    |</span>
+                    />
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/nationality")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
-                    <Select         className='selectdir'
+                    <Select
+                      className="selectdir"
                       placeholder={
                         <div style={{ direction: "rtl" }}>
                           اكتب للبحث عن الجنسية
@@ -879,7 +966,7 @@ const onSelectFile = e => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
+                </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
@@ -890,11 +977,13 @@ const onSelectFile = e => {
                       options={AllNationality}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> |</span>
+                    />
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <Select         className='selectdir'
+                    <Select
+                      className="selectdir"
                       placeholder={
                         <div style={{ direction: "rtl" }}>
                           اكتب للبحث عن الجنسية
@@ -907,35 +996,7 @@ const onSelectFile = e => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
-                {/* <div className="row mainrow">
-                  <div className="col-sm">
-                    <Select
-                      placeholder={<div>Enter Cap</div>}
-                      defaultValue={Trainer}
-                      onChange={setTrainer}
-                      options={traineroption}
-                      isClearable={true}
-                      isSearchable={true}
-                      
-                    /><span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm ">
-                    <Select         className='selectdir'
-                      placeholder={
-                        <div style={{ direction: "rtl" }}>
-                          Type to search trainer
-                        </div>
-                      }
-                      defaultValue={Trainer}
-                      onChange={setTrainer}
-                      options={traineroption}
-                      isClearable={true}
-                      isSearchable={true}
-                    />
-                  </div>
-                </div> */}
+                </div>
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
@@ -945,29 +1006,25 @@ const onSelectFile = e => {
                       options={traineroption}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> 
-                    
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/trainerform')}>+</button>
-        </OverlayTrigger> 
-                    
-                    
-                    
-                    
-                    
-                    |</span>
+                    />
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/trainerform")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
-                    <Select         className='selectdir'
+                    <Select
+                      className="selectdir"
                       placeholder={
                         <div style={{ direction: "rtl" }}>
                           اكتب للبحث عن المدرب النشط
@@ -981,100 +1038,23 @@ const onSelectFile = e => {
                     />
                   </div>
                 </div>
-                {/* <div className="row mainrow">
-                  <div className="col-sm">
-                    <Select
-                      placeholder={<div>Type to search trainer</div>}
-                      defaultValue={ActiveTrainer}
-                      onChange={setActiveTrainer}
-                      options={traineroption}
-                      isClearable={true}
-                      isSearchable={true}
-                    /><span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <Select         className='selectdir'
-                      placeholder={
-                        <div style={{ direction: "rtl" }}>
-                          اكتب للبحث عن المدرب النشط
-                        </div>
-                      }
-                      defaultValue={ActiveTrainer}
-                      onChange={setActiveTrainer}
-                      options={traineroption}
-                      isClearable={true}
-                      isSearchable={true}
-                    />
-                  </div>
-                </div> */}
-                {/* <div className="row mainrow">
-                  <div className="col-sm " >
-                    <Select
-                      placeholder={<div>Type to search Jockey</div>}
-                    
-                      defaultValue={Jockey}
-                      onChange={setJockey}
-                      options={jockeyoption}
-                      isClearable={true}
-                      isSearchable={true}
-                    /><span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <Select         className='selectdir'
-                      placeholder={
-                        <div style={{ direction: "rtl" }}>
-                          Type to search Jockey
-                        </div>
-                      }
-                      defaultValue={Jockey}
-                      onChange={setJockey}
-                      options={jockeyoption}
-                      isClearable={true}
-                      isSearchable={true}
-                    />
-                  </div>
-                </div> */}
-                {/* <div className="row mainrow">
-                  <div className="col-sm">
-                    <Select
-                      placeholder={<div>Type to search Active Jockey</div>}
-                      defaultValue={ActiveJockey}
-                      onChange={setActiveJockey}
-                      style
-                      options={jockeyoption}
-                      isClearable={true}
-                      isSearchable={true}
-                    /><span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <Select         className='selectdir'
-        
-                      placeholder={
-                        <div>
-                          Type to search Active Jockey
-                        </div>
-                      }
-                      defaultValue={ActiveJockey}
-                      onChange={setActiveJockey}
-                      options={jockeyoption}
-                      isClearable={true}
-                      isSearchable={true}
-                    />
-                  </div>
-                </div> */}
-                
-
-             
 
                 <div className="ButtonSection">
-              <div>
-                  <input type='file' onChange={onSelectFile} className="formInput"/>
-                  {image &&  <img src={preview}  alt="" className="PreviewImage" /> }
+                  <div>
+                    <input
+                      type="file"
+                      onChange={onSelectFile}
+                      className="formInput"
+                    />
+                    {image && (
+                      <img src={preview} alt="" className="PreviewImage" />
+                    )}
                   </div>
-                  <button type="submit" disabled={isSubmitData} className="SubmitButton">
+                  <button
+                    type="submit"
+                    disabled={isSubmitData}
+                    className="SubmitButton"
+                  >
                     Add Horse
                   </button>
                 </div>

@@ -1,22 +1,21 @@
-import React, { useState ,useEffect} from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { useNavigate,useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert";
 import { fetchSingleOwner } from "../../redux/getReducer/getSingleOwner";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import DatePicker from "react-date-picker";
 import Select from "react-select";
 
 const EditOwnerForm = () => {
-    const { data: singleowner } = useSelector((state) => state.singleowner);
-    const { id } = useParams()
+  const { data: singleowner } = useSelector((state) => state.singleowner);
+  const { id } = useParams();
   const dispatch = useDispatch();
   const history = useNavigate();
   const [Name, setName] = useState(singleowner.Name);
   const [image, setImage] = useState(singleowner.image);
 
-  console.log(singleowner,"Araha hu")
   const fileSelected = (event) => {
     const image = event.target.files[0];
     setImage(image);
@@ -39,13 +38,11 @@ const EditOwnerForm = () => {
       });
     } catch (error) {
       alert(error.message);
-      console.log(singleowner,"hai")
     }
   };
   return (
     <>
-           <div className="page">
-     
+      <div className="page">
         <div className="rightsidedata">
           <div
             style={{
@@ -63,7 +60,8 @@ const EditOwnerForm = () => {
                       name="Name"
                       value={Name}
                       required
-                    ></input><span className="spanForm"> |</span>
+                    ></input>
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
@@ -76,7 +74,6 @@ const EditOwnerForm = () => {
                 <div className="row mainrow">
                   <div className="col-sm">
                     <DatePicker
-                      
                       dayPlaceholder=""
                       monthPlaceholder="Registration Date"
                       yearPlaceholder=""
@@ -94,34 +91,32 @@ const EditOwnerForm = () => {
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
-                    
                       placeholder={<div>Select Color</div>}
                       // defaultValue={SilkColor}
                       // onChange={setSilkColor}
                       // options={AllColor}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm">
-                      
+                    />
+                    <span className="spanForm">
                       <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/color')}>+</button>
-        </OverlayTrigger> 
-                      
-                       |</span>
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/color")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder={<div>حدد نوع الجنس</div>}
-                      className='selectdir'
+                      className="selectdir"
                       // defaultValue={SilkColor}
                       // onChange={setSilkColor}
                       // options={AllColor}
@@ -139,24 +134,25 @@ const EditOwnerForm = () => {
                       // options={AllNationality}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> 
-                    
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/nationality')}>+</button>
-        </OverlayTrigger> 
-                    |</span>
+                    />
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/nationality")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
-                    <Select         className='selectdir'
+                    <Select
+                      className="selectdir"
                       placeholder={
                         <div style={{ direction: "rtl" }}>
                           اكتب للبحث عن الجنسية
@@ -169,16 +165,13 @@ const EditOwnerForm = () => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
+                </div>
                 <div className="ButtonSection">
                   <label>
                     <input type="file" size="60" onChange={fileSelected} />
                   </label>
-                  <button
-                    type="submit"
-                    className="SubmitButton"
-                  >
-                   Update
+                  <button type="submit" className="SubmitButton">
+                    Update
                   </button>
                 </div>
               </form>

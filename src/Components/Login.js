@@ -7,6 +7,7 @@ import { userLogin } from '../redux/postReducer/UserPost'
 import '../Components/CSS/login.css'
 import {useform} from 'react-hook-form'
 import {BsEyeFill} from 'react-icons/bs'
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -30,11 +31,11 @@ const Login = () => {
 
   const submitForm = (data) => {
     dispatch(userLogin(data))  
-     
+    toast(error || customError)
   }
 
   // const AllFilled = (register.Email !== '') && (register.password !== "")
-  // console.log(AllFilled,'register')
+  // 
   return (
     <div className='mainlogin'>
     <div className='loginheader'>
@@ -46,8 +47,8 @@ const Login = () => {
    
    <form onSubmit={handleSubmit(submitForm)}>
    <h3 className='WelcomeAdmin'>Welcome Admin</h3>
-      {error && <Error>{error}</Error>}
-      {customError && <Error>{customError}</Error>}
+      {/* {error && <Error>{error}</Error>}
+      {customError && <Error>{customError}</Error>} */}
       <div className='form-group'>
       
         <input

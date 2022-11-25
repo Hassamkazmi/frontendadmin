@@ -7,12 +7,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { fetchHorse ,STATUSES } from "../../../redux/getReducer/getHorseSlice";
+import { fetchverdict } from '../../../redux/getReducer/getVerdict'
 import Select from "react-select";
 import swal from "sweetalert";
 import { AiOutlinePlus } from "react-icons/ai";
 import axios from "axios";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+
 
 const LocalItem = () => {
 
@@ -27,18 +29,17 @@ const LocalItem = () => {
 const PublishRace = () => {
   const [InputData, SetinputData] = useState("");
   const [InputData2, SetinputData2] = useState("");
-  const [VerdictName, SetVerdictName] = useState();
-  const [Gate , setGate] = useState('')
+  const [VerdictName, SetVerdictName] = useState('');
+  const [Gate , setGate] = useState(1)
   const [JockeyData, SetJockeyData] = useState("");
   const [items, setitems] = useState(LocalItem());
   const { data: jockey } = useSelector((state) => state.jockey);
   const { data: horse } = useSelector((state) => state.horse);
+  const { data: verdict } = useSelector((state) => state.verdict);
 
   const history = useNavigate();
   const { state } = useLocation();
   const { RaceId } = state;
-  // const RaceId='dsada'
-  console.log(RaceId ,'RaceId')
   let horseoptions = horse.map(function (item) {
     return {
       id: item._id,
@@ -54,28 +55,43 @@ const PublishRace = () => {
     };
   });
 
+  let AllVerdict = verdict.map(function (item) {
+    return {
+      id: item._id,
+      value: item.NameEn,
+      label: item.NameEn,
+    };
+  });
+
   const dispatch = useDispatch();
-  const VerdictEntry = [`1,${VerdictName},${InputData.id},${JockeyData.id}`,];
-console.log(VerdictName,'VerdictName')
+  const VerdictEntry = [`${VerdictName.id},${Gate},${InputData.id}`];
+
   useEffect(() => {
     dispatch(fetchHorse());
     dispatch(fetchjockey());
+    dispatch(fetchverdict());
   }, [dispatch]);
+
   useEffect(() => {
     localStorage.setItem("verdict", JSON.stringify(items));
   }, [items]);
+
   const addItem = () => {
     setitems([...items, VerdictEntry]);
-    SetinputData("");
+    setGate(Gate + 1)
   };
   const Remove = () => {
     setitems([]);
+    setGate(1)
   };
   const submit = async (event) => {
     event.preventDefault();
     try {
-      console.log(items, "VerdictEntry");
-      // const response = await axios.post(`${window.env.API_URL}addverdicts/${RaceId}`, {VerdictEntry:items});
+      
+
+
+(items, "VerdictEntry");
+      const response = await axios.post(`${window.env.API_URL}addverdicts/${RaceId}`, {VerdictEntry:items});
       const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
       history("/races");
       swal({
@@ -120,15 +136,24 @@ console.log(VerdictName,'VerdictName')
                     <span>Rank #</span>
                     <span>Verdict Name</span>
                     <span>Horse Name</span>
-                    <span>Jockey Name</span>
+                    {/* <span>Jockey Name</span> */}
                   </div>
                 </div>
                 {items.map((e, i) => {
                 return (
                   <div className="myselectiondata">
                     <span >{i + 1}</span>
-                    <span>
+                    {/* <span>
                       <input type='text' value={VerdictName} onChange={() => SetVerdictName(e.target.value)} placeholder='Verdict Name' className='textverdict' />
+                    </span> */}
+                     <span>
+                      <Select
+                        defaultValue={VerdictName}
+                        onChange={SetVerdictName}
+                        options={AllVerdict}
+                        isClearable={false}
+                        isSearchable={true}
+                      />
                     </span>
                     <span>
                       <Select
@@ -139,7 +164,7 @@ console.log(VerdictName,'VerdictName')
                         isSearchable={true}
                       />
                     </span>
-                    <span>
+                    {/* <span>
                       <Select
                         defaultValue={JockeyData}
                         onChange={SetJockeyData}
@@ -147,8 +172,16 @@ console.log(VerdictName,'VerdictName')
                         isClearable={false}
                         isSearchable={true}
                       />
-                    </span>
-                  
+                    </span> */}
+                    {/* <span>
+                      <Select
+                        defaultValue={InputData}
+                        onChange={SetinputData}
+                        options={horseoptions}
+                        isClearable={false}
+                        isSearchable={true}
+                      />
+                    </span> */}
                   </div>
                 );
               })}
@@ -165,6 +198,13 @@ console.log(VerdictName,'VerdictName')
                     onClick={submit}
                   >
                     Publish
+                  </button>
+                  <button
+                    className="SubmitButton"
+                   
+                    onClick={Remove}
+                  >
+                    Remove
                   </button>
         </div>
       </div>

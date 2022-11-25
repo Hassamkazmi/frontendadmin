@@ -12,6 +12,9 @@ import { BsFillEyeFill } from "react-icons/bs";
 import ScrollContainer from "react-indiana-drag-scroll";
 import Moment from "react-moment";
 import axios from "axios";
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
+
 
 const Statistic = () => {
   const [show, setShow] = useState(false);
@@ -50,11 +53,7 @@ const Statistic = () => {
   };
 
   if (status === STATUSES.LOADING) {
-    return (
-      <h2 className="loader">
-        <div class="inner"></div>
-      </h2>
-    );
+    return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
   }
 
   if (status === STATUSES.ERROR) {
@@ -88,7 +87,7 @@ const Statistic = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                 <Link to="/jockeyform">
@@ -156,7 +155,7 @@ const Statistic = () => {
                               })}>
                                   <BiEdit />
                                 <MdDelete
-                                  onClick={() => handleRemove(item._id)}
+                                  // onClick={() => handleRemove(item._id)}
                                 />
                               </td>
                             </tr>

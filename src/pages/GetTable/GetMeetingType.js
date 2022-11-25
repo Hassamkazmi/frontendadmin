@@ -6,6 +6,8 @@ import { remove } from "../../redux/postReducer/PostJockey";
 import { Link, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import ScrollContainer from "react-indiana-drag-scroll";
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const GetMeetingType = () => {
   const dispatch = useDispatch();
@@ -33,15 +35,11 @@ const GetMeetingType = () => {
       }
     });
     dispatch(remove(Id));
-    history("/color");
+    history("/");
   };
 
   if (status === STATUSES.LOADING) {
-    return (
-      <h2 className="loader">
-        <div class="inner"></div>
-      </h2>
-    );
+    return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
   }
 
   if (status === STATUSES.ERROR) {
@@ -66,21 +64,21 @@ const GetMeetingType = () => {
             }}
           >
             <div className="Header ">
-              <h4>Color Listings</h4>
+              <h4>Meeting Listings</h4>
 
               <div>
                 <h6
                   style={{
                     marginRight: "100px",
                     alignItems: "center",
-                    color: "rgba(0, 0, 0, 0.6)",
+                    meeting: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
-                <Link to="/color">
-                  <button>Add Color</button>
+                <Link to="/meeting">
+                  <button>Add meeting</button>
                 </Link>
               </div>
             </div>
@@ -111,7 +109,10 @@ const GetMeetingType = () => {
                               <td className="table_delete_btn1">
                                 {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
                                 <MdDelete
-                                  onClick={() => handleRemove(item._id)}
+                                style={{
+                                  fontSize: "22px",
+                                }}
+                                  // onClick={() => handleRemove(item._id)}
                                 />
                               </td>
                             </tr>

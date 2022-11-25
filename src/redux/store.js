@@ -39,6 +39,10 @@ import getRaceKind from './getReducer/getRaceKind';
 import getHorseKind from './getReducer/getHorseKind';
 import getToBePublishRace from './getReducer/getToBePublishRace';
 import { fetchtobeRaceResult } from './getReducer/getRaceToBeAwait';
+import getGroundType from './getReducer/getGroundType';
+import getEquipment from './getReducer/getEquipment';
+import getResultSlice from './getReducer/getResultSlice';
+import getVerdict from './getReducer/getVerdict';
 
 const store = configureStore({
     reducer: {
@@ -81,7 +85,12 @@ const store = configureStore({
         raceKinds:getRaceKind,
         HorseKind:getHorseKind,
         tobePublishRace:getToBePublishRace,
-        tobeRaceResult:fetchtobeRaceResult
+        tobeRaceResult:fetchtobeRaceResult,
+        groundtype:getGroundType,
+        equipment:getEquipment,
+        Result:getResultSlice,
+        verdict:getVerdict
+        
     },
 });
 

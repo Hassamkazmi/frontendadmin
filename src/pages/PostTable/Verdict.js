@@ -1,4 +1,4 @@
-import React, { useEffect,Fragment } from "react";
+import React, { useEffect, Fragment } from "react";
 import Moment from "moment";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchjockey } from "../../redux/getReducer/getJockeySlice";
@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { fetchHorse ,STATUSES } from "../../redux/getReducer/getHorseSlice";
+import { fetchHorse, STATUSES } from "../../redux/getReducer/getHorseSlice";
 import Select from "react-select";
 import swal from "sweetalert";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -15,7 +15,6 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
 const LocalItem = () => {
-
   const list = localStorage.getItem("lists");
   if (list) {
     return JSON.parse(localStorage.getItem("lists"));
@@ -28,7 +27,7 @@ const Verdict = () => {
   const [InputData, SetinputData] = useState("");
   const [InputData2, SetinputData2] = useState("");
   const [VerdictName, SetVerdictName] = useState();
-  const [Gate , setGate] = useState('')
+  const [Gate, setGate] = useState("");
   const [JockeyData, SetJockeyData] = useState("");
   const [items, setitems] = useState(LocalItem());
   const { data: jockey } = useSelector((state) => state.jockey);
@@ -37,7 +36,7 @@ const Verdict = () => {
   const history = useNavigate();
   const { state } = useLocation();
   // const { RaceId } = state;
-  const RaceId='dsada'
+  const RaceId = "dsada";
 
   let horseoptions = horse.map(function (item) {
     return {
@@ -55,10 +54,7 @@ const Verdict = () => {
   });
 
   const dispatch = useDispatch();
-  const VerdictEntry = [
-    `1,${VerdictName},${InputData.id},${JockeyData.id}`,
-  ];
-console.log(VerdictName,'VerdictName')
+  const VerdictEntry = [`1,${VerdictName},${InputData.id},${JockeyData.id}`];
   useEffect(() => {
     dispatch(fetchHorse());
     dispatch(fetchjockey());
@@ -76,12 +72,16 @@ console.log(VerdictName,'VerdictName')
   const submit = async (event) => {
     event.preventDefault();
     try {
-      console.log(items, "VerdictEntry");
-      const response = await axios.post(`${window.env.API_URL}addverdicts/${RaceId}`, {VerdictEntry:items});
-      const response1 = await axios.put(`${window.env.API_URL}/publishrace/${RaceId}`);
+      const response = await axios.post(
+        `${window.env.API_URL}addverdicts/${RaceId}`,
+        { VerdictEntry: items }
+      );
+      const response1 = await axios.put(
+        `${window.env.API_URL}/publishrace/${RaceId}`
+      );
       history("/publishrace", {
         state: {
-          RaceId: RaceId
+          RaceId: RaceId,
         },
       });
       history("/races");
@@ -102,8 +102,6 @@ console.log(VerdictName,'VerdictName')
     }
   };
 
-  
-
   return (
     <Fragment>
       <div className="page">
@@ -117,62 +115,62 @@ console.log(VerdictName,'VerdictName')
           </div>
 
           <Tabs defaultActiveKey="0" id="justify-tab-example" className="mb-3">
-
-           {
-            items.map((data,index) => {
-              return(
-                <Tab eventKey={index} title={`Verdict # ${index + 1 }`} className="Verdicttab">
-                <div className="myselecthorse">
-                  <div className="myselecthorsedata">
-                    <span>Rank #</span>
-                    <span>Verdict Name</span>
-                    <span>Horse Name</span>
-                    <span>Jockey Name</span>
+            {items.map((data, index) => {
+              return (
+                <Tab
+                  eventKey={index}
+                  title={`Verdict # ${index + 1}`}
+                  className="Verdicttab"
+                >
+                  <div className="myselecthorse">
+                    <div className="myselecthorsedata">
+                      <span>Rank #</span>
+                      <span>Verdict Name</span>
+                      <span>Horse Name</span>
+                      <span>Jockey Name</span>
+                    </div>
                   </div>
-                </div>
-                {items.map((e, i) => {
-                return (
-                  <div className="myselectiondata">
-                    <span >{i + 1}</span>
-                    <span>
-                      <input type='text' value={VerdictName} onChange={() => SetVerdictName(e.target.value)} placeholder='Verdict Name' className='textverdict' />
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={InputData}
-                        onChange={SetinputData}
-                        options={horseoptions}
-                        isClearable={false}
-                        isSearchable={true}
-                      />
-                    </span>
-                    <span>
-                      <Select
-                        defaultValue={JockeyData}
-                        onChange={SetJockeyData}
-                        options={AllJockey}
-                        isClearable={false}
-                        isSearchable={true}
-                      />
-                    </span>
-                  
-                  </div>
-                );
-              })}
-
-                </Tab> 
-              )
-            })
-           }
-
+                  {items.map((e, i) => {
+                    return (
+                      <div className="myselectiondata">
+                        <span>{i + 1}</span>
+                        <span>
+                          <input
+                            type="text"
+                            value={VerdictName}
+                            onChange={() => SetVerdictName(e.target.value)}
+                            placeholder="Verdict Name"
+                            className="textverdict"
+                          />
+                        </span>
+                        <span>
+                          <Select
+                            defaultValue={InputData}
+                            onChange={SetinputData}
+                            options={horseoptions}
+                            isClearable={false}
+                            isSearchable={true}
+                          />
+                        </span>
+                        <span>
+                          <Select
+                            defaultValue={JockeyData}
+                            onChange={SetJockeyData}
+                            options={AllJockey}
+                            isClearable={false}
+                            isSearchable={true}
+                          />
+                        </span>
+                      </div>
+                    );
+                  })}
+                </Tab>
+              );
+            })}
           </Tabs>
-          <button
-                    className="SubmitButton"
-                    type="submit"
-                    onClick={submit}
-                  >
-                    Publish
-                  </button>
+          <button className="SubmitButton" type="submit" onClick={submit}>
+            Publish
+          </button>
         </div>
       </div>
     </Fragment>

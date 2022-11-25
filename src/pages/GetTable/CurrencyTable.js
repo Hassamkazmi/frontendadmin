@@ -1,14 +1,13 @@
-
-import React, { useEffect ,Fragment } from "react";
+import React, { useEffect ,Fragment } from "react"
 import { fetchcurrency ,STATUSES } from "../../redux/getReducer/getCurrency";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostJockey";
 import { Link, useNavigate } from "react-router-dom";
-
 import swal from 'sweetalert';
 import ScrollContainer from "react-indiana-drag-scroll";
-
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 
 
@@ -34,25 +33,18 @@ const CurrencyTable = () => {
             icon: "success",
           });
           dispatch(remove(Id));
-          history("/currency");
+          history("/currencylist");
         } else {
           swal("Your imaginary file is safe!");
         }
       });
       dispatch(remove(Id));
-      history("/currency");
+      history("/currencylist");
     };
   
     
     if (status === STATUSES.LOADING) {
-      return (
-          <h2
-          className="loader"
-          >
-            <div class="inner">
-      </div>
-          </h2>
-      );
+      return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
     }
   
     if (status === STATUSES.ERROR) {
@@ -90,7 +82,7 @@ const CurrencyTable = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                 <Link to="/currency">
@@ -130,8 +122,10 @@ const CurrencyTable = () => {
                             <td className="table_delete_btn1">
                        {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
                               <MdDelete
-                                
-                                onClick={() => handleRemove(item._id)}
+                                style={{
+                                  fontSize: "22px",
+                                }}
+                                // onClick={() => handleRemove(item._id)}
                               />
                          
                             </td>

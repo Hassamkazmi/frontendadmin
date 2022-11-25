@@ -4,6 +4,9 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { add } from "../../redux/postReducer/PostAds";
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
+
 
 import swal from "sweetalert";
 
@@ -29,7 +32,7 @@ const AdsForm = () => {
       await axios.post(`${window.env.API_URL}/uploadAds`, formData);
       swal({
         title: "Success!",
-        text: "Data has been added successfully ",
+        text: "Data has been added Successfully",
         icon: "success",
         button: "OK",
       });
@@ -72,7 +75,10 @@ const AdsForm = () => {
   
     
       setImage(e.target.files[0])
-    console.log(image,'image')
+    
+
+
+(image,'image')
   
     }
 
@@ -87,48 +93,80 @@ const AdsForm = () => {
               marginTop: "30px",
             }}
           >
-            <div className="Headers">Create Ads</div>
+            <div className="Headers">Create Advertisement</div>
             <div className="form">
               <form onSubmit={submit}>
-                <div className="row mainrow">
+              <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder=" Title"
-                      onChange={(e) => setTitleEn(e.target.value)}
-                      name="Name"
-                      value={TitleEn}
-                      required
-                    ></input><span className="spanForm"> |</span>
+                
+                    
+                    
+                    <FloatingLabel
+        controlId="floatingInput"
+        label="Title"
+        className="mb-3"
+onChange={(e) => setTitleEn(e.target.value)}
+                  name="Name"
+                  value={TitleEn}
+> 
+        <Form.Control type="text" placeholder="Title" />
+      </FloatingLabel>
+                
+                    
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم "
-                      onChange={(e) => setTitleAr(e.target.value)}
-                      name="Name"
-                      value={TitleAr}
-                    ></input>
+                  <FloatingLabel
+        controlId="floatingInput"
+        label="عنوان"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setTitleAr(e.target.value)}
+                  name="Name"
+                  value={TitleAr}
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="عنوان"     />
+      </FloatingLabel>
                   </div>
                 </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Detail"
-                      name="Detail"
-                      onChange={(e) => setDescriptionEn(e.target.value)}
-                      value={DescriptionEn}
-                    ></input><span className="spanForm"> |</span>
+                  
+       
+                    
+                    
+       <FloatingLabel
+        controlId="floatingInput"
+        label="Description"
+        className="mb-3"
+        onChange={(e) => setDescriptionEn(e.target.value)}
+        value={DescriptionEn}
+> 
+        <Form.Control type="text" placeholder="Description" />
+      </FloatingLabel>
+                    
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                     placeholder="التفاصيل"  style={{ direction: "rtl" }} 
-                      name="Detail"
-                      onChange={(e) => setDescriptionAr(e.target.value)}
-                      value={DescriptionAr}
-                    ></input>
+             
+
+
+<FloatingLabel
+        controlId="floatingInput"
+        label="التفاصيل"
+        className="mb-3 floatingInputAr"
+        onChange={(e) => setDescriptionAr(e.target.value)}
+                      value={DescriptionAr}  
+                      style={{ direction: "rtl" }}
+             
+> 
+        <Form.Control type="text" placeholder="التفاصيل"     />
+      </FloatingLabel>
                   </div>
                 </div>
 
@@ -138,7 +176,7 @@ const AdsForm = () => {
             {image &&  <img src={preview}  className="PreviewImage" alt=""/> }
         </div>
 
-                  <button type='submit' className='SubmitButton' disabled={isSubmitData}>Add Owner</button>
+                  <button type='submit' className='SubmitButton' disabled={isSubmitData}>Create Ads</button>
 
                 </div>
               </form>

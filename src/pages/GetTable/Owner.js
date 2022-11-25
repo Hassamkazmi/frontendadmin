@@ -11,6 +11,8 @@ import {MdDelete} from "react-icons/md"
 import ScrollContainer from 'react-indiana-drag-scroll';
 import Moment from "react-moment";
 import {BiEdit} from 'react-icons/bi'
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const Owner = () => {
 
@@ -39,29 +41,19 @@ const Owner = () => {
   },[dispatch]);
  
   if (status === STATUSES.LOADING) {
-    return (
-      <h2
-      className="loader"
-      >
-        
-      </h2>
-    );
+        return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
   }
 
   if (status === STATUSES.ERROR) {
-    return (
-      <h2
-        style={{
-          margin: "100px",
-        }}
-      >
-        Something went wrong!
-      </h2>
-    );
+    return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
   }
 
 
-console.log(owner)
+
+
+
+(owner)
 
   return (
     <>
@@ -85,7 +77,7 @@ console.log(owner)
                      color: "rgba(0, 0, 0, 0.6)",
                    }}
                  >
-                   Toggle to Arabic
+                   
                  </h6>
  
                  <Link to="/ownerform">
@@ -128,18 +120,22 @@ console.log(owner)
                              </Moment></td>
                     
                       <td>{item.OwnerDataNationalityData.NameEn}</td> 
-                         <td>{item.SilkColorData === null ? <>N/A</> :<>{item.SilkColorData.NameEn}</> }</td>
+                         <td>
+                          <img src={item.OwnerIDData[0].OwnerSilkColor} alt='' />
+                         </td>
                          <td>
                            <img src={item.image} alt="" />
                          </td>
-                        <td style={{textAlign: 'center'}}><MdDelete/>
+                        <td style={{textAlign: 'center'}}><MdDelete style={{
+                                  fontSize: "22px",
+                                }}/>
                         
                        
-                         <BiEdit onClick={() => navigate('/editowner',{
+                         {/* <BiEdit onClick={() => navigate('/editowner',{
                                 state:{
                                   ownerid:item._id
                                 }
-                              })}/>
+                              })}/> */}
                         
                         </td>
                        </tr>

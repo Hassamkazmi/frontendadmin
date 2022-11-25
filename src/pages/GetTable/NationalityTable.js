@@ -1,17 +1,13 @@
-
-
 import React, { useEffect ,Fragment } from "react";
-
 import { fetchnationality ,STATUSES } from "../../redux/getReducer/getNationality";
 import { useDispatch, useSelector } from "react-redux";
-
 import { MdDelete } from "react-icons/md";
 import { remove } from "../../redux/postReducer/PostJockey";
 import { Link, useNavigate } from "react-router-dom";
-
 import { BiEdit } from "react-icons/bi";
 import swal from 'sweetalert';
-
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -53,14 +49,7 @@ const NationalityTable = () => {
   
     
     if (status === STATUSES.LOADING) {
-      return (
-          <h2
-          className="loader"
-          >
-            <div class="inner">
-      </div>
-          </h2>
-      );
+      return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
     }
   
     if (status === STATUSES.ERROR) {
@@ -95,7 +84,7 @@ const NationalityTable = () => {
                     color: "rgba(0, 0, 0, 0.6)",
                   }}
                 >
-                  Toggle to Arabic
+                  
                 </h6>
 
                 <Link to="/nationality">
@@ -146,10 +135,12 @@ const NationalityTable = () => {
                             </td>
 
                             <td className="table_delete_btn1">
-                       <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link> 
+                       {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
                               <MdDelete
-                                
-                                onClick={() => handleRemove(item._id)}
+                                style={{
+                                  fontSize: "22px",
+                                }}
+                                // onClick={() => handleRemove(item._id)}
                               />
                          
                             </td>

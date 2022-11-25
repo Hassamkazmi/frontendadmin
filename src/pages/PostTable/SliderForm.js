@@ -1,16 +1,19 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 
 const SliderForm = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const [TitleEn, setTitleEn] = useState("");
   const [TitleAr, setTitleAr] = useState("");
+  const [Url, setUrl] = useState();
   const [image, setImage] = useState();
-const [preview,setPreview] = useState()
+  const [preview, setPreview] = useState();
 
   const submit = async (event) => {
     event.preventDefault();
@@ -19,7 +22,11 @@ const [preview,setPreview] = useState()
       formData.append("image", image);
       formData.append("TitleEn", TitleEn);
       formData.append("TitleAr", TitleAr);
-      const response = await axios.post(`${window.env.API_URL}uploadSlider`, formData);
+      formData.append("Url", Url);
+      const response = await axios.post(
+        `${window.env.API_URL}uploadSlider`,
+        formData
+      );
       history("/slider");
       swal({
         title: "Success!",
@@ -33,31 +40,28 @@ const [preview,setPreview] = useState()
   };
   useEffect(() => {
     if (!image) {
-        setPreview(undefined)
-        return
+      setPreview(undefined);
+      return;
     }
 
-    const objectUrl = URL.createObjectURL(image)
-    setPreview(objectUrl)
+    const objectUrl = URL.createObjectURL(image);
+    setPreview(objectUrl);
 
     // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl)
-}, [image])
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [image]);
 
-const onSelectFile = e => {
+  const onSelectFile = (e) => {
+    setImage(e.target.files[0]);
+    
 
-  
-    setImage(e.target.files[0])
-  console.log(image,'image')
 
-  }
-  const isSubmitData =
-    TitleAr === "" || TitleEn === "" ;
+(image, "image");
+  };
+  const isSubmitData = TitleAr === "" || TitleEn === "";
   return (
     <>
-     
       <div className="page">
-  
         <div className="rightsidedata">
           <div
             style={{
@@ -67,45 +71,79 @@ const onSelectFile = e => {
             <div className="Headers">Add Slider</div>
             <div className="form">
               <form onSubmit={submit}>
-                <div className="row  mainrow">
+                <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder=" Name"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Title"
+                      className="mb-3"
                       onChange={(e) => setTitleEn(e.target.value)}
                       name="Name"
                       value={TitleEn}
-                      
-                      required
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control type="text" placeholder="Title" />
+                    </FloatingLabel>
+
+                    <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="عنوان"
+                      className="mb-3 floatingInputAr"
                       onChange={(e) => setTitleAr(e.target.value)}
                       name="Name"
                       value={TitleAr}
-                      placeholder="اسم "
-                    ></input>
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="text" placeholder="عنوان" />
+                    </FloatingLabel>
                   </div>
                 </div>
 
-       
-        
-         <div className='ButtonSection'>
-                <div>
-            <input type='file' onChange={onSelectFile} className="formInput"/>
-            {image &&  <img src={preview} className="PreviewImage" alt="" /> }
-        </div>
+                <div className="row mainrow">
+                  <div className="col-sm">
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Slider URL"
+                      className="mb-3"
+                      onChange={(e) => setUrl(e.target.value)}
+                      name="Name"
+                      value={Url}
+                    >
+                      <Form.Control type="text" placeholder="Title" />
+                    </FloatingLabel>
 
-                  <button type='submit' onClick={submit} className='SubmitButton'>Add Slider</button>
+                  </div>
 
+                
                 </div>
-        </form>
+
+                <div className="ButtonSection">
+                  <div>
+                    <input
+                      type="file"
+                      onChange={onSelectFile}
+                      className="formInput"
+                    />
+                    {image && (
+                      <img src={preview} className="PreviewImage" alt="" />
+                    )}
+                  </div>
+
+                  <button
+                    type="submit"
+                    onClick={submit}
+                    className="SubmitButton"
+                  >
+                    Add Slider
+                  </button>
                 </div>
-                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        
       </div>
     </>
   );

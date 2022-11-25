@@ -4,7 +4,9 @@ import React from "react";
 
 const JockeyPopup = (data) => {
 
-    console.log(data,'data')
+    
+
+
 
     return (
         <>

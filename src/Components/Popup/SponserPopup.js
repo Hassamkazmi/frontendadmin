@@ -6,7 +6,8 @@ import '../CSS/modal.css'
 
 const SponsorModal = (data) => {
 
-console.log(data)
+
+
     return (
       <div  >
       <div >

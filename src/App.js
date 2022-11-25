@@ -70,6 +70,15 @@ import AdminRole from "./pages/Setting/AdminRole";
 import RaceKind from "./pages/GetTable/RaceKind";
 import RaceKindForm from "./pages/PostTable/RaceKind";
 import PublishRace from "./pages/PostTable/RaceForm/AddVerdict";
+import Equipment from "./pages/PostTable/Equipment";
+import EquiptmentTable from "./pages/GetTable/EquiptmentTable";
+import Verdicts from "./pages/PostTable/Verdicts";
+import VerdictTable from "./pages/GetTable/VerdictTable";
+import GroundType from "./pages/PostTable/GroundType";
+import GroundTypeTable from "./pages/GetTable/GroundTypeTable";
+import TestTable from './pages/PostTable/RaceForm/RaceTwo'
+import RaceCard from './pages/PostTable/RaceCard'
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   useEffect(() => {
@@ -86,7 +95,7 @@ function App() {
     <>
       <Provider store={store}>
         <div className="App">
-          
+          <ToastContainer />
           <BrowserRouter>
             <Header />
             <div style={{display: "flex"}}>
@@ -99,7 +108,6 @@ function App() {
                 <Route path='/AdminProfile' element={<AdminProfile />} />
                 <Route path='/subscriberlist' element={<SubscriberList />} />
                 <Route path='/AddRole' element={<AdminRole />} />
-
                 <Route path="/racecourse" element={<RaceCourse />} />
                 <Route path="/races" element={<Races />} />
                 <Route path="/competition" element={<Competition />} />
@@ -136,6 +144,8 @@ function App() {
                 <Route path='/racename' element={<Racename/>} />
                 <Route path="racenameform" element={<Racenameform/>}/>
                 <Route path='/horsekindform' element={<Horsekindform/>}/>
+                <Route path='/ground' element={<GroundType/>}/>
+                <Route path='/groundlist' element={<GroundTypeTable/>}/>
                 <Route path="tracklength" element={<Tracklength/>} />
                 <Route path='/tracklengthform' element={<Tracklengthform/>}/>
                 <Route path='/horsekind' element={<HorseKind/>}/>
@@ -143,14 +153,20 @@ function App() {
                 <Route path="/nationality" element={<Nationality/>}/>
                 <Route path="/currency" element={<Currency/>}/>
                 <Route path="/meeting" element={<MeetingType/>}/>
+                <Route path="/equipment" element={<Equipment/>}/>
+                <Route path="/equipmentlist" element={<EquiptmentTable/>}/>
                 <Route path="/breeder" element={<Breeder/>}/>
                 <Route path="/getmeeting" element={<GetMeetingType/>}/>
                 <Route path="/meeting" element={<MeetingType/>}/>
                 <Route path="/slider" element={<Slider />} />
                 <Route path="/addverdict" element={<Verdict />} />
+                <Route path="/verdict" element={<Verdicts />} />
+                <Route path="/verdictlist" element={<VerdictTable />} />
                 <Route path="/racekindform" element={<RaceKindForm />} />
                 <Route path="/racekind" element={<RaceKind />} />
                 <Route path="/fullpublishrace" element={<PublishRace />} />
+                <Route path="/testTable" element={<TestTable />} />
+                <Route path="/racecard" element={<RaceCard />} />
 
                 {/* Edit Pages */}
                 <Route path="/editjockey" element={<EditJockey />} />

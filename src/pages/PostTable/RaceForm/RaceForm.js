@@ -8,24 +8,31 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { fetchracecourse } from "../../../redux/getReducer/getRaceCourseSlice";
-import { fetchSponsor } from '../../../redux/getReducer/getSponsorSlice'
+import { fetchSponsor } from "../../../redux/getReducer/getSponsorSlice";
 import { fetchMeeting } from "../../../redux/getReducer/getMeeting";
 import { fetchRaceType } from "../../../redux/getReducer/getRacetype";
-import {fetchRaceName}  from '../../../redux/getReducer/getRaceName'
+import { fetchRaceName } from "../../../redux/getReducer/getRaceName";
 import { fetchTrackLength } from "../../../redux/getReducer/getTracklength";
 import { fetchRaceKind } from "../../../redux/getReducer/getRaceKind";
 import Select from "react-select";
 import swal from "sweetalert";
-import DateTimePicker from 'react-datetime-picker';
+import DateTimePicker from "react-datetime-picker";
 import axios from "axios";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import { AiOutlineReload } from "react-icons/ai";
+import { Modal } from "react-bootstrap";
+import Racename from "../Racenameform";
+import MeetingTypePopUp from "../MeetingType";
+import RaceTypePopup from '../Racetypeform'
+import TrackLengthPopup from '../Tracklengthform'
 
-
-const RaceKinds = [
-  { id: "1", value: "Flat", label: "Flat" },
-  { id: "2", value: "Turf", label: "Turf" },
-];
+// const RaceKinds = [
+//   { id: "1", value: "Flat", label: "Flat" },
+//   { id: "2", value: "Turf", label: "Turf" },
+// ];
 const WeatherTypes = [
   { id: "1", value: "Sunny", label: "Sunny" },
   { id: "2", value: "Cloudy", label: "Cloudy" },
@@ -33,13 +40,13 @@ const WeatherTypes = [
 const RaceStatuss = [
   { id: "1", value: "Cancel", label: "Cancel" },
   { id: "2", value: "Due", label: "Due" },
-  { id: "3", value: "Awaited", label: "Awaited" },
+  { id: "2", value: "Live", label: "Live" },
+  { id: "2", value: "End", label: "End" },
 ];
 const GroundTypes = [
   { id: "1", value: "Green", label: "Green" },
   { id: "2", value: "Flat", label: "Flat" },
 ];
-
 
 const RaceForm = () => {
   const { data: racecourse } = useSelector((state) => state.racecourse);
@@ -47,88 +54,171 @@ const RaceForm = () => {
   const { data: sponsor } = useSelector((state) => state.sponsor);
   const { data: meeting } = useSelector((state) => state.meeting);
   const { data: RaceType } = useSelector((state) => state.RaceType);
-  const {data : RaceName} = useSelector((state)=> state.RaceName );
-  const {data : trackLength} = useSelector((state)=> state.trackLength );
+  const { data: RaceName } = useSelector((state) => state.RaceName);
+  const { data: trackLength } = useSelector((state) => state.trackLength);
   const { data: raceKinds, status } = useSelector((state) => state.raceKinds);
 
   const history = useNavigate();
   const dispatch = useDispatch();
 
-  let racecourses = racecourse === undefined ? <></> : racecourse.map(function (item) {
-    return {
-      id: item._id,
-      value: item.TrackNameEn,
-      label: item.TrackNameEn,
-    };
-  });
+  let racecourses =
+    racecourse === undefined ? (
+      <></>
+    ) : (
+      racecourse.map(function (item) {
+        return {
+          id: item._id,
+          value: item.TrackNameEn,
+          label: item.TrackNameEn,
+        };
+      })
+    );
 
-  let JockeyForTheRace = jockey === undefined ? <></> : jockey.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-      
-    };
-  });
+  let JockeyForTheRace =
+    jockey === undefined ? (
+      <></>
+    ) : (
+      jockey.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let Racenameoptions = RaceName === undefined ? <></> : RaceName.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let Racenameoptions =
+    RaceName === undefined ? (
+      <></>
+    ) : (
+      RaceName.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let SponsorForTheRace = sponsor === undefined ? <></> : sponsor.map(function (item) {
-    return {
-      id: item._id,
-      value: item.image,
-      label: <div><img src={item.image} height="30px" width="30px"/> </div>,
-    };
-  });
+  let SponsorForTheRace =
+    sponsor === undefined ? (
+      <></>
+    ) : (
+      sponsor.map(function (item) {
+        return {
+          id: item._id,
+          value: item.image,
+          label: (
+            <div>
+              <img src={item.image} height="30px" width="30px" />{" "}
+            </div>
+          ),
+        };
+      })
+    );
 
-  let SponsorForTheRaceAr = sponsor === undefined ? <></> : sponsor.map(function (item) {
-    return {
-      id: item._id,
-      value: item.TitleAr,
-      label: item.TitleAr,
-    };
-  });
+  let SponsorForTheRaceAr =
+    sponsor === undefined ? (
+      <></>
+    ) : (
+      sponsor.map(function (item) {
+        return {
+          id: item._id,
+          value: item.TitleAr,
+          label: item.TitleAr,
+        };
+      })
+    );
 
-  let MeetingTypes =  meeting === undefined ? <></> : meeting.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let MeetingTypes =
+    meeting === undefined ? (
+      <></>
+    ) : (
+      meeting.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let RaceTypes =  RaceType === undefined ? <></> : RaceType.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let RaceTypes =
+    RaceType === undefined ? (
+      <></>
+    ) : (
+      RaceType.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  let TrackLenght =  trackLength === undefined ? <></> : trackLength.map(function (item) {
-    return {
-      id: item._id,
-      value: item.TrackLength,
-      label: item.TrackLength,
-    };
-  });
+  let TrackLenght =
+    trackLength === undefined ? (
+      <></>
+    ) : (
+      trackLength.map(function (item) {
+        return {
+          id: item._id,
+          value: item.TrackLength,
+          label: item.TrackLength,
+        };
+      })
+    );
 
-  let OprtionRaceKind =  raceKinds === undefined ? <></> : raceKinds.map(function (item) {
-    return {
-      id: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+  let OprtionRaceKind =
+    raceKinds === undefined ? (
+      <></>
+    ) : (
+      raceKinds.map(function (item) {
+        return {
+          id: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
 
-  
-  const [MeetingType , setMeetingType ] = useState("");
+  const [showName, setShowName] = useState(false);
+  const [showType, setShowType] = useState(false);
+  const [showRaceType, setShowRaceType] = useState(false);
+  const [showTrackLength, setShowTrackLength] = useState(false);
+
+  const handleCloseTrackLength = () => setShowName(false);
+  const handleCloseName = () => setShowName(false);
+  const handleCloseType = () => setShowType(false);
+  const handleCloseRaceType = () => setShowRaceType(false);
+
+  const handleShowTrackLength = async () => {
+    await setTrackLength(true);
+  };
+
+  const handleShowName = async () => {
+    await setShowName(true);
+  };
+  const handleShowType = async () => {
+    await setShowType(true);
+  };
+
+  const handleShowRaceType = async () => {
+    await setShowRaceType(true);
+  };
+
+  const FetchNew = () => {
+    dispatch(fetchracecourse());
+    dispatch(fetchjockey());
+    dispatch(fetchSponsor());
+    dispatch(fetchMeeting());
+    dispatch(fetchRaceType());
+    dispatch(fetchRaceName());
+    dispatch(fetchTrackLength());
+    dispatch(fetchRaceKind());
+  };
+
+  const [MeetingType, setMeetingType] = useState("");
   const [RaceNameEn, setRaceNameEn] = useState("");
   const [MeetingCode, setMeetingCode] = useState("");
   const [Ground, setGround] = useState("");
@@ -148,7 +238,6 @@ const RaceForm = () => {
   const [image, setImage] = useState();
   const [preview, setPreview] = useState();
   const [RaceTyp, setRaceType] = useState("");
-
   const [FirstPrice, setFirstPrice] = useState("");
   const [SecondPrice, setSecondPrice] = useState("");
   const [ThirdPrice, setThirdPrice] = useState("");
@@ -156,6 +245,7 @@ const RaceForm = () => {
   const [FifthPrice, setFifthPrice] = useState("");
   const [SixthPrice, setSixthPrice] = useState("");
 
+  var today = new Date();
 
   useEffect(() => {
     dispatch(fetchracecourse());
@@ -173,19 +263,19 @@ const RaceForm = () => {
     const objectUrl = URL.createObjectURL(image);
     setPreview(objectUrl);
     return () => URL.revokeObjectURL(objectUrl);
-  }, [image,dispatch]);
+  }, [image, dispatch]);
 
   const submit = async (event) => {
     event.preventDefault();
     try {
       const formData = new FormData();
       formData.append("RaceName", RaceNameEn.id);
-      formData.append("MeetingType",MeetingType.id );
+      formData.append("MeetingType", MeetingType.id);
       formData.append("MeetingCode", MeetingCode);
       formData.append("Ground", Ground.id);
       formData.append("RaceNameAr", RaceNameAr);
       formData.append("RaceType", RaceTyp.id);
-      formData.append("RaceKind", RaceKind.id)
+      formData.append("RaceKind", RaceKind.id);
       formData.append("DescriptionEn", DescriptionEn);
       formData.append("DescriptionAr", DescriptionAr);
       formData.append("DayNTime", DayNTime);
@@ -204,17 +294,20 @@ const RaceForm = () => {
       formData.append("TrackLength", TrackLength.id);
       formData.append("ActiveJockeyForTheRace", ActiveJockeyForTheRace.id);
       formData.append("image", image);
-      const response = await axios.post(`${window.env.API_URL}/createrace`, formData);
+      const response = await axios.post(
+        `${window.env.API_URL}/createrace`,
+        formData
+      );
       swal({
         title: "success!",
         text: "Data Submitted !",
         icon: "success",
         button: "OK",
       });
-      const RaceId = response.data.data._id
+      const RaceId = response.data.data._id;
       history("/publishrace", {
         state: {
-          RaceId: RaceId
+          RaceId: RaceId,
         },
       });
     } catch (error) {
@@ -227,7 +320,6 @@ const RaceForm = () => {
       });
     }
   };
-  
 
   const isSubmitData =
     RaceKind === "" ||
@@ -240,10 +332,16 @@ const RaceForm = () => {
 
   const onSelectFile = (e) => {
     setImage(e.target.files[0]);
-    console.log(image, "image");
+    
+
+
+(image, "image");
   };
 
-  console.log(jockey,'jockey')
+  
+
+
+(jockey, "jockey");
   return (
     <>
       <div className="page">
@@ -256,7 +354,7 @@ const RaceForm = () => {
             <div className="Headers">Add Race</div>
             <div className="form">
               <form onSubmit={submit}>
-              <div className="row mainrow">
+                <div className="row mainrow">
                   <div className="col-sm">
                     <Select
                       placeholder={<div>Meeting Type</div>}
@@ -265,159 +363,195 @@ const RaceForm = () => {
                       options={MeetingTypes}
                       isClearable={true}
                       isSearchable={true}
-                      
                     />{" "}
-                    <span className="spanForm">  
-        <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/meeting')}>+</button>
-        </OverlayTrigger>
-     |</span>
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <>
+                          <button className="addmore" onClick={handleShowType}>
+                            +
+                          </button>
+                        </>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        overlay={
+                          <Tooltip id={`tooltip-top`}>Fetch New</Tooltip>
+                        }
+                      >
+                        <>
+                          {/* <button className="addmore" onClick={handleShow}>+</button> */}
+                          <button className="addmore" onClick={FetchNew}>
+                            <AiOutlineReload />
+                          </button>
+                        </>
+                      </OverlayTrigger>{" "}
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
                     <Select
                       placeholder={<div>طقس</div>}
+                      defaultValue={MeetingType}
                       className="selectdir"
                       options={MeetingTypes}
-                
                       isClearable={true}
                       isSearchable={true}
                     />
                   </div>
                 </div>
-                <div className="row  mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Meeting Code"
-                      onChange={(e) => setMeetingCode(e.target.value)}
-                      name="Name"
-                      value={MeetingCode}
-                      required
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="وصف "
-                      onChange={(e) => setDescriptionAr(e.target.value)}
-                      name="Name"
-                      value={DescriptionAr}
-                      required
-                    ></input>
-                  </div>
-                </div>
-                <div className="row  mainrow">
-                  <div className="col-sm">
-                  <Select
+                <div className="row mainrow">
+                <div className="col-sm">
+                    <Select
                       placeholder={<div>Race Name</div>}
                       defaultValue={RaceName}
                       onChange={setRaceNameEn}
                       options={Racenameoptions}
                       isClearable={true}
                       isSearchable={true}
-                    />
+                    />{" "}
                     <span className="spanForm">
-                       <OverlayTrigger
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/racenameform')}>+</button>
-        </OverlayTrigger> |</span>
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <>
+                          <button className="addmore" onClick={handleShowName}>
+                            +
+                          </button>
+                        </>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        overlay={
+                          <Tooltip id={`tooltip-top`}>Fetch New</Tooltip>
+                        }
+                      >
+                        <>
+                          {/* <button className="addmore" onClick={handleShow}>+</button> */}
+                          <button className="addmore" onClick={FetchNew}>
+                            <AiOutlineReload />
+                          </button>
+                        </>
+                      </OverlayTrigger>{" "}
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم العرق "
-                      onChange={(e) => setRaceNameAr(e.target.value)}
-                      value={RaceNameAr}
-                      name="Name"
-                    ></input>
+                    <Select
+                      placeholder={<div>طقس</div>}
+                      className="selectdir"
+                      defaultValue={RaceNameEn}
+                      onChange={setRaceNameEn}
+                      options={Racenameoptions}
+                      isClearable={true}
+                      isSearchable={true}
+                    />
                   </div>
                 </div>
                 <div className="row  mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Description"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Meeting Code"
+                      className="mb-3"
+                      onChange={(e) => setMeetingCode(e.target.value)}
+                      value={MeetingCode}
+                    >
+                      <Form.Control type="text" placeholder="Meeting Code" />
+                    </FloatingLabel>
+                    <span className="spanForm"> |</span>
+                  </div>
+
+                  <div className="col-sm">
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="رمز الاجتماع"
+                      className="mb-3 floatingInputAr"
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="text" placeholder="رمز الاجتماع" />
+                    </FloatingLabel>
+                  </div>
+                </div>
+
+                <div className="row  mainrow">
+                  <div className="col-sm">
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Description"
+                      className="mb-3"
                       onChange={(e) => setDescriptionEn(e.target.value)}
-                      name="Name"
                       value={DescriptionEn}
-                      required
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder="Description" />
+                    </FloatingLabel>
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="وصف "
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label=" وصف"
+                      className="mb-3 floatingInputAr"
                       onChange={(e) => setDescriptionAr(e.target.value)}
-                      name="Name"
                       value={DescriptionAr}
-                      required
-                    ></input>
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="text" placeholder=" وصف" />
+                    </FloatingLabel>
                   </div>
                 </div>
                 <div className="row  mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Weather Icon"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Weather Icon"
+                      className="mb-3"
                       onChange={(e) => setWeatherIcon(e.target.value)}
-                      name="Name"
                       value={WeatherIcon}
-                      required
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder="Weather Icon" />
+                    </FloatingLabel>
+                    <span className="spanForm"> |</span>
+                  </div>
+
+                  <div className="col-sm">
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label=" رمز الطقس"
+                      className="mb-3 floatingInputAr"
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="text" placeholder=" رمز الطقس" />
+                    </FloatingLabel>
+                  </div>
+                </div>
+                <div className="row  mainrow">
+                  <div className="col-sm">
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Weather Degree"
+                      className="mb-3"
+                      onChange={(e) => setWeatherDegree(e.target.value)}
+                      value={WeatherDegree}
+                    >
+                      <Form.Control
+                        type="number"
+                        placeholder="Weather Degree"
+                      />
+                    </FloatingLabel>
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
                     <input
                       style={{ direction: "rtl" }}
-                      placeholder="وصف "
-                      onChange={(e) => setWeatherIcon(e.target.value)}
-                      name="Name"
-                      value={WeatherIcon}
-                      required
-                      
-                    ></input>
-                  </div>
-                </div>
-                <div className="row  mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Weather Degree"
+                      placeholder="درجة الطقس "
                       onChange={(e) => setWeatherDegree(e.target.value)}
-                      name="Name"
                       value={WeatherDegree}
+                      type="number"
                       required
-                      type='number'
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="وصف "
-                      onChange={(e) => setWeatherDegree(e.target.value)}
-                      name="Name"
-                      value={WeatherDegree}
-                      type='number'
-                      required
-                      
                     ></input>
                   </div>
                 </div>
@@ -431,18 +565,29 @@ const RaceForm = () => {
                       isClearable={true}
                       isSearchable={true}
                     />
-                    <span className="spanForm">     
-                     <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/racetypeform')}>+</button>
-        </OverlayTrigger> |</span>
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <>
+                          <button className="addmore" onClick={handleShowType}>
+                            +
+                          </button>
+                        </>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        overlay={
+                          <Tooltip id={`tooltip-top`}>Fetch New</Tooltip>
+                        }
+                      >
+                        <>
+                          <button className="addmore" onClick={FetchNew}>
+                            <AiOutlineReload />
+                          </button>
+                        </>
+                      </OverlayTrigger>{" "}
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
@@ -472,18 +617,19 @@ const RaceForm = () => {
                       isSearchable={true}
                     />
                     <span className="spanForm">
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/tracklengthform')}>+</button>
-        </OverlayTrigger> 
-                       |</span>
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                       
+                      >
+                        <button
+                          className="addmore" 
+                          onClick={() => history("/tracklengthform")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
@@ -511,9 +657,7 @@ const RaceForm = () => {
                       options={GroundTypes}
                       isClearable={true}
                       isSearchable={true}
-                      
                     />{" "}
-                   
                     <span className="spanForm"> |</span>
                   </div>
 
@@ -527,32 +671,6 @@ const RaceForm = () => {
                     />
                   </div>
                 </div>
-                {/* <div className="row  mainrow">
-                  <div className="col-sm">
-                    <input
-                      placeholder="Track Length"
-                      onChange={(e) => setTrackLength(e.target.value)}
-                      name="Name"
-                      value={TrackLength}
-                      required
-                      type='number'
-                    ></input>
-                    <span className="spanForm"> |</span>
-                  </div>
-
-                  <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="وصف "
-                      onChange={(e) => setTrackLength(e.target.value)}
-                      name="Name"
-                      value={TrackLength}
-                      type='number'
-                      required
-                      
-                    ></input>
-                  </div>
-                </div> */}
                 <div className="row mainrow">
                   <div className="col-sm">
                     <Select
@@ -610,22 +728,20 @@ const RaceForm = () => {
                       options={racecourses}
                       isClearable={true}
                       isSearchable={true}
-
                     />
                     <span className="spanForm">
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/racecourseform')}>+</button>
-        </OverlayTrigger> 
-                      
-                       |</span>
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/racecourseform")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
@@ -649,19 +765,18 @@ const RaceForm = () => {
                       isSearchable={true}
                     />
                     <span className="spanForm">
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/jockeyform')}>+</button>
-        </OverlayTrigger> 
-                      
-                       |</span>
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/jockeyform")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
@@ -705,28 +820,23 @@ const RaceForm = () => {
                       placeholder={<div>Sponsor Image</div>}
                       defaultValue={Sponsor}
                       onChange={setSponsor}
-                      options={
-                        SponsorForTheRace
-                      }
+                      options={SponsorForTheRace}
                       isClearable={true}
                       isSearchable={true}
                     />
                     <span className="spanForm">
-                      
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/sponsorform')}>+</button>
-        </OverlayTrigger> 
-                      
-                      
-                       |</span>
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/sponsorform")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
 
                   <div className="col-sm">
@@ -743,22 +853,25 @@ const RaceForm = () => {
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Enter Cap"
-                      // onChange={(e) => setCap(e.target.value)}
-                      name="Name"
-                      // value={Cap}
-                      required
-                    ></input><span className="spanForm"> |</span>
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Enter Cap"
+                      className="mb-3"
+                    >
+                      <Form.Control type="text" placeholder="Enter Cap" />
+                    </FloatingLabel>
+
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
-                    <input
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="أدخل كاب"
+                      className="mb-3 floatingInputAr"
                       style={{ direction: "rtl" }}
-                      placeholder="اسم "
-                      // onChange={(e) => setCap(e.target.value)}
-                      name="Name"
-                      // value={Cap}
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder=" أدخل كاب" />
+                    </FloatingLabel>
                   </div>
                 </div>
                 <div className="row mainrow">
@@ -768,12 +881,14 @@ const RaceForm = () => {
                       value={DayNTime}
                       monthPlaceholder="Date "
                       dayPlaceholder="&"
+                      minDate={today}
+                      maxDate={new Date("02-29-2023")}
                       yearPlaceholder="Time"
                     />
                     <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
-                  <DateTimePicker
+                    <DateTimePicker
                       onChange={setDayNTime}
                       value={DayNTime}
                       monthPlaceholder="Date "
@@ -785,121 +900,147 @@ const RaceForm = () => {
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Enter 1st Prize"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Enter 1st Prize"
+                      className="mb-3"
                       onChange={(e) => setFirstPrice(e.target.value)}
-                      name="Name"
                       value={FirstPrice}
                      
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control  type="number" placeholder="Enter 1st Prize" />
+                    </FloatingLabel>
+                    <span className="spanForm"> |</span>
                   </div>
-                  {/* <div className="col-sm">
+                  <div className="col-sm">
                     <input
                       style={{ direction: "rtl" }}
-                      placeholder="اسم "
-                      onChange={(e) => setFirstPrice(e.target.value)}
-                      name="Name"
+                      placeholder="الجائزة الأولى "
                       value={FirstPrice}
+                      onChange={(e) => setFirstPrice(e.target.value)}
+                     
                     ></input>
-                  </div> */}
+                  </div>
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Enter 2nd Prize"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Enter 2nd Prize"
+                      className="mb-3"
                       onChange={(e) => setSecondPrice(e.target.value)}
-                      name="Name"
                       value={SecondPrice}
                      
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control  type="number" placeholder="Enter 2nd Prize" />
+                    </FloatingLabel>
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <input
                       style={{ direction: "rtl" }}
-                      placeholder="اسم "
-                      onChange={(e) => setSecondPrice(e.target.value)}
-                      name="Name"
+                      placeholder="الجائزة الثانية "
                       value={SecondPrice}
+                      onChange={(e) => setSecondPrice(e.target.value)}
+                     
                     ></input>
                   </div>
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Enter 3rd Prize"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Enter 3rd Prize"
+                      className="mb-3"
                       onChange={(e) => setThirdPrice(e.target.value)}
-                      name="Name"
                       value={ThirdPrice}
                      
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control  type="number" placeholder="Enter 3rd Prize" />
+                    </FloatingLabel>
+
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <input
+                      placeholder="الجائزة الثالثة"
                       style={{ direction: "rtl" }}
-                      placeholder="اسم "
                       onChange={(e) => setThirdPrice(e.target.value)}
-                      name="Name"
                       value={ThirdPrice}
+                     
                     ></input>
                   </div>
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Enter 4th Prize"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Enter 4th Prize"
+                      className="mb-3"
                       onChange={(e) => setFourthPrice(e.target.value)}
-                      name="Name"
                       value={FourthPrice}
                      
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control  type="number" placeholder="Enter 4th Prize" />
+                    </FloatingLabel>
+
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <input
                       style={{ direction: "rtl" }}
-                      placeholder="اسم "
+                      placeholder="الجائزة الرابعة "
                       onChange={(e) => setFourthPrice(e.target.value)}
-                      name="Name"
                       value={FourthPrice}
+                     
                     ></input>
                   </div>
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Enter 5th Prize"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Enter 5th Prize"
+                      className="mb-3"
                       onChange={(e) => setFifthPrice(e.target.value)}
-                      name="Name"
                       value={FifthPrice}
                      
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control  type="number" placeholder="Enter 5th Prize" />
+                    </FloatingLabel>
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <input
                       style={{ direction: "rtl" }}
-                      placeholder="اسم "
+                      placeholder="الجائزة الخامسة "
                       onChange={(e) => setFifthPrice(e.target.value)}
-                      name="Name"
                       value={FifthPrice}
+                     
                     ></input>
                   </div>
                 </div>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Enter 6th Prize"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Enter 6th Prize"
+                      className="mb-3"
                       onChange={(e) => setSixthPrice(e.target.value)}
-                      name="Name"
                       value={SixthPrice}
                      
-                    ></input><span className="spanForm"> |</span>
+                    >
+                      <Form.Control  type="number" placeholder="Enter 6th Prize" />
+                    </FloatingLabel>
+                    <span className="spanForm"> |</span>
                   </div>
                   <div className="col-sm">
                     <input
                       style={{ direction: "rtl" }}
-                      placeholder="اسم "
+                      placeholder="الجائزة السادسة"
                       onChange={(e) => setSixthPrice(e.target.value)}
-                      name="Name"
                       value={SixthPrice}
+                     
                     ></input>
                   </div>
                 </div>
@@ -916,7 +1057,7 @@ const RaceForm = () => {
                   </div>
 
                   <button type="submit" className="SubmitButton">
-                  Save & Add Horses
+                    Save & Add Horses
                   </button>
                 </div>
               </form>
@@ -924,6 +1065,49 @@ const RaceForm = () => {
           </div>
         </div>
       </div>
+      <Modal
+        show={showName}
+        onHide={handleCloseName}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <h2>Race Name</h2>
+        </Modal.Header>
+        <Modal.Body>
+          <Racename />
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={showType}
+        onHide={handleCloseType}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <h2>Meeting Type</h2>
+        </Modal.Header>
+        <Modal.Body>
+          <MeetingTypePopUp />
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={showRaceType}
+        onHide={handleCloseRaceType}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <h2>Race Type</h2>
+        </Modal.Header>
+        <Modal.Body>
+          <RaceTypePopup />
+        </Modal.Body>
+      </Modal>
+      
     </>
   );
 };

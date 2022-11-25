@@ -9,16 +9,17 @@ import { fetchnationality } from "../../redux/getReducer/getNationality";
 import swal from "sweetalert";
 import { useSelector } from "react-redux";
 import Select from "react-select";
-import Rating from "react-rating";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
 
 const NewsForm = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
-  const {data: nationality} = useSelector((state) => state.nationality);
-
+  const { data: nationality } = useSelector((state) => state.nationality);
+  var today = new Date();
 
   const [NameEn, setNameEn] = useState("");
   const [NameAr, setNameAr] = useState("");
@@ -86,32 +87,64 @@ const NewsForm = () => {
 
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
-  }, [image,dispatch]);
+  }, [image, dispatch]);
 
   const onSelectFile = (e) => {
     setImage(e.target.files[0]);
-    console.log(image, "image");
   };
   const ref = useRef();
 
   const convert = (num) => {
+    if (num) {
+      var date = new Date(num);
+      var months = [
+        "يناير",
+        "فبراير",
+        "مارس",
+        "إبريل",
+        "مايو",
+        "يونيو",
+        "يوليو",
+        "أغسطس",
+        "سبتمبر",
+        "أكتوبر",
+        "نوفمبر",
+        "ديسمبر",
+      ];
+      var days = [
+        "اﻷحد",
+        "اﻷثنين",
+        "الثلاثاء",
+        "اﻷربعاء",
+        "الخميس",
+        "الجمعة",
+        "السبت",
+      ];
+      var delDateString =
+        days[date.getDay()] +
+        " " +
+        date.getDate() +
+        " " +
+        months[date.getMonth()] +
+        " " +
+        date.getFullYear();
 
-    var date = new Date(num);
-    var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
-      "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
-    ];
-    var days = ["اﻷحد", "اﻷثنين", "الثلاثاء", "اﻷربعاء", "الخميس", "الجمعة", "السبت"];
-    var delDateString = days[date.getDay()] + ', ' + date.getDate() + ' ' + months[date.getMonth()] + ', ' + date.getFullYear();
-    console.log(delDateString);
-    return delDateString;
+      return delDateString;
+    }
   };
-  let AllNationality = nationality === undefined ? <></> : nationality.map(function (item) {
-    return {
-      ID: item._id,
-      value: item.NameEn,
-      label: item.NameEn,
-    };
-  });
+
+  let AllNationality =
+    nationality === undefined ? (
+      <></>
+    ) : (
+      nationality.map(function (item) {
+        return {
+          ID: item._id,
+          value: item.NameEn,
+          label: item.NameEn,
+        };
+      })
+    );
   return (
     <>
       <div className="page">
@@ -126,73 +159,92 @@ const NewsForm = () => {
               <form onSubmit={submit}>
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder=" Name"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Name"
+                      className="mb-3"
                       onChange={(e) => setNameEn(e.target.value)}
                       name="Name"
                       value={NameEn}
-                      required
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder="Name" />
+                    </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
-                      placeholder="اسم "
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="اسم"
+                      className="mb-3 floatingInputAr"
                       onChange={(e) => setNameAr(e.target.value)}
+                      name="Name"
                       value={NameAr}
-                    ></input>
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="text" placeholder="اسم" />
+                    </FloatingLabel>
                   </div>
                 </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Short Name "
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Short Name"
+                      className="mb-3"
                       onChange={(e) => setShortNameEn(e.target.value)}
-                      name="Name"
                       value={ShortNameEn}
-                      required
-                      type="text"
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder="Short Name" />
+                    </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="اسم قصير"
+                      className="mb-3 floatingInputAr"
                       onChange={(e) => setShortNameAr(e.target.value)}
-                      type="text"
+                      name="Name"
                       value={ShortNameAr}
-                      placeholder="اسم قصير"
-                    ></input>
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="text" placeholder="اسم قصير" />
+                    </FloatingLabel>
                   </div>
                 </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      placeholder="Remarks "
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Remarks"
+                      className="mb-3"
                       onChange={(e) => setRemarksEn(e.target.value)}
-                      name="Name"
                       value={RemarksEn}
-                      required
-                      type="text"
-                    ></input>
+                    >
+                      <Form.Control type="text" placeholder="Remarks" />
+                    </FloatingLabel>
+
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      style={{ direction: "rtl" }}
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="ملاحظات"
+                      className="mb-3 floatingInputAr"
                       onChange={(e) => setRemarksAr(e.target.value)}
                       name="Name"
                       value={RemarksAr}
-                      required
-                      type="text"
-                      placeholder="اسم قصير"
-                    ></input>
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control type="text" placeholder="ملاحظات" />
+                    </FloatingLabel>
                   </div>
                 </div>
 
@@ -202,6 +254,7 @@ const NewsForm = () => {
                       onChange={setDOB}
                       value={DOB}
                       dayPlaceholder="  "
+                      maxDate={today}
                       monthPlaceholder="Date Of Birth"
                       yearPlaceholder=""
                     />
@@ -210,12 +263,13 @@ const NewsForm = () => {
                   </div>
 
                   <div className="col-sm">
-                    <input type="text"
-                     placeholder="Date Of Birth" 
-                     onChange={setDOB}
-                     value={convert(DOB)}
-                     style={{ direction: "rtl" }}
-                     />
+                    <input
+                      type="text"
+                      placeholder="Date Of Birth"
+                      onChange={setDOB}
+                      value={convert(DOB)}
+                      style={{ direction: "rtl" }}
+                    />
                   </div>
                 </div>
 
@@ -225,6 +279,7 @@ const NewsForm = () => {
                       onChange={setJockeyLicenseDate}
                       value={JockeyLicenseDate}
                       dayPlaceholder="  "
+                      maxDate={today}
                       monthPlaceholder="Jockey License Date"
                       yearPlaceholder=""
                     />
@@ -245,66 +300,97 @@ const NewsForm = () => {
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      type="number"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Rating"
+                      className="mb-3"
                       onChange={(e) => setRating(e.target.value)}
                       value={Rating}
-                      placeholder="Rating"
-                    />
+                    >
+                      <Form.Control type="number" placeholder="Rating" />
+                    </FloatingLabel>
 
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      type="number"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="معدل"
+                      className="mb-3 floatingInputAr"
+                      name="Name"
                       style={{ direction: "rtl" }}
-                      placeholder="تقييم"
-                    />
+                    >
+                      <Form.Control type="number" placeholder="معدل" />
+                    </FloatingLabel>
                   </div>
                 </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      type="number"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Jockey Minimum Weight"
+                      className="mb-3"
                       onChange={(e) => setMiniumumJockeyWeight(e.target.value)}
                       value={MiniumumJockeyWeight}
-                      placeholder="Jockey Minimum Weight"
-                    />
+                    >
+                      <Form.Control
+                        type="number"
+                        placeholder="Jockey Minimum Weight"
+                      />
+                    </FloatingLabel>
 
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      type="number"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="الحد الأدنى لوزن الجوكي"
+                      className="mb-3 floatingInputAr"
+                      value={MiniumumJockeyWeight}
                       style={{ direction: "rtl" }}
-                      placeholder="الحد الأدنى لوزن الجوكي"
-                    />
+                    >
+                      <Form.Control
+                        type="number"
+                        placeholder="الحد الأدنى لوزن الجوكي"
+                      />
+                    </FloatingLabel>
                   </div>
                 </div>
 
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      type="number"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Jockey Maximum Weight"
+                      className="mb-3"
                       onChange={(e) => setMaximumJockeyWeight(e.target.value)}
                       value={MaximumJockeyWeight}
-                      placeholder="Jockey Maximum Weight"
-                    />
+                    >
+                      <Form.Control
+                        type="number"
+                        placeholder="Jockey Maximum Weight"
+                      />
+                    </FloatingLabel>
 
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      type="number"
-                      style={{ direction: "rtl" }}
-                      placeholder="الحد الأدنى لوزن الجوكي"
-                      onChange={(e) => setMaximumJockeyWeight(e.target.value)}
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="الحد الأدنى لوزن الجوكي"
+                      className="mb-3 floatingInputAr"
                       value={MaximumJockeyWeight}
-                    />
+                      style={{ direction: "rtl" }}
+                    >
+                      <Form.Control
+                        type="number"
+                        placeholder="الحد الأدنى لوزن الجوكي"
+                      />
+                    </FloatingLabel>
                   </div>
                 </div>
                 <div className="row mainrow">
@@ -316,29 +402,26 @@ const NewsForm = () => {
                       options={AllNationality}
                       isClearable={true}
                       isSearchable={true}
-                    /><span className="spanForm"> 
-                    
-                    <OverlayTrigger
-          
-         
-          overlay={
-            <Tooltip id={`tooltip-top`}>
-              Add more
-            </Tooltip>
-          }
-        >
-          <button className="addmore" onClick={()=> history('/nationality')}>+</button>
-        </OverlayTrigger> 
-                    
-                    
-                    
-                    |</span>
+                    />
+                    <span className="spanForm">
+                      <OverlayTrigger
+                        overlay={<Tooltip id={`tooltip-top`}>Add more</Tooltip>}
+                      >
+                        <button
+                          className="addmore"
+                          onClick={() => history("/nationality")}
+                        >
+                          +
+                        </button>
+                      </OverlayTrigger>
+                      |
+                    </span>
                   </div>
                   <div className="col-sm">
                     <Select
                       required
                       placeholder={<div>حدد جيلتي</div>}
-                      className='selectdir'
+                      className="selectdir"
                       defaultValue={NationalityID}
                       onChange={setNationalityID}
                       options={AllNationality}
@@ -346,25 +429,39 @@ const NewsForm = () => {
                       isSearchable={true}
                     />
                   </div>
-                </div> 
+                </div>
+
                 <div className="row mainrow">
                   <div className="col-sm">
-                    <input
-                      type="number"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Jockey Allowance"
+                      className="mb-3"
                       onChange={(e) => setJockeyAllowance(e.target.value)}
                       value={JockeyAllowance}
-                      placeholder="Jockey Allowance"
-                    />
+                    >
+                      <Form.Control
+                        type="number"
+                        placeholder="Jockey Allowance"
+                      />
+                    </FloatingLabel>
 
                     <span className="spanForm"> |</span>
                   </div>
 
                   <div className="col-sm">
-                    <input
-                      type="number"
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="الحد الأدنى لوزن الجوكي"
+                      className="mb-3 floatingInputAr"
+                      value={JockeyAllowance}
                       style={{ direction: "rtl" }}
-                      placeholder="الحد الأدنى لوزن الجوكي"
-                    />
+                    >
+                      <Form.Control
+                        type="number"
+                        placeholder="الحد الأدنى لوزن الجوكي"
+                      />
+                    </FloatingLabel>
                   </div>
                 </div>
 

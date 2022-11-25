@@ -20,7 +20,7 @@ const Auth = () => {
     dispatch(logout())
     navigate('/')
   }
-  console.log('data')
+  
   return (
     <>
       <div className="cta">

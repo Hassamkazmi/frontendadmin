@@ -1,15 +1,16 @@
-
 import React,{useState} from 'react'
 import swal from 'sweetalert';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,useLocation } from 'react-router-dom';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';  
 const Racetypeform = () => {
     const [NameEn, setNameEn] = useState("");
     const [NameAr, setNameAr] = useState("");
     const [shortCode,setshortCode]= useState("") 
   
   const history =useNavigate()
-  
+  const {pathname} = useLocation();
   
   
     const submit = async (event) => {
@@ -27,7 +28,10 @@ const Racetypeform = () => {
           icon: "success",
           button: "OK",
         });
-        history('/racetype')
+        if(pathname === '/racetypeform'){
+          history('/racetype')
+        }
+       
       } catch (error) {
         const err = error.message;
         swal({
@@ -56,43 +60,72 @@ const Racetypeform = () => {
           <form onSubmit={submit}>
             <div className="row mainrow">
               <div className="col-sm">
-                <input
-                  placeholder=" Name"
-                  onChange={(e) => setNameEn(e.target.value)}
+               
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Name"
+        className="mb-3"
+onChange={(e) => setNameEn(e.target.value)}
                   name="Name"
                   value={NameEn}
-                  required
-                ></input><span className="spanForm"> |</span>
+> 
+        <Form.Control type="text" placeholder="Name" />
+      </FloatingLabel>
+                
+                
+                <span className="spanForm"> |</span>
               </div>
 
               <div className="col-sm">
-                <input
-                  style={{ direction: "rtl" }}
-                  placeholder="اسم "
-                  onChange={(e) => setNameAr(e.target.value)}
+           
+                       <FloatingLabel
+        controlId="floatingInput"
+        label="اسم"
+        className="mb-3 floatingInputAr"
+onChange={(e) => setNameAr(e.target.value)}
                   name="Name"
                   value={NameAr}
-                ></input>
+                  style={{ direction: "rtl" }}
+               
+             
+> 
+        <Form.Control type="text" placeholder="اسم"     />
+      </FloatingLabel>
               </div>
             </div>
 
             <div className="row mainrow">
               <div className="col-sm">
-                <input
-                  placeholder="Short Code"
-                  name="Detail"
-                  onChange={(e) => setshortCode(e.target.value)}
-                  value={shortCode}
-                ></input><span className="spanForm"> |</span>
+          
+                
+                <FloatingLabel
+        controlId="floatingInput"
+        label="Short Code"
+        className="mb-3"
+        onChange={(e) => setshortCode(e.target.value)}
+        value={shortCode}
+                 
+               
+             
+> 
+        <Form.Control type="text" placeholder="Short Code"/>
+      </FloatingLabel>
+                
+                <span className="spanForm"> |</span>
               </div>
 
               <div className="col-sm">
-                <input
-                 placeholder="التفاصيل"  style={{ direction: "rtl" }} 
-                  name="Detail"
-         
-            
-                ></input>
+              <FloatingLabel
+        controlId="floatingInput"
+        label="رمز قصير"
+        className="mb-3 floatingInputAr "
+        style={{ direction: "rtl" , left:'initial' , right:0  }}
+
+        
+             
+> 
+        <Form.Control type="text" placeholder="اسم"  style={{left:'%'}}   />
+      </FloatingLabel>
               </div>
             </div>
 
@@ -100,7 +133,7 @@ const Racetypeform = () => {
             <div className='ButtonSection ' style={{justifyContent:"end"}}>
      
 
-              <button type='submit' className='SubmitButton'>Add Race type</button>
+              <button Name='submit' className='SubmitButton'>Add Race Type</button>
 
             </div>
           </form>

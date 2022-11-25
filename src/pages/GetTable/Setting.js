@@ -1,6 +1,8 @@
 import React,{useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Components/CSS/setting.css';
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const Setting = () => {
 const navigate = useNavigate();

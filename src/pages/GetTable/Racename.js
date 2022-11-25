@@ -6,7 +6,8 @@ import { remove } from "../../redux/postReducer/PostJockey";
 import { Link } from "react-router-dom";
 import swal from 'sweetalert';
 import ScrollContainer from "react-indiana-drag-scroll";
-
+import Lottie from "lottie-react";
+import HorseAnimation from "../../assets/horselottie.json";
 
 const Racename = () => {
     const dispatch = useDispatch( )
@@ -39,14 +40,9 @@ const Racename = () => {
   
     
     if (status === STATUSES.LOADING) {
-      return (
-          <h2
-          className="loader"
-          >
-            <div class="inner">
-      </div>
-          </h2>
-      );
+          return <Lottie animationData={HorseAnimation} loop={true}  className='Lottie'/>
+
+
     }
   
     if (status === STATUSES.ERROR) {
@@ -84,7 +80,7 @@ const Racename = () => {
                         color: "rgba(0, 0, 0, 0.6)",
                       }}
                     >
-                      Toggle to Arabic
+                      
                     </h6>
     
                     <Link to="/racenameform">
@@ -125,7 +121,7 @@ const Racename = () => {
                            {/* <Link to={`/editjockey/${item._id}`}> <BiEdit /></Link>  */}
                                   <MdDelete
                                     
-                                    onClick={() => handleRemove(item._id)}
+                                    // onClick={() => handleRemove(item._id)}
                                   />
                              
                                 </td>
